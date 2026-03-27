@@ -1,10 +1,10 @@
 #pragma once
 
 namespace engine {
-class renderer {
+class opengl_renderer {
 public:
-  renderer();
-  ~renderer();
+  opengl_renderer();
+  ~opengl_renderer();
 private:
 
 };

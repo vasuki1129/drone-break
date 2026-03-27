@@ -65,14 +65,9 @@
  * ---------------- compile time switches ----------------
  */
 
-#if defined __has_include
-#  if __has_include ("mus-config.h")
-#    include "mus-config.h"
-#  endif
-#else
-#    include "mus-config.h"
-#endif
 
+#define HAVE_COMPLEX_NUMBERS 0
+#define HAVE_COMPLEX_TRIG 0
 /*
  * Your config file goes here, or just replace that #include line with the defines you need.
  * The compile-time switches involve booleans, complex numbers, and multiprecision arithmetic.
@@ -38970,7 +38965,7 @@ static s7_pointer g_uname(s7_scheme *sc, s7_pointer unused_args)
 #else
 static s7_pointer g_uname(s7_scheme *sc, s7_pointer args)
 { /* return a list to be somewhat compatible with the uname-related functions */
-  return(s7_list(sc, 5, sc->nil_string, sc->nil_string, sc->nil_string, sc->nil_string, sc->nil_string));
+  return(s7_list(sc, 5, nil_string, nil_string, nil_string, nil_string, nil_string));
 }
 #endif
 

@@ -1,0 +1,2 @@
+-I"C:\\lib\\glfw\\include"
+-I"C:\\lib\\glew\\include"
