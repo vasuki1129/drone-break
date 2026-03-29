@@ -1,17 +1,17 @@
 #include "mesh.h"
-
+#include <GL/glew.h>
 namespace engine {
 
-Error Mesh::Rebuffer() {
+Error<bool> Mesh::Rebuffer() {
   glBindBuffer(GL_ARRAY_BUFFER,this->vertex_buffer_handle);
   glBufferData(GL_ARRAY_BUFFER, this->vertices.size() * sizeof(Vertex),
                this->vertices.data(), GL_STATIC_DRAW);
   glBindBuffer(GL_ARRAY_BUFFER, NULL);
 
   if (glGetError() != 0) {
-    return Error(Err{"Failed to buffer data to vertex buffer: " +
+    return Error<bool>(Err("Failed to buffer data to vertex buffer: " +
                      std::to_string(this->vertex_buffer_handle) + " on mesh " +
-                     this->name});
+                     this->name));
   }
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->index_buffer_handle);
@@ -19,11 +19,11 @@ Error Mesh::Rebuffer() {
                this->indices.data(), GL_STATIC_DRAW);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, NULL);
   if (glGetError() != 0) {
-    return Error(Err{"Failed to buffer data to index buffer: " +
+    return Error<bool>(Err("Failed to buffer data to index buffer: " +
                      std::to_string(this->index_buffer_handle) + " on mesh " +
-                     this->name});
+                     this->name));
   } else {
-    return Error(Ok());
+    return Error<bool>(Ok<bool>(true));
   }
 }
 

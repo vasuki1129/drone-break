@@ -25,7 +25,7 @@ public:
   ~Mesh();
   void SetVertices(std::vector<Vertex> v);
   void SetIndices(std::vector<unsigned int> v);
-  Error Rebuffer();
+  Error<bool> Rebuffer();
 private:
   std::string name;
   uint8_t material_index;

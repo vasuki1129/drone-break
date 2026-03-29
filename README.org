@@ -1,0 +1,6 @@
+#+title: README
+
+* Assets
+** Meshes
+ *** Folder Structure
+ It is recommended that each mesh be placed in its own directory, with its textures, animations and other associated data files

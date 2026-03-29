@@ -1,7 +1,7 @@
 PROJ_NAME := light
 
 #LINUX (any posix probably idfk)
-LIN_FLAGS := -g
+LIN_FLAGS := -g -std=c++20
 
 LIN_DEPS := build_linux/engine/camera_component.o
 LIN_DEPS += build_linux/engine/component.o
@@ -16,7 +16,7 @@ LIN_DEPS += build_linux/engine/transform.o
 LIN_DEPS += build_linux/game/entry.o
 LIN_DEPS += build_linux/s7/s7.o
 
-LIN_LIBS := -lglfw -lGLEW
+LIN_LIBS := -lglfw -lGLEW -lGL
 
 linux_debug : $(LIN_DEPS)
 	g++ $(LIN_DEPS) -o bin/linux/x64/debug/light $(LIN_LIBS)
@@ -24,11 +24,11 @@ linux : $(LIN_DEPS)
 	g++ $(LIN_DEPS) -o bin/linux/x64/release/light $(LIN_LIBS)
 
 build_linux/engine/%.o : src/engine/%.cpp
-	g++ -c -o $@ $<
+	g++ -c -o $@ $< -std=c++20
 build_linux/game/%.o : src/game/%.cpp
-	g++ -c -o $@ $<
+	g++ -c -o $@ $< -std=c++20
 build_linux/s7/%.o : src/s7/%.c
-	gcc -c -o $@ $<
+	gcc -c -o $@ $< -std=c++20
 #WINDOWS
 NT_FLAGS := /MT
 NT_DEPS := build_windows/engine/camera_component.obj

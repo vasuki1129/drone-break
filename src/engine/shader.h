@@ -38,8 +38,8 @@ public:
 
 class Shader {
 public:
-  Error SetUniforms(UniformList& u);
-  Error SetUniform(Uniform u);
+  Error<bool> SetUniforms(UniformList& u);
+  Error<bool> SetUniform(Uniform u);
 private:
   unsigned int shader_handle;
   std::string name;

@@ -19,7 +19,8 @@ overload(Ts...) -> overload<Ts...>;
 
 #define match {auto visitor = overload
 #define on(x) ;auto _a = x;std::visit(visitor,_a);}
-#define mcase(v) [this](v& val)
+#define mcase(v) [this](v & val)
+#define mcase_const(v) [this](const v& val)
 
 //usage example
 /*
