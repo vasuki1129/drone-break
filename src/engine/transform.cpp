@@ -20,4 +20,27 @@ void Transform::ProcessTick(float dt) {
   }
 }
 
+glm::vec3 Transform::Forward() {
+  return glm::vec3(0.0f,0.0f,1.0f) * this->rotation;
+}
+glm::vec3 Transform::Backward() {
+  return -Forward();
+}
+glm::vec3 Transform::Up() {
+  return glm::vec3(0.0f, 1.0f, 0.0f) * this->rotation;
+}
+glm::vec3 Transform::Down() {
+  return -Up();
+}
+glm::vec3 Transform::Right() {
+  return glm::vec3(1.0f,0.0f,0.0f) * this->rotation;
+}
+glm::vec3 Transform::Left() {
+  return -Right();
+}
+
+
+
+
+
 }
