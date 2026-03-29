@@ -1,10 +1,16 @@
 #include "../engine/engine.h"
 
-int main(int argc, char **argv)
-{
-    engine::engine_instance* eng = new engine::engine_instance();
-    //register any additional types
-    eng->Run();
+int main(int argc, char **argv) {
 
-    return 0;
+  engine::EngineCreateInfo create_info {
+    .game_name = "hiverunner",
+    .initial_window_width = 800,
+    .initial_window_height = 600
+  };
+
+  engine::engine_instance* eng = engine::CreateEngine(create_info);
+  //register any additional types
+  eng->Run();
+
+  return 0;
 }

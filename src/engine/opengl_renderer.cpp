@@ -3,9 +3,9 @@
 
 namespace engine {
 
-opengl_renderer::opengl_renderer(GLFWwindow** smuggle) {
+opengl_renderer::opengl_renderer(GLFWwindow** smuggle, EngineCreateInfo& create_info) {
     glfwInit();
-    window = glfwCreateWindow(1024, 768, "light", NULL, NULL);
+    window = glfwCreateWindow(create_info.initial_window_width, create_info.initial_window_height, create_info.game_name.c_str(), NULL, NULL);
     *smuggle = window;
     glfwMakeContextCurrent(window);
     glewInit();
