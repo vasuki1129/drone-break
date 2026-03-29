@@ -1,7 +1,33 @@
 #include "transform.h"
 #include <glm/gtc/quaternion.hpp>
-
+#include "util.h"
 namespace engine {
+
+Transform::Transform() {
+  name = "Transform";
+  uid = GenerateUID();
+}
+Transform::Transform(json value) {
+
+
+}
+
+json Transform::Save() {
+  json out;
+  out["name"] = this->name;
+  out["uid"] = this->uid;
+
+  std::vector<json> serialized_components;
+  for (auto comp : components) {
+    serialized_components.push_back(comp->Save());
+  }
+  std::vector<json> serialized_children;
+  for (auto child : children) {
+    serialized_children.push_back(child->Save());
+  }
+  out["children"] = json::parse(serialized_children);
+
+}
 
 void Transform::ProcessRender() {
   for (auto comp : components) {

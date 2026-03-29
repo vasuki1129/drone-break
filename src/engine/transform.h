@@ -1,5 +1,6 @@
 #pragma once
 #include "component.h"
+#include "saveable.h"
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <vector>
@@ -9,9 +10,12 @@ namespace engine {
 
 class Component;
 
-
-class Transform {
+class Transform : public Saveable {
 public:
+  Transform();
+  Transform(json value);
+  Transform(std::string name);
+  json Save() override;
   void ProcessRender();
   void ProcessTick(float dt);
 
@@ -38,6 +42,7 @@ public:
 
 private:
   std::string name;
+  uint64_t uid;
   glm::vec3 position;
   glm::quat rotation;
   glm::vec3 scale;
