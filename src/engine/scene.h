@@ -12,6 +12,7 @@ private:
   std::string name;
   std::string path;
   Transform* root;
+  bool finalized;
 };
 
 }
