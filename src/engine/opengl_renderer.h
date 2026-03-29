@@ -6,8 +6,10 @@
 namespace engine {
 class opengl_renderer {
 public:
-  opengl_renderer();
+  opengl_renderer(GLFWwindow** smuggle);
   ~opengl_renderer();
+  bool ShouldClose();
+  void PushFrame();
 private:
   GLFWwindow* window;
 };

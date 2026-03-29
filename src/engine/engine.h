@@ -12,9 +12,12 @@ namespace engine {
     public:
         engine_instance();
         ~engine_instance();
+        void Run();
+
     private:
-        std::vector<engine::scene *> loaded_scenes;
-        engine::scene* current_scene = nullptr;
+        GLFWwindow* window;
+        std::vector<engine::Scene *> loaded_scenes;
+        engine::Scene* current_scene = nullptr;
         s7_scheme *scheme_interpreter;
         engine::opengl_renderer* renderer;
 

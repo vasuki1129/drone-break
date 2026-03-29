@@ -29,6 +29,7 @@ build_linux/game/%.o : src/game/%.cpp
 	g++ -c -o $@ $< -std=c++20
 build_linux/s7/%.o : src/s7/%.c
 	gcc -c -o $@ $< -std=c++20
+
 #WINDOWS
 NT_FLAGS := /MT
 NT_DEPS := build_windows/engine/camera_component.obj

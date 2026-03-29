@@ -1,9 +1,11 @@
 #pragma once
 #include "component.h"
 #include <string>
-#include <variant>
+
+
 
 namespace engine {
+
 
 struct ScriptLiteral {
   std::string script;
@@ -18,9 +20,6 @@ struct ScriptFile {
 class ScriptComponent : public Component {
 public:
   virtual void tick(float dt) override;
-  virtual void init() override;
-  virtual void destroy() override;
-
 
 private:
   std::variant<ScriptLiteral, ScriptFile> script;
