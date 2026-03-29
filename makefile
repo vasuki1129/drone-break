@@ -18,8 +18,16 @@ LIN_DEPS += build_linux/release/engine/material.o
 LIN_DEPS += build_linux/release/engine/util.o
 
 LIN_DEPS += build_linux/release/game/entry.o
+
 LIN_DEPS += build_linux/release/s7/s7.o
 
+LIN_DEPS += build_linux/release/imgui/imgui.o
+LIN_DEPS += build_linux/release/imgui/imgui_demo.o
+LIN_DEPS += build_linux/release/imgui/imgui_draw.o
+LIN_DEPS += build_linux/release/imgui/imgui_impl_glfw.o
+LIN_DEPS += build_linux/release/imgui/imgui_impl_opengl3.o
+LIN_DEPS += build_linux/release/imgui/imgui_tables.o
+LIN_DEPS += build_linux/release/imgui/imgui_widgets.o
 
 LIN_DEPS_DEBUG := build_linux/debug/engine/camera_component.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/component.o
@@ -36,7 +44,17 @@ LIN_DEPS_DEBUG += build_linux/debug/engine/material.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/util.o
 
 LIN_DEPS_DEBUG += build_linux/debug/game/entry.o
+
 LIN_DEPS_DEBUG += build_linux/debug/s7/s7.o
+
+LIN_DEPS_DEBUG += build_linux/debug/imgui/imgui.o
+LIN_DEPS_DEBUG += build_linux/debug/imgui/imgui_demo.o
+LIN_DEPS_DEBUG += build_linux/debug/imgui/imgui_draw.o
+LIN_DEPS_DEBUG += build_linux/debug/imgui/imgui_impl_glfw.o
+LIN_DEPS_DEBUG += build_linux/debug/imgui/imgui_impl_opengl3.o
+LIN_DEPS_DEBUG += build_linux/debug/imgui/imgui_tables.o
+LIN_DEPS_DEBUG += build_linux/debug/imgui/imgui_widgets.o
+
 
 LIN_LIBS := -lglfw -lGLEW -lGL -lassimp
 
@@ -52,14 +70,18 @@ build_linux/debug/engine/%.o : src/engine/%.cpp
 build_linux/debug/game/%.o : src/game/%.cpp
 	g++ -c -o $@ $< -std=c++20 -g
 build_linux/debug/s7/%.o : src/s7/%.c
-	gcc -c -o $@ $< -std=c++20 -g
+	gcc -c -o $@ $< -g
+build_linux/debug/imgui/%.o : src/imgui/%.cpp
+	g++ -c -o $@ $< -std=c++20 -g
 
 build_linux/release/engine/%.o : src/engine/%.cpp
 	g++ -c -o $@ $< -std=c++20
 build_linux/release/game/%.o : src/game/%.cpp
 	g++ -c -o $@ $< -std=c++20
 build_linux/release/s7/%.o : src/s7/%.c
-	gcc -c -o $@ $< -std=c++20
+	gcc -c -o $@ $<
+build_linux/release/imgui/%.o : src/imgui/%.cpp
+	g++ -c -o $@ $< -std=c++20
 
 #WINDOWS
 NT_FLAGS := /MT

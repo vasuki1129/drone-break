@@ -8,10 +8,11 @@ Transform::Transform() {
   uid = GenerateUID();
 }
 Transform::Transform(json value) {
+  name = value["name"];
+  uid = value["uid"];
 
 
 }
-
 json Transform::Save() {
   json out;
   out["name"] = this->name;
@@ -25,8 +26,7 @@ json Transform::Save() {
   for (auto child : children) {
     serialized_children.push_back(child->Save());
   }
-  out["children"] = json::parse(serialized_children);
-
+  out["children"] = serialized_children;
 }
 
 void Transform::ProcessRender() {
