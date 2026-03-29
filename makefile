@@ -3,31 +3,60 @@ PROJ_NAME := light
 #LINUX (any posix probably idfk)
 LIN_FLAGS := -g -std=c++20
 
-LIN_DEPS := build_linux/engine/camera_component.o
-LIN_DEPS += build_linux/engine/component.o
-LIN_DEPS += build_linux/engine/engine.o
-LIN_DEPS += build_linux/engine/mesh.o
-LIN_DEPS += build_linux/engine/opengl_renderer.o
-LIN_DEPS += build_linux/engine/scene.o
-LIN_DEPS += build_linux/engine/script_component.o
-LIN_DEPS += build_linux/engine/shader.o
-LIN_DEPS += build_linux/engine/texture.o
-LIN_DEPS += build_linux/engine/transform.o
-LIN_DEPS += build_linux/game/entry.o
-LIN_DEPS += build_linux/s7/s7.o
+LIN_DEPS := build_linux/release/engine/camera_component.o
+LIN_DEPS += build_linux/release/engine/component.o
+LIN_DEPS += build_linux/release/engine/engine.o
+LIN_DEPS += build_linux/release/engine/mesh.o
+LIN_DEPS += build_linux/release/engine/model.o
+LIN_DEPS += build_linux/release/engine/opengl_renderer.o
+LIN_DEPS += build_linux/release/engine/scene.o
+LIN_DEPS += build_linux/release/engine/script_component.o
+LIN_DEPS += build_linux/release/engine/shader.o
+LIN_DEPS += build_linux/release/engine/texture.o
+LIN_DEPS += build_linux/release/engine/transform.o
+LIN_DEPS += build_linux/release/engine/material.o
 
-LIN_LIBS := -lglfw -lGLEW -lGL
+LIN_DEPS += build_linux/release/game/entry.o
+LIN_DEPS += build_linux/release/s7/s7.o
 
-linux_debug : $(LIN_DEPS)
-	g++ $(LIN_DEPS) -o bin/linux/x64/debug/light $(LIN_LIBS)
+
+LIN_DEPS_DEBUG := build_linux/debug/engine/camera_component.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/component.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/engine.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/mesh.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/model.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/opengl_renderer.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/scene.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/script_component.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/shader.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/texture.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/transform.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/material.o
+
+LIN_DEPS_DEBUG += build_linux/debug/game/entry.o
+LIN_DEPS_DEBUG += build_linux/debug/s7/s7.o
+
+LIN_LIBS := -lglfw -lGLEW -lGL -lassimp
+
+linux_all : linux_debug linux
+
+linux_debug : $(LIN_DEPS_DEBUG)
+	g++ $(LIN_DEPS_DEBUG) -o bin/linux/x64/debug/light $(LIN_LIBS) -g
 linux : $(LIN_DEPS)
 	g++ $(LIN_DEPS) -o bin/linux/x64/release/light $(LIN_LIBS)
 
-build_linux/engine/%.o : src/engine/%.cpp
+build_linux/debug/engine/%.o : src/engine/%.cpp
+	g++ -c -o $@ $< -std=c++20 -g
+build_linux/debug/game/%.o : src/game/%.cpp
+	g++ -c -o $@ $< -std=c++20 -g
+build_linux/debug/s7/%.o : src/s7/%.c
+	gcc -c -o $@ $< -std=c++20 -g
+
+build_linux/release/engine/%.o : src/engine/%.cpp
 	g++ -c -o $@ $< -std=c++20
-build_linux/game/%.o : src/game/%.cpp
+build_linux/release/game/%.o : src/game/%.cpp
 	g++ -c -o $@ $< -std=c++20
-build_linux/s7/%.o : src/s7/%.c
+build_linux/release/s7/%.o : src/s7/%.c
 	gcc -c -o $@ $< -std=c++20
 
 #WINDOWS
@@ -61,6 +90,8 @@ build_windows/engine/component.obj : src/engine/component.cpp
 	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\component.cpp"
 build_windows/engine/engine.obj : src/engine/engine.cpp
 	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\engine.cpp"
+build_windows/engine/material.obj : src/engine/material.cpp
+	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\material.cpp"
 build_windows/engine/mesh.obj : src/engine/mesh.cpp
 	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\mesh.cpp"
 build_windows/engine/opengl_renderer.obj : src/engine/opengl_renderer.cpp

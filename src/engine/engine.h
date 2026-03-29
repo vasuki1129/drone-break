@@ -9,7 +9,7 @@
 
 namespace engine {
 
-class opengl_renderer;
+class OpenGLRenderer;
 
 
 struct EngineCreateInfo {
@@ -18,19 +18,20 @@ struct EngineCreateInfo {
   uint16_t initial_window_height;
 };
 
-    class engine_instance {
-    public:
-        engine_instance(EngineCreateInfo& info);
-        ~engine_instance();
-        void Run();
+class EngineInstance {
+public:
+  EngineInstance(EngineCreateInfo& info);
+  ~EngineInstance();
+  void Run();
 
-    private:
-        GLFWwindow* window;
-        std::vector<engine::Scene *> loaded_scenes;
-        engine::Scene* current_scene = nullptr;
-        s7_scheme *scheme_interpreter;
-        engine::opengl_renderer* renderer;
-    };
+private:
+  GLFWwindow* window;
+  std::vector<engine::Scene *> loaded_scenes;
+  engine::Scene* current_scene = nullptr;
+  s7_scheme *scheme_interpreter;
+  engine::OpenGLRenderer* renderer;
+};
 
-  engine_instance* CreateEngine(EngineCreateInfo& create_info);
+EngineInstance* CreateEngine(EngineCreateInfo& create_info);
+
 }

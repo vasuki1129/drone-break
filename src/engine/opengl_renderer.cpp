@@ -3,7 +3,7 @@
 
 namespace engine {
 
-opengl_renderer::opengl_renderer(GLFWwindow** smuggle, EngineCreateInfo& create_info) {
+OpenGLRenderer::OpenGLRenderer(GLFWwindow** smuggle, EngineCreateInfo& create_info) {
     glfwInit();
     window = glfwCreateWindow(create_info.initial_window_width, create_info.initial_window_height, create_info.game_name.c_str(), NULL, NULL);
     *smuggle = window;
@@ -12,18 +12,18 @@ opengl_renderer::opengl_renderer(GLFWwindow** smuggle, EngineCreateInfo& create_
 
 }
 
-bool opengl_renderer::ShouldClose() {
+bool OpenGLRenderer::ShouldClose() {
   return glfwWindowShouldClose(this->window);
 }
 
-void opengl_renderer::PushFrame() {
+void OpenGLRenderer::PushFrame() {
   glClear(GL_COLOR_BUFFER_BIT);
 
 
   glfwSwapBuffers(this->window);
 }
 
-opengl_renderer::~opengl_renderer() {
+OpenGLRenderer::~OpenGLRenderer() {
     glfwDestroyWindow(window);
     glfwTerminate();
 }

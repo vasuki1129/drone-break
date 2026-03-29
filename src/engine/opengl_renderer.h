@@ -5,10 +5,10 @@
 #include "engine.h"
 
 namespace engine {
-class opengl_renderer {
+class OpenGLRenderer {
 public:
-  opengl_renderer(GLFWwindow** smuggle, struct EngineCreateInfo& create_info);
-  ~opengl_renderer();
+  OpenGLRenderer(GLFWwindow** smuggle, struct EngineCreateInfo& create_info);
+  ~OpenGLRenderer();
   bool ShouldClose();
   void PushFrame();
 private:

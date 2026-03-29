@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
     .initial_window_height = 600
   };
 
-  engine::engine_instance* eng = engine::CreateEngine(create_info);
+  engine::EngineInstance* eng = engine::CreateEngine(create_info);
   //register any additional types
   eng->Run();
 

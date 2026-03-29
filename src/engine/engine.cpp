@@ -3,16 +3,16 @@
 
 namespace engine {
 
-engine_instance* instance = nullptr;
+EngineInstance* instance = nullptr;
 
 
-engine_instance *Engine() {
+EngineInstance *Engine() {
   return instance;
 
 }
 
 
-void engine_instance::Run() {
+void EngineInstance::Run() {
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
     renderer->PushFrame();
@@ -21,19 +21,19 @@ void engine_instance::Run() {
 }
 
 
-engine_instance *CreateEngine(EngineCreateInfo &create_info) {
-  instance = new engine_instance(create_info);
+EngineInstance *CreateEngine(EngineCreateInfo &create_info) {
+  instance = new EngineInstance(create_info);
   return instance;
 }
 
 
-engine_instance::engine_instance(EngineCreateInfo& create_info)
+EngineInstance::EngineInstance(EngineCreateInfo& create_info)
 {
   scheme_interpreter = s7_init();
-  renderer = new engine::opengl_renderer(&window, create_info);
+  renderer = new engine::OpenGLRenderer(&window, create_info);
 }
 
-engine_instance::~engine_instance()
+EngineInstance::~EngineInstance()
 {
     delete renderer;
 }
