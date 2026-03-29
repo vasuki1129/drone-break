@@ -3,8 +3,12 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <vector>
+#include <string>
 
 namespace engine {
+
+class Component;
+
 
 class Transform {
 public:
@@ -21,6 +25,8 @@ public:
   glm::vec3 Left();
   glm::vec3 Right();
 
+  glm::mat4 GetModelMatrix();
+
   glm::vec3 GetGlobalPosition();
   glm::vec3 GetLocalPosition();
 
@@ -31,6 +37,7 @@ public:
   glm::vec3 GetLocalScale();
 
 private:
+  std::string name;
   glm::vec3 position;
   glm::quat rotation;
   glm::vec3 scale;
