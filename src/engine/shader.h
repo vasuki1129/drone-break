@@ -5,27 +5,30 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include "errorcheck.h"
-
+#include <map>
 namespace engine {
 
 struct Uniform_i {
-  std::string key;
   int value;
+  Uniform_i(int v)
+  {
+    value = v;
+  }
 };
 struct Uniform_ui {
-  std::string key;
   unsigned int value;
 };
 struct Uniform_f {
-  std::string key;
   float value;
+  Uniform_f(float f)
+  {
+    value = f;
+  }
 };
 struct Uniform_d {
-  std::string key;
   double value;
 };
 struct Uniform_mat4 {
-  std::string key;
   glm::mat4 value;
 };
 
@@ -34,11 +37,13 @@ using Uniform =
 
 class UniformList {
 public:
-  std::vector<Uniform> uniforms;
+  std::map<std::string,Uniform> uniforms;
 };
 
 class Shader {
 public:
+  Shader(std::string path);
+  ~Shader();
   Error<bool> SetUniforms(UniformList& u);
   Error<bool> SetUniform(Uniform u);
 private:

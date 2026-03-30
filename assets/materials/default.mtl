@@ -1,0 +1,5 @@
+{
+    "name": "default_material",
+    "shader_id": "shd_default_diffuse",
+    "uniforms": []
+}

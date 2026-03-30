@@ -9,8 +9,10 @@ namespace engine {
     class Material
     {
     public:
-
+        Material(std::string path);
     private:
+        std::string name;
+        std::string path;
         Shader* shader;
         UniformList uniform_set;
     };
