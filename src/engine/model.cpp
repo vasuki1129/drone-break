@@ -81,15 +81,23 @@ Error<Mesh *> Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
       indices.push_back(face.mIndices[j]);
     }
   }
+  Mesh *m = new Mesh();
+  m->SetVertices(vertices);
+  m->SetIndices(indices);
+
+  return Ok<Mesh*>(m);
+
+
+
 }
 
 Model* __LoadModel(std::string path) {
   Model *m = new Model(path);
+  return m;
 }
 
 Model* GetModel(std::string path) {
-
-
+  return nullptr;
 }
 
 

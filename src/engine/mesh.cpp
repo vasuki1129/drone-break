@@ -27,6 +27,17 @@ Error<bool> Mesh::Rebuffer() {
   }
 }
 
+void Mesh::SetVertices(std::vector<Vertex> v) {
+
+
+}
+void Mesh::SetIndices(std::vector<unsigned int> v) {
+
+
+}
+
+
+
 Mesh::Mesh() {
   glGenBuffers(1, &this->vertex_buffer_handle);
   glGenBuffers(1, &this->index_buffer_handle);

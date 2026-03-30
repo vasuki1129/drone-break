@@ -27,6 +27,7 @@ json Transform::Save() {
     serialized_children.push_back(child->Save());
   }
   out["children"] = serialized_children;
+  return out;
 }
 
 void Transform::ProcessRender() {

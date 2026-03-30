@@ -84,53 +84,51 @@ build_linux/release/imgui/%.o : src/imgui/%.cpp
 	g++ -c -o $@ $< -std=c++20
 
 #WINDOWS
-NT_FLAGS := /MT
+NT_FLAGS := /DGLEW_STATIC /MDd /EHsc /IC:\lib\glm\include /IC:\lib\glew\include /IC:\lib\glfw\include /IC:\lib\assimp\include
 NT_DEPS := build_windows/engine/camera_component.obj
 NT_DEPS += build_windows/engine/component.obj
 NT_DEPS += build_windows/engine/engine.obj
 NT_DEPS += build_windows/engine/mesh.obj
+NT_DEPS += build_windows/engine/model.obj
 NT_DEPS += build_windows/engine/opengl_renderer.obj
 NT_DEPS += build_windows/engine/scene.obj
 NT_DEPS += build_windows/engine/script_component.obj
 NT_DEPS += build_windows/engine/shader.obj
 NT_DEPS += build_windows/engine/texture.obj
 NT_DEPS += build_windows/engine/transform.obj
+NT_DEPS += build_windows/engine/material.obj
+NT_DEPS += build_windows/engine/util.obj
+
 NT_DEPS += build_windows/game/entry.obj
+
 NT_DEPS += build_windows/s7/s7.obj
+
+NT_DEPS += build_windows/imgui/imgui.obj
+NT_DEPS += build_windows/imgui/imgui_demo.obj
+NT_DEPS += build_windows/imgui/imgui_draw.obj
+NT_DEPS += build_windows/imgui/imgui_impl_glfw.obj
+NT_DEPS += build_windows/imgui/imgui_impl_opengl3.obj
+NT_DEPS += build_windows/imgui/imgui_tables.obj
+NT_DEPS += build_windows/imgui/imgui_widgets.obj
 
 NT_LIBDIRS := /LIBPATH:"C:\\lib\\glfw\\lib"
 NT_LIBDIRS += /LIBPATH:"C:\\lib\\glew\\lib"
+NT_LIBDIRS += /LIBPATH:"C:\\lib\\assimp\\lib\\x64"
 
-NT_LIBS := glfw3.lib glew32s.lib opengl32.lib
+NT_LIBS := glfw3.lib glew32s.lib opengl32.lib assimp-vc143-mt.lib Gdi32.lib
 
 windows_debug : $(NT_DEPS)
 	link $(NT_DEPS)
 windows : $(NT_DEPS)
 	link $(NT_LIBDIRS) /OUT:"bin/windows/x64/debug/$(PROJ_NAME).exe" $(NT_DEPS) $(NT_LIBS)
 
-build_windows/engine/camera_component.obj : src/engine/camera_component.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\camera_component.cpp"
-build_windows/engine/component.obj : src/engine/component.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\component.cpp"
-build_windows/engine/engine.obj : src/engine/engine.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\engine.cpp"
-build_windows/engine/material.obj : src/engine/material.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\material.cpp"
-build_windows/engine/mesh.obj : src/engine/mesh.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\mesh.cpp"
-build_windows/engine/opengl_renderer.obj : src/engine/opengl_renderer.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\opengl_renderer.cpp"
-build_windows/engine/scene.obj : src/engine/scene.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\scene.cpp"
-build_windows/engine/script_component.obj : src/engine/script_component.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\script_component.cpp"
-build_windows/engine/shader.obj : src/engine/shader.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\shader.cpp"
-build_windows/engine/texture.obj : src/engine/texture.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\texture.cpp"
-build_windows/engine/transform.obj : src/engine/transform.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\engine\\" /c "src\\engine\\transform.cpp"
-build_windows/game/entry.obj : src/game/entry.cpp
-	cl $(NT_FLAGS) /Fo".\\build_windows\\game\\" /c "src\\game\\entry.cpp"
+build_windows/engine/%.obj : src/engine/%.cpp
+	cl /std:c++20 $(NT_FLAGS) /Fo$@ /c $<
 build_windows/s7/s7.obj : src/s7/s7.c
 	cl $(NT_FLAGS) /std:c17 /DCLOCKS_PER_SEC=1000 /Fo".\\build_windows\\s7\\" /c /TC "src\\s7\\s7.c"
+
+build_windows/imgui/%.obj : src/imgui/%.cpp
+	cl /std:c++20 $(NT_FLAGS) /Fo$@ /c $<
+
+build_windows/game/%.obj : src/game/%.cpp
+	cl /std:c++20 $(NT_FLAGS) /Fo$@ /c $<
