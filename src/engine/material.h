@@ -10,6 +10,8 @@ namespace engine {
     {
     public:
         Material(std::string path);
+        Error<bool> Reload();
+        Error<bool> Bind();
     private:
         std::string name;
         std::string path;

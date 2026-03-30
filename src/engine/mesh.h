@@ -5,6 +5,8 @@
 #include <GL/glew.h>
 #include "errorcheck.h"
 #include "gl_util.h"
+#include "material.h"
+
 struct Vertex {
   glm::vec3 position;
   glm::vec3 normal;
@@ -28,10 +30,9 @@ public:
   void SetVertices(std::vector<Vertex> v);
   void SetIndices(std::vector<unsigned int> v);
   Error<bool> Rebuffer();
-  void Draw(BaseUniforms base);
+  Error<bool> Draw(BaseUniforms base, Material* material);
 private:
   std::string name;
-  uint8_t material_index;
   std::vector<Vertex> vertices;
   std::vector<unsigned int> indices;
   GLuint vertex_buffer_handle;

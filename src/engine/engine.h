@@ -6,11 +6,11 @@
 
 #include "opengl_renderer.h"
 #include "scene.h"
+#include "script_engine.h"
 
 namespace engine {
 
 class OpenGLRenderer;
-
 
 struct EngineCreateInfo {
   std::string game_name;
@@ -23,7 +23,7 @@ public:
   EngineInstance(EngineCreateInfo& info);
   ~EngineInstance();
   void Run();
-
+  std::string GetVersionString();
 private:
   GLFWwindow* window;
   std::vector<engine::Scene *> loaded_scenes;
@@ -34,4 +34,5 @@ private:
 
 EngineInstance* CreateEngine(EngineCreateInfo& create_info);
 
+EngineInstance *Engine();
 }

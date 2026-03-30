@@ -40,15 +40,27 @@ public:
   std::map<std::string,Uniform> uniforms;
 };
 
+
+
+
+//the shader is going to hold the VAO, so each shader
+//can have its own vertex attrib set, and they can
+//be set up once, at shader creation
 class Shader {
 public:
   Shader(std::string path);
   ~Shader();
   Error<bool> SetUniforms(UniformList& u);
-  Error<bool> SetUniform(Uniform u);
+  Error<bool> SetUniform(std::string key, Uniform u);
+  void Reload();
+  Error<bool> Bind();
 private:
-  unsigned int shader_handle;
+  unsigned int shader_handle = 0;
+  unsigned int vao = 0;
   std::string name;
+  std::string vertex_src_str;
+  std::string fragment_src_str;
+  std::string path;
 };
 
 };

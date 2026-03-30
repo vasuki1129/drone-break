@@ -86,9 +86,6 @@ Error<Mesh *> Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
   m->SetIndices(indices);
 
   return Ok<Mesh*>(m);
-
-
-
 }
 
 Model* __LoadModel(std::string path) {
@@ -99,6 +96,5 @@ Model* __LoadModel(std::string path) {
 Model* GetModel(std::string path) {
   return nullptr;
 }
-
 
 } // namespace engine

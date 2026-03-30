@@ -1,5 +1,6 @@
 #include "material.h"
 #include "../json/json.hpp"
+#include "shader.h"
 #include <fstream>
 #include <iostream>
 
@@ -9,11 +10,20 @@ namespace engine
 {
     Material::Material(std::string path)
     {
+      this->path = path;
+      this->Reload();
+    }
+
+    Error<bool> Material::Bind() {
+      this->shader->Bind();
+      this->shader->SetUniforms(this->uniform_set);
+    }
+
+    Error<bool> Material::Reload() {
        std::ifstream f(path);
        json data = json::parse(f);
 
        name = data["name"];
-       this->path = path;
        std::string shader_name = data["shader_id"];
        for(json val : data["uniforms"])
        {
@@ -32,5 +42,6 @@ namespace engine
                std::cout << "Unknown uniform value type: " << val["key"] << "\n";
            }
        }
+      return Ok<bool>(true);
     }
 }

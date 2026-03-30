@@ -15,6 +15,10 @@ public:
   Transform();
   Transform(json value);
   Transform(std::string name);
+  ~Transform();
+  void SetName(std::string name);
+
+
   json Save() override;
   void ProcessRender();
   void ProcessTick(float dt);

@@ -10,9 +10,25 @@ Transform::Transform() {
 Transform::Transform(json value) {
   name = value["name"];
   uid = value["uid"];
+}
 
+Transform::~Transform() {
+  for (auto cmp : components) {
+    delete cmp;
+  }
+
+  for (auto tr : children) {
+    delete tr;
+  }
+}
+
+
+Transform::Transform(std::string name) {
+  this->name = name;
 
 }
+
+
 json Transform::Save() {
   json out;
   out["name"] = this->name;
