@@ -4,7 +4,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include "errorcheck.h"
+#include "../dflib/dflib.h"
 #include <map>
 namespace engine {
 

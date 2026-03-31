@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include "errorcheck.h"
+#include "../dflib/dflib.h"
 #include "gl_util.h"
 #include "material.h"
 

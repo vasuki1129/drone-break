@@ -1,8 +1,10 @@
 #pragma once
 #include "transform.h"
+#include "camera_component.h"
 #include "saveable.h"
 namespace engine
 {
+
 class Scene : public Saveable {
 public:
   Scene();
@@ -10,14 +12,16 @@ public:
   ~Scene();
   void Render();
   void Tick(float dt);
-  json Save();
-  Transform* GetRoot();
+  json Save() override;
+  Transform *GetRoot();
+  bool IsValid();
+  glm::mat4 GetCurrentCameraMatrix();
 private:
+  CameraComponent* current_camera;
   std::string name;
   std::string path;
   Transform* root;
   bool finalized;
 };
-
 
 }

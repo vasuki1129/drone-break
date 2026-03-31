@@ -11,7 +11,9 @@ public:
   ~OpenGLRenderer();
   bool ShouldClose();
   void PushFrame();
+
 private:
+  float delta_time;
   GLFWwindow* window;
 };
 }

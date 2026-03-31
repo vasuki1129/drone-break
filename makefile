@@ -4,6 +4,7 @@ PROJ_NAME := light
 LIN_FLAGS := -g -std=c++20
 
 LIN_DEPS := build_linux/release/engine/camera_component.o
+LIN_DEPS += build_linux/release/engine/mesh_component.o
 LIN_DEPS += build_linux/release/engine/component.o
 LIN_DEPS += build_linux/release/engine/engine.o
 LIN_DEPS += build_linux/release/engine/mesh.o
@@ -16,6 +17,7 @@ LIN_DEPS += build_linux/release/engine/texture.o
 LIN_DEPS += build_linux/release/engine/transform.o
 LIN_DEPS += build_linux/release/engine/material.o
 LIN_DEPS += build_linux/release/engine/util.o
+LIN_DEPS += build_linux/release/engine/scene_loader.o
 
 LIN_DEPS += build_linux/release/game/entry.o
 
@@ -30,6 +32,7 @@ LIN_DEPS += build_linux/release/imgui/imgui_tables.o
 LIN_DEPS += build_linux/release/imgui/imgui_widgets.o
 
 LIN_DEPS_DEBUG := build_linux/debug/engine/camera_component.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/mesh_component.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/component.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/engine.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/mesh.o
@@ -42,6 +45,7 @@ LIN_DEPS_DEBUG += build_linux/debug/engine/texture.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/transform.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/material.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/util.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/scene_loader.o
 
 LIN_DEPS_DEBUG += build_linux/debug/game/entry.o
 

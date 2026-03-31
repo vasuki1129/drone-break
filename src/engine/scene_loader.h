@@ -1,6 +1,6 @@
 #pragma once
 #include "scene.h"
-#include "errorcheck.h"
+#include "../dflib/dflib.h"
 #include <future>
 
 
@@ -8,13 +8,17 @@ namespace engine {
 
 class SceneLoader {
 public:
+  SceneLoader();
+  ~SceneLoader();
   Error<bool> CueScene(std::string path); // async load scene from json dump to on deck scene, for streaming
   Error<bool> LoadScene(std::string path); // sync load scene from json dump to current scene
   void LoadDefaultScene();                 // immediately load the startup scene
 
+  Error<bool> UpdateCurrentScene(float dt);
+  Scene* GetCurrentScene();
 
 private:
-  Scene* current_scene;
-  Scene* scene_in_progress_load;
+  Scene* current_scene = nullptr;
+  Scene* scene_in_progress_load = nullptr;
 };
 }

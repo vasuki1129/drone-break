@@ -18,7 +18,6 @@ EngineInstance* instance = nullptr;
 
 EngineInstance *Engine() {
   return instance;
-
 }
 
 
@@ -30,6 +29,9 @@ void EngineInstance::Run() {
 
 }
 
+SceneLoader *EngineInstance::GetSceneLoader() {
+  return scene_loader;
+}
 
 EngineInstance *CreateEngine(EngineCreateInfo &create_info) {
   instance = new EngineInstance(create_info);
@@ -40,6 +42,7 @@ EngineInstance *CreateEngine(EngineCreateInfo &create_info) {
 EngineInstance::EngineInstance(EngineCreateInfo& create_info)
 {
   scheme_interpreter = s7_init();
+  scene_loader = new engine::SceneLoader();
   renderer = new engine::OpenGLRenderer(&window, create_info);
 }
 

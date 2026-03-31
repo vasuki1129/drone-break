@@ -1,6 +1,7 @@
 #pragma once
 #include "component.h"
-#include "model.h"
+#include "mesh.h"
+#include "material.h"
 namespace engine {
 
 class MeshComponent : public Component {
@@ -9,7 +10,8 @@ public:
   virtual void init() override;
   virtual void destroy() override;
 private:
-  Model* model;
+  Mesh* mesh;
+  Material* material;
 };
 
 }

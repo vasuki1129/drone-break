@@ -3,8 +3,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <iostream>
-#include "cppmatch.h"
-
+#include "../dflib/dflib.h"
 
 namespace engine {
 
@@ -19,7 +18,7 @@ Model::Model(std::string path) {
     std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
     return;
   }
-  directory = path.substr(0, path.find_last_of('/'));
+  this->path = path;
   ProcessNode(scene->mRootNode, scene);
 }
 Model::~Model() {}
@@ -29,13 +28,13 @@ Error<bool> Model::ProcessNode(aiNode *node, const aiScene *scene) {
     aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
     match {
       mcase(Err) {
-        std::cout << "Error processing mesh in " << this->directory << "\n";
+        std::cout << "Error processing mesh in " << this->path << "\n";
       },
       mcase(Ok<Mesh*>) {
         meshes.push_back(val.val);
       }
     }
-    on(ProcessMesh(mesh,scene));
+    eval_on(ProcessMesh(mesh,scene));
   }
 
   for (unsigned int i = 0; i < node->mNumChildren; i++) {

@@ -5,6 +5,7 @@
 #include <glm/ext.hpp>
 #include <vector>
 #include <string>
+#include "../dflib/dflib.h"
 
 namespace engine {
 
@@ -18,10 +19,13 @@ public:
   ~Transform();
   void SetName(std::string name);
 
-
   json Save() override;
   void ProcessRender();
   void ProcessTick(float dt);
+
+  void AddChild(Transform *tr);
+  Error<Transform*> FindChildByName(std::string name);
+  Error<Transform*> RemoveChild(Transform *tr);
 
   void Translate(glm::vec3 offset);
   void Scale(glm::vec3 amount);

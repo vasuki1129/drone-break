@@ -7,6 +7,7 @@
 #include "opengl_renderer.h"
 #include "scene.h"
 #include "script_engine.h"
+#include "scene_loader.h"
 
 namespace engine {
 
@@ -24,10 +25,10 @@ public:
   ~EngineInstance();
   void Run();
   std::string GetVersionString();
+  SceneLoader* GetSceneLoader();
 private:
-  GLFWwindow* window;
-  std::vector<engine::Scene *> loaded_scenes;
-  engine::Scene* current_scene = nullptr;
+  GLFWwindow *window;
+  engine::SceneLoader* scene_loader;
   s7_scheme *scheme_interpreter;
   engine::OpenGLRenderer* renderer;
 };

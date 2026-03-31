@@ -1,7 +1,33 @@
 #include "transform.h"
 #include <glm/gtc/quaternion.hpp>
 #include "util.h"
+
 namespace engine {
+
+void Transform::AddChild(Transform *tr) {
+  this->children.push_back(tr);
+}
+
+Error<Transform*> Transform::FindChildByName(std::string name) {
+  auto it = std::find_if(children.begin(), children.end(), [name](Transform* t) {return t->name == name;});
+  if (it == children.end()) {
+    return Err("Supplied name " + name + " not found on " +
+               this->name);
+  } else {
+    return Ok(*it);
+  }
+}
+
+Error<Transform*> Transform::RemoveChild(Transform *tr) {
+  auto it = std::find(children.begin(),children.end(),tr);
+  if (it == children.end()) {
+    return Err("Supplied transform " + tr->name + " is not a child of " +
+               this->name);
+  } else {
+    children.erase(it);
+    return Ok(tr);
+  }
+}
 
 Transform::Transform() {
   name = "Transform";
@@ -22,12 +48,9 @@ Transform::~Transform() {
   }
 }
 
-
 Transform::Transform(std::string name) {
   this->name = name;
-
 }
-
 
 json Transform::Save() {
   json out;

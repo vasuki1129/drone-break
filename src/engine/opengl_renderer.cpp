@@ -9,7 +9,6 @@ OpenGLRenderer::OpenGLRenderer(GLFWwindow** smuggle, EngineCreateInfo& create_in
     *smuggle = window;
     glfwMakeContextCurrent(window);
     glewInit();
-
 }
 
 bool OpenGLRenderer::ShouldClose() {
@@ -17,10 +16,11 @@ bool OpenGLRenderer::ShouldClose() {
 }
 
 void OpenGLRenderer::PushFrame() {
+  double last = glfwGetTime();
   glClear(GL_COLOR_BUFFER_BIT);
-
-
+  Engine()->GetSceneLoader()->UpdateCurrentScene(delta_time);
   glfwSwapBuffers(this->window);
+  delta_time = glfwGetTime() - last;
 }
 
 OpenGLRenderer::~OpenGLRenderer() {
