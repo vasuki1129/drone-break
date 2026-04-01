@@ -28,11 +28,11 @@ Error<bool> Model::ProcessNode(aiNode *node, const aiScene *scene) {
   for (unsigned int i = 0; i < node->mNumMeshes; i++) {
     aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
     match {
-      mcase(Err) {
+      mcase(_implErr*) {
         std::cout << "Error processing mesh in " << this->path << "\n";
       },
-      mcase(Ok<Mesh*>) {
-        meshes.push_back(val.val);
+      mcase(_implOk<Mesh*>*) {
+        meshes.push_back(val->val);
       }
     }
     eval_on(ProcessMesh(mesh,scene));
@@ -42,7 +42,7 @@ Error<bool> Model::ProcessNode(aiNode *node, const aiScene *scene) {
     ProcessNode(node->mChildren[i],scene);
   }
 
-  return Error<bool>(Ok<bool>(true));
+  return MakeOk(true);
 }
 
 Error<Mesh *> Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
@@ -85,7 +85,7 @@ Error<Mesh *> Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
   m->SetVertices(vertices);
   m->SetIndices(indices);
 
-  return Ok<Mesh*>(m);
+  return MakeOk<Mesh*>(m);
 }
 
 Model* __LoadModel(std::string path) {

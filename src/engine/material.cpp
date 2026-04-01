@@ -44,6 +44,6 @@ namespace engine
                std::cout << "Unknown uniform value type: " << val["key"] << "\n";
            }
        }
-      return Ok<bool>(true);
+      return MakeOk<bool>(true);
     }
 }

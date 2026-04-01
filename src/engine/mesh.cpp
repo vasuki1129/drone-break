@@ -12,9 +12,9 @@ Error<bool> Mesh::Draw(BaseUniforms base, Material* material) {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   if (err == GL_INVALID_OPERATION) {
-    return Err("GL_INVALID_OPERATION on mesh draw call.");
+    return MakeErr<bool>("GL_INVALID_OPERATION on mesh draw call.");
   } else {
-    return Ok<bool>(true);
+    return MakeOk<bool>(true);
   }
   glBindVertexArray(0);
 }
@@ -26,7 +26,7 @@ Error<bool> Mesh::Rebuffer() {
   glBindBuffer(GL_ARRAY_BUFFER, NULL);
 
   if (glGetError() != 0) {
-    return Error<bool>(Err("Failed to buffer data to vertex buffer: " +
+    return Error<bool>(MakeErr<bool>("Failed to buffer data to vertex buffer: " +
                      std::to_string(this->vertex_buffer_handle) + " on mesh " +
                      this->name));
   }
@@ -36,11 +36,11 @@ Error<bool> Mesh::Rebuffer() {
                this->indices.data(), GL_STATIC_DRAW);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, NULL);
   if (glGetError() != 0) {
-    return Error<bool>(Err("Failed to buffer data to index buffer: " +
+    return Error<bool>(MakeErr<bool>("Failed to buffer data to index buffer: " +
                      std::to_string(this->index_buffer_handle) + " on mesh " +
                      this->name));
   } else {
-    return Error<bool>(Ok<bool>(true));
+    return Error<bool>(MakeOk<bool>(true));
   }
 }
 
