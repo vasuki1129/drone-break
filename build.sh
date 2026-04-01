@@ -11,4 +11,4 @@ mkdir -p build_linux/release/imgui
 mkdir -p bin/linux/x64/release
 mkdir -p bin/linux/x64/debug
 
-make linux_all
+make linux_all -j 6

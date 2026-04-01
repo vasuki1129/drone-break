@@ -104,6 +104,9 @@ NT_DEPS += build_windows/engine/texture.obj
 NT_DEPS += build_windows/engine/transform.obj
 NT_DEPS += build_windows/engine/material.obj
 NT_DEPS += build_windows/engine/util.obj
+NT_DEPS += build_windows/engine/scene_loader.obj
+NT_DEPS += build_windows/engine/editor.o
+
 
 NT_DEPS += build_windows/game/entry.obj
 

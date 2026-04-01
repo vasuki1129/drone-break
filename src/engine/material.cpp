@@ -3,6 +3,8 @@
 #include "shader.h"
 #include <fstream>
 #include <iostream>
+#include "../dflib/errorcheck.h"
+
 
 using json = nlohmann::json;
 

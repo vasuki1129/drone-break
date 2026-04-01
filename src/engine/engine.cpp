@@ -7,6 +7,7 @@ std::string EngineInstance::GetVersionString() {
   std::string out;
   out += "LIGHT v0.2.2\n";
   out += "Copyright 2026 Deepfrog\n";
+  return out;
 }
 
 EngineInstance* instance = nullptr;
