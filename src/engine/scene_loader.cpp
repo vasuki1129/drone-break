@@ -1,5 +1,5 @@
 #include "scene_loader.h"
-
+#include "mesh_component.h"
 namespace engine {
 Error<bool> SceneLoader::CueScene(std::string path) {}
 
@@ -11,19 +11,21 @@ void SceneLoader::LoadDefaultScene() {
     delete current_scene;
 
   current_scene = new Scene();
+  //Transform *tr = new Transform(std::string("DefaultCube"));
+  //MeshComponent *meshComp = new MeshComponent();
 }
 
 Error<bool> SceneLoader::UpdateCurrentScene(float dt) {
 
   if (this->current_scene == nullptr)
   {
-    return Err("No Scene Loaded");
+    return MakeErr<bool>("No Scene Loaded");
   }
   else
   {
     this->current_scene->Tick(dt);
     this->current_scene->Render();
-    return Ok(true);
+    return MakeOk(true);
   }
 }
 

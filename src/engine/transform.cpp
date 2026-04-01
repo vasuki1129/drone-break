@@ -4,6 +4,12 @@
 
 namespace engine {
 
+
+
+void Transform::AddComponent(Component *component) {
+  this->components.push_back(component);
+}
+
 void Transform::AddChild(Transform *tr) {
   this->children.push_back(tr);
 }
@@ -11,31 +17,35 @@ void Transform::AddChild(Transform *tr) {
 Error<Transform*> Transform::FindChildByName(std::string name) {
   auto it = std::find_if(children.begin(), children.end(), [name](Transform* t) {return t->name == name;});
   if (it == children.end()) {
-    return Err("Supplied name " + name + " not found on " +
+    return MakeErr<Transform*>("Supplied name " + name + " not found on " +
                this->name);
   } else {
-    return Ok(*it);
+    return MakeOk(*it);
   }
 }
 
 Error<Transform*> Transform::RemoveChild(Transform *tr) {
   auto it = std::find(children.begin(),children.end(),tr);
   if (it == children.end()) {
-    return Err("Supplied transform " + tr->name + " is not a child of " +
+    return MakeErr<Transform*>("Supplied transform " + tr->name + " is not a child of " +
                this->name);
   } else {
     children.erase(it);
-    return Ok(tr);
+    return MakeOk(tr);
   }
 }
 
 Transform::Transform() {
   name = "Transform";
   uid = GenerateUID();
+  children = std::vector<Transform*>();
+  components = std::vector<Component*>();
 }
 Transform::Transform(json value) {
   name = value["name"];
   uid = value["uid"];
+  children = std::vector<Transform*>();
+  components = std::vector<Component*>();
 }
 
 Transform::~Transform() {
@@ -50,6 +60,9 @@ Transform::~Transform() {
 
 Transform::Transform(std::string name) {
   this->name = name;
+  uid = GenerateUID();
+  children = std::vector<Transform*>();
+  components = std::vector<Component*>();
 }
 
 json Transform::Save() {
@@ -79,11 +92,15 @@ void Transform::ProcessRender() {
 }
 
 void Transform::ProcessTick(float dt) {
-  for (auto comp : components) {
-    comp->tick(dt);
+  if (components.size() != 0) {
+    for (auto comp : components) {
+      comp->tick(dt);
+    }
   }
-  for (auto child : children) {
-    child->ProcessTick(dt);
+  if (children.size() != 0) {
+    for (auto child : children) {
+      child->ProcessTick(dt);
+    }
   }
 }
 

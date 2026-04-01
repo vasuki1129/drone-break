@@ -2,6 +2,11 @@
 #include "engine.h"
 namespace engine {
 
+void MeshComponent::SetMesh(Mesh *mesh) {
+  this->mesh = mesh;
+}
+
+
 void MeshComponent::render() {
   BaseUniforms base{
     .model = this->owner->GetModelMatrix(),

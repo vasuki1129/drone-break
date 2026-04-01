@@ -1,7 +1,7 @@
 PROJ_NAME := light
 
 #LINUX (any posix probably idfk)
-LIN_FLAGS := -g -std=c++20
+LIN_FLAGS := -g -std=c++20 -w
 
 LIN_DEPS := build_linux/release/engine/camera_component.o
 LIN_DEPS += build_linux/release/engine/mesh_component.o

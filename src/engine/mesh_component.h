@@ -9,9 +9,10 @@ public:
   virtual void render() override;
   virtual void init() override;
   virtual void destroy() override;
+  void SetMesh(Mesh* mesh);
 private:
   Mesh* mesh;
-  Material* material;
+  Material *material;
 };
 
 }

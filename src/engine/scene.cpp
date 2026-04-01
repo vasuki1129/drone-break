@@ -25,6 +25,7 @@ Scene::~Scene() {
 Scene::Scene(json value) {
   name = value["name"];
   root = new Transform(value["root"]);
+
 }
 
 json Scene::Save() {

@@ -23,6 +23,13 @@ public:
   void ProcessRender();
   void ProcessTick(float dt);
 
+  void AddComponent(Component* component);
+
+
+
+
+
+
   void AddChild(Transform *tr);
   Error<Transform*> FindChildByName(std::string name);
   Error<Transform*> RemoveChild(Transform *tr);
