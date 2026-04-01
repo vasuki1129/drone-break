@@ -10,9 +10,18 @@ public:
   OpenGLRenderer(GLFWwindow** smuggle, struct EngineCreateInfo& create_info);
   ~OpenGLRenderer();
   bool ShouldClose();
-  void PushFrame();
 
+
+  float DeltaTime();
+
+  void StartFrame();
+
+
+  void EndFrame();
+
+  void InitForImGui();
 private:
+  double last;
   float delta_time;
   GLFWwindow* window;
 };

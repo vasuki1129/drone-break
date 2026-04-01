@@ -12,6 +12,20 @@ namespace engine {
 
 void Shader::Reload() {
 
+  if (this->vao != 0) {
+    glDeleteVertexArrays(1,&vao);
+  }
+
+  glGenVertexArrays(1,&this->vao);
+  glBindVertexArray(this->vao);
+  glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,sizeof(Vertex),offsetof(Vertex,position))
+
+
+
+
+
+
+
   std::ifstream f(path);
   json value = json::parse(f);
   this->name = value["name"];

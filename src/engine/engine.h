@@ -26,7 +26,10 @@ public:
   void Run();
   std::string GetVersionString();
   SceneLoader* GetSceneLoader();
+  OpenGLRenderer *GetRenderer();
+  GLFWwindow* GetWindow();
 private:
+  glm::vec2 window_size;
   GLFWwindow *window;
   engine::SceneLoader* scene_loader;
   s7_scheme *scheme_interpreter;

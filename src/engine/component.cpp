@@ -1,5 +1,7 @@
 #include "component.h"
 #include "util.h"
+#include "../imgui/imgui.h"
+
 
 namespace engine {
 
@@ -14,6 +16,13 @@ json Component::Save() {
   out["uid"] = this->name;
   return out;
 }
+
+void Component::ComponentDisplay() {
+  ImGui::BeginGroup();
+  ImGui::Text("%s",this->name.c_str());
+  ImGui::EndGroup();
+}
+
 
 Component::Component() {
   name = "Component";

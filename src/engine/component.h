@@ -21,6 +21,8 @@ protected:
   std::string name;
   uint64_t uid;
   Transform* owner;
+
+  void ComponentDisplay();
 };
 
 }
