@@ -6,7 +6,11 @@
 #include <GL/glew.h>
 #include "../dflib/dflib.h"
 #include <map>
+#include "asset.h"
+
 namespace engine {
+
+class Asset;
 
 struct Uniform_i {
   int value;
@@ -46,7 +50,7 @@ public:
 //the shader is going to hold the VAO, so each shader
 //can have its own vertex attrib set, and they can
 //be set up once, at shader creation
-class Shader {
+class Shader : public Asset{
 public:
   Shader(std::string path);
   ~Shader();

@@ -1,5 +1,6 @@
 #include "scene_loader.h"
 #include "mesh_component.h"
+#include "engine.h"
 namespace engine {
 Error<bool> SceneLoader::CueScene(std::string path) {}
 
@@ -11,8 +12,26 @@ void SceneLoader::LoadDefaultScene() {
     delete current_scene;
 
   current_scene = new Scene();
-  //Transform *tr = new Transform(std::string("DefaultCube"));
-  //MeshComponent *meshComp = new MeshComponent();
+  Transform *tr = new Transform(std::string("DefaultCube"));
+  MeshComponent *mesh_comp = new MeshComponent("MeshComponent");
+  auto err = Engine()->GetAssetManager()->GetMesh("DefaultCube.Cube");
+  match {
+    mcase(_implErr *){
+      ErrTrace(err);
+    },
+    mcase(_implOk<Mesh*>*) {
+        mesh_comp->SetMesh(val->val);
+        ErrIgnore(err);
+    }
+  }
+  eval_on(err);
+  auto mat = Engine()->GetAssetManager()->GetMaterialOrNull("default");
+  if (mat == nullptr) {
+    std::cout << "failed to get default material\n";
+  }
+  mesh_comp->SetMaterial(mat);
+  tr->AddComponent(mesh_comp);
+  current_scene->GetRoot()->AddChild(tr);
 }
 
 Error<bool> SceneLoader::UpdateCurrentScene(float dt) {

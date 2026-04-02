@@ -7,6 +7,7 @@ namespace engine {
 
 
 void Transform::AddComponent(Component *component) {
+  component->SetOwner(this);
   this->components.push_back(component);
 }
 
@@ -40,6 +41,9 @@ Transform::Transform() {
   uid = GenerateUID();
   children = std::vector<Transform*>();
   components = std::vector<Component*>();
+  position = glm::vec3(0.0f);
+  rotation = glm::identity<glm::quat>();
+  scale = glm::vec3(1.0f,1.0f,1.0f);
 }
 Transform::Transform(json value) {
   name = value["name"];
@@ -89,6 +93,17 @@ void Transform::ProcessRender() {
   for (auto child : children) {
     child->ProcessRender();
   }
+}
+
+uint64_t Transform::GetUID() {
+  return uid;
+}
+
+std::string Transform::GetName() { return name; }
+
+
+std::vector<Transform *> Transform::GetChildren() {
+  return children;
 }
 
 void Transform::ProcessTick(float dt) {
@@ -168,7 +183,7 @@ glm::vec3 Transform::GetGlobalScale() {
   glm::vec3 tot(1.0f, 1.0f, 1.0f);
   Transform *tr = this;
   while (tr != nullptr) {
-    tot *= tr->GetLocalPosition();
+    tot *= tr->GetLocalScale();
     tr = tr->parent;
   }
   return tot;

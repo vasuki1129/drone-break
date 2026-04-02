@@ -9,10 +9,10 @@ public:
   EditorInstance();
   ~EditorInstance();
   void Run();
+  void DebugPanel();
+  void AssetPanel();
+  void SceneHierarchy();
   EngineInstance* engine;
 };
-
-
-
 
 }

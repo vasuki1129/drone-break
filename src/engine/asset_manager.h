@@ -12,26 +12,30 @@ using json = nlohmann::json;
 
 namespace engine {
 
-class Asset {
-public:
-  virtual Error<bool> Load();
-  virtual void Destroy();
-
-protected:
-  std::string path;
-};
 
 class AssetManager {
 public:
   void Rescan();
+  Error<Mesh*> GetMesh(std::string key);
+  Mesh *GetMeshOrNull(std::string key);
 
-private:
-  std::map<std::string, Model*> loaded_models;            //.blend
+  Error<Material *> GetMaterial(std::string key);
+  Material* GetMaterialOrNull(std::string key);
+
+  Error<Shader *> GetShader(std::string key);
+  Shader* GetShaderOrNull(std::string key);
+
+
+  std::map<std::string, Model*> loaded_models;            //.fbx
   std::map<std::string, Mesh*> loaded_meshes;
   std::map<std::string, Material*> loaded_materials;      //.mtl
   std::map<std::string, Texture*> loaded_textures;        //.png
   std::map<std::string, Shader *> loaded_shaders;         //.shd
-  std::map<std::string, Scene*> loaded_scenes;            //.scn
+private:
+  void ProcessModel(std::filesystem::path pth);
+  void ProcessMaterial(std::filesystem::path pth);
+  void ProcessShader(std::filesystem::path pth);
+  void ProcessTexture(std::filesystem::path pth);
 
 };
 

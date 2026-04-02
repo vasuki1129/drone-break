@@ -10,7 +10,6 @@ using json = nlohmann::json;
 
 namespace engine {
 
-
 void Shader::Reload() {
 
   if (this->vao != 0) {
@@ -57,6 +56,7 @@ void Shader::Reload() {
   {
     glGetShaderInfoLog(vertex_shader, 512, NULL, infoLog);
     std::cout << "Error: Vertex shader compilation failed\n" << infoLog;
+    valid = false;
   }
 
   unsigned int fragment_shader;
@@ -70,6 +70,7 @@ void Shader::Reload() {
   {
     glGetShaderInfoLog(fragment_shader, 512, NULL, infoLog);
     std::cout << "Error: Fragment shader compilation failed\n" << infoLog;
+    valid = false;
   }
 
   unsigned int shader_hnd;
@@ -84,16 +85,19 @@ void Shader::Reload() {
   {
     glGetProgramInfoLog(shader_hnd, 512, NULL, infoLog);
     std::cout << "Error: Shader link failed\n" << infoLog;
+    valid = false;
+    glDeleteProgram(shader_hnd);
   }
   this->shader_handle = shader_hnd;
-
+  this->valid = true;
   glDeleteShader(vertex_shader);
   glDeleteShader(fragment_shader);
-
 }
+
 
 Shader::Shader(std::string path) {
   this->path = path;
+
   Reload();
 }
 
@@ -163,6 +167,9 @@ Error<bool> Shader::SetUniform(std::string key, Uniform u) {
 }
 
 Error<bool> Shader::Bind() {
+    if (!this->valid) {
+      return MakeErr<bool>("Attempt to bind invalid shader "+ this->name);
+    }
     glBindVertexArray(vao);
     glUseProgram(this->shader_handle);
     return MakeOk<bool>(true);

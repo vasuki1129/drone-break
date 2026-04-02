@@ -1,8 +1,14 @@
 #pragma once
-
+#include <string>
+#include "asset.h"
 namespace engine {
-class Texture {
 
+class Asset;
 
+class Texture : public Asset{
+public:
+  Texture(std::string path);
+  ~Texture();
+private:
 };
 }

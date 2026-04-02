@@ -8,6 +8,7 @@
 #include "scene.h"
 #include "script_engine.h"
 #include "scene_loader.h"
+#include "asset_manager.h"
 
 namespace engine {
 
@@ -27,10 +28,13 @@ public:
   std::string GetVersionString();
   SceneLoader* GetSceneLoader();
   OpenGLRenderer *GetRenderer();
-  GLFWwindow* GetWindow();
+  GLFWwindow *GetWindow();
+  AssetManager* GetAssetManager();
+  void Initialize();
 private:
   glm::vec2 window_size;
   GLFWwindow *window;
+  AssetManager* asset_loader;
   engine::SceneLoader* scene_loader;
   s7_scheme *scheme_interpreter;
   engine::OpenGLRenderer* renderer;

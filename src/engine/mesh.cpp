@@ -4,7 +4,19 @@
 namespace engine {
 
 Error<bool> Mesh::Draw(BaseUniforms base, Material* material) {
-  material->Bind();
+  {//let
+    auto err = material->Bind();
+    match {
+      mcase(_implErr *){
+        ErrTrace(err);
+      },
+      mcase(_implOk<bool> *) {
+        ErrIgnore(err);
+      }
+    }
+    eval_on(err);
+  }
+
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_handle);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_handle);
   glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
@@ -48,8 +60,10 @@ void Mesh::SetVertices(std::vector<Vertex> v) {
   this->vertices = v;
 }
 
-void Mesh::SetIndices(std::vector<unsigned int> v) {
-  this->indices = v;
+void Mesh::SetIndices(std::vector<unsigned int> v) { this->indices = v; }
+
+void Mesh::SetName(std::string name) {
+    this->name = name;
 }
 
 Mesh::Mesh() {
@@ -57,9 +71,15 @@ Mesh::Mesh() {
   glGenBuffers(1, &this->index_buffer_handle);
 }
 
+
 Mesh::~Mesh() {
   glDeleteBuffers(1, &this->vertex_buffer_handle);
   glDeleteBuffers(1, &this->index_buffer_handle);
+}
+
+
+std::string Mesh::GetName() {
+  return name;
 }
 
 }

@@ -9,11 +9,16 @@ class Transform;
 class Component : public Saveable {
 public:
   Component();
+  Component(std::string name);
   Component(json value); //load constructor
   virtual void render();
   virtual void tick(float dt);
   virtual void init();
   virtual void destroy();
+
+
+  void SetOwner(Transform* own);
+
 
   json Save() override;
 

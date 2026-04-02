@@ -10,12 +10,23 @@ void Component::tick(float dt) {}
 void Component::init() {}
 void Component::destroy() {}
 
+void Component::SetOwner(Transform *own) {
+  this->owner = own;
+}
+
+
 json Component::Save() {
   json out;
   out["name"] = this->name;
   out["uid"] = this->name;
   return out;
 }
+
+
+Component::Component(std::string name) {
+  this->name = name;
+}
+
 
 void Component::ComponentDisplay() {
   ImGui::BeginGroup();

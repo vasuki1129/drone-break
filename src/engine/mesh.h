@@ -7,6 +7,8 @@
 #include "gl_util.h"
 #include "material.h"
 
+class Material;
+
 struct Vertex {
   glm::vec3 position;
   glm::vec3 normal;
@@ -31,6 +33,9 @@ public:
   void SetIndices(std::vector<unsigned int> v);
   Error<bool> Rebuffer();
   Error<bool> Draw(BaseUniforms base, Material* material);
+
+  void SetName(std::string name);
+  std::string GetName();
 private:
   std::string name;
   std::vector<Vertex> vertices;

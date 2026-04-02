@@ -33,6 +33,10 @@ public:
   void AddChild(Transform *tr);
   Error<Transform*> FindChildByName(std::string name);
   Error<Transform*> RemoveChild(Transform *tr);
+  std::vector<Transform*> GetChildren();
+
+
+
 
   void Translate(glm::vec3 offset);
   void Scale(glm::vec3 amount);
@@ -55,13 +59,17 @@ public:
   glm::vec3 GetGlobalScale();
   glm::vec3 GetLocalScale();
 
+
+  std::string GetName();
+  uint64_t GetUID();
+
 private:
   std::string name;
   uint64_t uid;
   glm::vec3 position;
   glm::quat rotation;
   glm::vec3 scale;
-  Transform *parent;
+  Transform *parent = nullptr;
   std::vector<Transform *> children;
   std::vector<Component*> components;
 };

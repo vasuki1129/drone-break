@@ -16,6 +16,10 @@ EngineInstance *Engine() {
   return instance;
 }
 
+AssetManager *EngineInstance::GetAssetManager() {
+  return this->asset_loader;
+}
+
 GLFWwindow *EngineInstance::GetWindow() {
   return window;
 }
@@ -35,14 +39,21 @@ SceneLoader *EngineInstance::GetSceneLoader() {
 
 EngineInstance *CreateEngine(EngineCreateInfo &create_info) {
   instance = new EngineInstance(create_info);
+  instance->Initialize();
   return instance;
 }
 
 
-EngineInstance::EngineInstance(EngineCreateInfo& create_info)
-{
+void EngineInstance::Initialize() {
+  asset_loader = new AssetManager();
   scheme_interpreter = s7_init();
+  asset_loader->Rescan();
   scene_loader = new engine::SceneLoader();
+}
+
+
+
+EngineInstance::EngineInstance(EngineCreateInfo &create_info) {
   renderer = new engine::OpenGLRenderer(&window, create_info);
 }
 

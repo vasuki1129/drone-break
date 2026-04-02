@@ -34,16 +34,16 @@ template <typename T>
 void ErrTrace(Error<T> err) // prints the error trace
 {
 
-  _implErr* cur = err;
+  _implErr* cur = std::get<_implErr*>(err);
   int i = 0;
   while (cur != nullptr) {
     for (int c = 0; c < i; c++) {
       std::cout << "-";
     }
-    std::cout << cur->error_message;
+    std::cout << cur->error_message << "\n";
     cur = cur->chain;
   }
-  delete err;
+  delete std::get<_implErr*>(err);
 }
 
 template <typename T>

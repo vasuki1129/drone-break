@@ -20,9 +20,25 @@ Model::Model(std::string path) {
     return;
   }
   this->path = path;
-  ProcessNode(scene->mRootNode, scene);
+  auto err = ProcessNode(scene->mRootNode, scene);
+
+  match {
+    mcase(_implErr *) {
+        valid = false;
+        ErrTrace(err);
+    },
+    mcase(_implOk<bool> *) {
+        valid = true;
+        ErrIgnore(err);
+
+    }
+  } eval_on(err);
 }
 Model::~Model() {}
+
+std::vector<Mesh *> Model::GetMeshes() {
+    return meshes;
+}
 
 Error<bool> Model::ProcessNode(aiNode *node, const aiScene *scene) {
   for (unsigned int i = 0; i < node->mNumMeshes; i++) {
@@ -84,17 +100,9 @@ Error<Mesh *> Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
   Mesh *m = new Mesh();
   m->SetVertices(vertices);
   m->SetIndices(indices);
-
+  m->SetName(mesh->mName.C_Str());
   return MakeOk<Mesh*>(m);
 }
 
-Model* __LoadModel(std::string path) {
-  Model *m = new Model(path);
-  return m;
-}
-
-Model* GetModel(std::string path) {
-  return nullptr;
-}
 
 } // namespace engine
