@@ -17,10 +17,9 @@ public:
   ~Model();
   std::vector<Mesh*> GetMeshes();
 private:
-  Error<bool> ProcessNode(aiNode *node, const aiScene *scene);
-  Error<Mesh*> ProcessMesh(aiMesh *mesh, const aiScene *scene);
+  bool ProcessNode(aiNode *node, const aiScene *scene);
+  Mesh* ProcessMesh(aiMesh *mesh, const aiScene *scene);
   std::vector<Mesh*> meshes;
-  std::string path;
 };
 
 Model* GetModel(std::string path);

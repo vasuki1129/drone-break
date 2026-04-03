@@ -25,21 +25,15 @@ public:
 
   void AddComponent(Component* component);
 
-
-
-
-
-
   void AddChild(Transform *tr);
-  Error<Transform*> FindChildByName(std::string name);
-  Error<Transform*> RemoveChild(Transform *tr);
+  Transform* FindChildByName(std::string name);
+  Transform* RemoveChild(Transform *tr);
   std::vector<Transform*> GetChildren();
-
-
-
 
   void Translate(glm::vec3 offset);
   void Scale(glm::vec3 amount);
+  void Rotate(glm::vec3 axis, float amount);
+
 
   glm::vec3 Forward();
   glm::vec3 Backward();

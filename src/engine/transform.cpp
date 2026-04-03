@@ -4,8 +4,6 @@
 
 namespace engine {
 
-
-
 void Transform::AddComponent(Component *component) {
   component->SetOwner(this);
   this->components.push_back(component);
@@ -15,24 +13,26 @@ void Transform::AddChild(Transform *tr) {
   this->children.push_back(tr);
 }
 
-Error<Transform*> Transform::FindChildByName(std::string name) {
+Transform *Transform::FindChildByName(std::string name) {
   auto it = std::find_if(children.begin(), children.end(), [name](Transform* t) {return t->name == name;});
   if (it == children.end()) {
-    return MakeErr<Transform*>("Supplied name " + name + " not found on " +
-               this->name);
+    std::cout << "Supplied name " + name + " not found on " +
+               this->name << "\n";
+    return nullptr;
   } else {
-    return MakeOk(*it);
+    return *it;
   }
 }
 
-Error<Transform*> Transform::RemoveChild(Transform *tr) {
+Transform* Transform::RemoveChild(Transform *tr) {
   auto it = std::find(children.begin(),children.end(),tr);
   if (it == children.end()) {
-    return MakeErr<Transform*>("Supplied transform " + tr->name + " is not a child of " +
-               this->name);
+    std::cout << "Supplied transform " + tr->name + " is not a child of " +
+               this->name << "\n";
+    return nullptr;
   } else {
     children.erase(it);
-    return MakeOk(tr);
+    return tr;
   }
 }
 
@@ -67,6 +67,9 @@ Transform::Transform(std::string name) {
   uid = GenerateUID();
   children = std::vector<Transform*>();
   components = std::vector<Component*>();
+  position = glm::vec3(0.0f);
+  rotation = glm::identity<glm::quat>();
+  scale = glm::vec3(1.0f,1.0f,1.0f);
 }
 
 json Transform::Save() {
@@ -122,8 +125,10 @@ void Transform::ProcessTick(float dt) {
 void Transform::Translate(glm::vec3 offset) {
   this->position += offset;
 }
-void Transform::Scale(glm::vec3 amount) {
-  this->scale *= amount;
+void Transform::Scale(glm::vec3 amount) { this->scale *= amount; }
+
+void Transform::Rotate(glm::vec3 axis, float amount) {
+  this->rotation = glm::rotate(this->rotation,amount,axis);
 }
 
 glm::vec3 Transform::Forward() {
@@ -141,14 +146,16 @@ glm::vec3 Transform::Down() {
 glm::vec3 Transform::Right() {
   return glm::vec3(1.0f,0.0f,0.0f) * this->rotation;
 }
-glm::vec3 Transform::Left() { return -Right(); }
-
+glm::vec3 Transform::Left() {
+  return -Right();
+}
 
 glm::mat4 Transform::GetModelMatrix() {
-  glm::mat4 scl = glm::scale(glm::mat4(1.0f),GetGlobalScale());
+  auto ident = glm::identity<glm::mat4>();
+  glm::mat4 scl = glm::scale(ident,GetGlobalScale());
   glm::mat4 rot = glm::mat4_cast(GetGlobalRotation());
-  glm::mat4 trns = glm::translate(glm::mat4(1.0f),GetGlobalPosition());
-  return trns * rot * scl;
+  glm::mat4 trns = glm::translate(ident,GetGlobalPosition());
+  return glm::inverse(rot * scl * trns);
 }
 
 glm::vec3 Transform::GetGlobalPosition() {

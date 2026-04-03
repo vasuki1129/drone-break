@@ -25,21 +25,19 @@ namespace engine {
 
 //meshes are grouped into models, so the actual handling
 //of that mesh memory is done in `model.cpp`
-class Mesh {
+class Mesh : public Asset{
 public:
   Mesh();
   ~Mesh();
   void SetVertices(std::vector<Vertex> v);
   void SetIndices(std::vector<unsigned int> v);
-  Error<bool> Rebuffer();
-  Error<bool> Draw(BaseUniforms base, Material* material);
+  bool Rebuffer();
+  bool Draw(BaseUniforms base, Material* material);
 
-  void SetName(std::string name);
-  std::string GetName();
 private:
-  std::string name;
   std::vector<Vertex> vertices;
   std::vector<unsigned int> indices;
+  GLuint vertex_array_handle;
   GLuint vertex_buffer_handle;
   GLuint index_buffer_handle;
 };

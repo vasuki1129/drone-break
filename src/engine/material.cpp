@@ -3,7 +3,6 @@
 #include "shader.h"
 #include <fstream>
 #include <iostream>
-#include "../dflib/errorcheck.h"
 #include "engine.h"
 
 using json = nlohmann::json;
@@ -13,33 +12,31 @@ namespace engine
     Material::Material(std::string path)
     {
       this->path = path;
-      auto err = this->Reload();
+      auto success = this->Reload();
 
-      match {
-        mcase(_implErr *){
-          valid = false;
-          ErrTrace(err);
-
-        },
-        mcase(_implOk<bool> *) {
-          valid = true;
-          ErrIgnore(err);
-        }
-      } eval_on(err);
+      if (success) {
+        valid = true;
+      } else {
+        valid = false;
+      }
     }
 
-    Error<bool> Material::Bind() {
+    bool Material::Bind(BaseUniforms base) {
       if (this->shader == nullptr) {
           this->shader = Engine()->GetAssetManager()->GetShaderOrNull(this->shader_path);
-          return MakeErr<bool>("Material " + this->name + " has no shader");
+          std::cout << "Material " + this->name + " has no shader\n";
+          return false;
       }
       this->shader->Bind();
+      this->shader->SetUniform("model", Uniform_mat4(base.model));
+      this->shader->SetUniform("camera", Uniform_mat4(base.camera));
       this->shader->SetUniforms(this->uniform_set);
-      return MakeOk(true);
+      return true;
     }
 
-    Error<bool> Material::Reload() {
-       std::ifstream f(path);
+    bool Material::Reload() {
+      std::ifstream f(path);
+      uniform_set.uniforms.clear();
        json data = json::parse(f);
 
        name = data["name"];
@@ -62,6 +59,9 @@ namespace engine
                std::cout << "Unknown uniform value type: " << val["key"] << "\n";
            }
        }
-      return MakeOk<bool>(true);
+
+       this->uniform_set.uniforms.insert_or_assign("light_pos",Uniform_vec3(glm::vec3(0.0, 0.0, 10.0)));
+
+      return true;
     }
 }

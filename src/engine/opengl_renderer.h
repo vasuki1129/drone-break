@@ -20,7 +20,13 @@ public:
   void EndFrame();
 
   void InitForImGui();
+
+  int WindowWidth();
+  int WindowHeight();
+
 private:
+  int window_width;
+  int window_height;
   double last;
   float delta_time;
   GLFWwindow* window;

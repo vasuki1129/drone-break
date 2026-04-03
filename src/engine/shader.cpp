@@ -12,19 +12,6 @@ namespace engine {
 
 void Shader::Reload() {
 
-  if (this->vao != 0) {
-    glDeleteVertexArrays(1,&vao);
-  }
-
-  glGenVertexArrays(1,&this->vao);
-  glBindVertexArray(this->vao);
-  glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,sizeof(Vertex),(const void*)offsetof(Vertex,position));
-  glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,sizeof(Vertex),(const void*)offsetof(Vertex,normal));
-  glVertexAttribPointer(2,3,GL_FLOAT,GL_FALSE,sizeof(Vertex),(const void*)offsetof(Vertex,t_coord));
-  glEnableVertexAttribArray(0);
-  glEnableVertexAttribArray(1);
-  glEnableVertexAttribArray(2);
-
   std::ifstream f(path);
   json value = json::parse(f);
   this->name = value["name"];
@@ -108,82 +95,105 @@ Shader::~Shader()
 }
 
 
-Error<bool> Shader::SetUniform(std::string key, Uniform u) {
-  Error<bool> err = (_implErr*)nullptr;
+bool Shader::SetUniform(std::string key, Uniform u) {
+  bool err;
 
   match {
+    mcase(Uniform_vec3) {
+
+          auto location = glGetUniformLocation(this->shader_handle, key.c_str());
+          if (location == -1) {
+            std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name << "\n";
+            return false;
+          }
+          glUniform3fv(location,1, glm::value_ptr(val.value));
+          return true;
+
+    },
       mcase(Uniform_i) {
           auto location = glGetUniformLocation(this->shader_handle, key.c_str());
-          if (location == -1)
-              return MakeErr<bool>(std::string("Uniform ") + key + " does not exist on shader " + this->name);
+          if (location == -1) {
+            std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name << "\n";
+            return false;
+          }
           glUniform1i(location, val.value);
-          return MakeOk<bool>(true);
+          return true;
       },
       mcase(Uniform_f) {
           auto location =
               glGetUniformLocation(this->shader_handle, key.c_str());
-          if (location == -1)
-              return MakeErr<bool>(std::string("Uniform ") + key +
-                                     " does not exist on shader " + this->name);
+          if (location == -1) {
+            std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name + "\n";
+            return false;
+          }
           glUniform1f(location, val.value);
-          return MakeOk<bool>(true);
+          return true;
       },
       mcase(Uniform_d){
           auto location =
               glGetUniformLocation(this->shader_handle, key.c_str());
-          if (location == -1)
-              return MakeErr<bool>(std::string("Uniform ") + key +
-                                     " does not exist on shader " + this->name);
-          glUniform1d(location, val.value);
-          return MakeOk<bool>(true);
+          if (location == -1) {
+            std::cout << std::string("Uniform ") + key +
+                                     " does not exist on shader " + this->name << "\n";
+
+            return false;
+          }
+            glUniform1d(location, val.value);
+          return true;
       },
       mcase(Uniform_mat4){
           auto location =
               glGetUniformLocation(this->shader_handle, key.c_str());
-          if (location == -1)
-              return MakeErr<bool>(std::string("Uniform ") + key +
-                                     " does not exist on shader " + this->name);
-          glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(val.value));
-          return MakeOk<bool>(true);
+          if (location == -1) {
+            std::cout << std::string("Uniform ") + key +
+                                     " does not exist on shader " + this->name << "\n";
+            return false;
+          }
+            glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(val.value));
+          return true;
       },
       mcase(Uniform_ui){
           auto location =
               glGetUniformLocation(this->shader_handle, key.c_str());
-          if (location == -1)
-              return MakeErr<bool>(std::string("Uniform ") + key + " does not exist on shader " + this->name);
+          if (location == -1) {
+            std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name << "\n";
+            return false;
+
+          }
           glUniform1ui(location, val.value);
-          return MakeOk<bool>(true);
+          return true;
       }
   } assign_on(u, err);
 
   switch (glGetError()) {
     case GL_INVALID_VALUE:
     case GL_INVALID_OPERATION:
-      ErrIgnore(err);
-      return MakeErr<bool>("Invalid program supplied to SetUniform");
+      std::cout << "Invalid program supplied to SetUniform\n";
+      return false;
       break;
   }
   return err;
 }
 
-Error<bool> Shader::Bind() {
-    if (!this->valid) {
-      return MakeErr<bool>("Attempt to bind invalid shader "+ this->name);
+bool Shader::Bind() {
+  if (!this->valid) {
+      std::cout << "Attempt to bind invalid shader "+ this->name << "\n";
+      return false;
     }
-    glBindVertexArray(vao);
     glUseProgram(this->shader_handle);
-    return MakeOk<bool>(true);
+    return true;
 }
 
-Error<bool> Shader::SetUniforms(UniformList &u) {
+bool Shader::SetUniforms(UniformList &u) {
   for (auto uniform : u.uniforms) {
-    Error<bool> e = this->SetUniform(uniform.first,uniform.second);
-    if (std::holds_alternative<_implErr*>(e)) {
-      return MakeErr<bool>("Error setting uniform list on shader: " + this->name, std::get<_implErr*>(e));
+    auto e = this->SetUniform(uniform.first,uniform.second);
+    if (!e) {
+      std::cout << "Error setting uniform list on shader: " + this->name << "\n";
+      return false;
       break;
     }
   }
-  return MakeOk<bool>(true);
+  return true;
 }
 
 }

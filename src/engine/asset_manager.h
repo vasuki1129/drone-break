@@ -16,13 +16,10 @@ namespace engine {
 class AssetManager {
 public:
   void Rescan();
-  Error<Mesh*> GetMesh(std::string key);
   Mesh *GetMeshOrNull(std::string key);
 
-  Error<Material *> GetMaterial(std::string key);
   Material* GetMaterialOrNull(std::string key);
 
-  Error<Shader *> GetShader(std::string key);
   Shader* GetShaderOrNull(std::string key);
 
 

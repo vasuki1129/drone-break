@@ -21,7 +21,7 @@ LIN_DEPS += build_linux/release/engine/scene_loader.o
 LIN_DEPS += build_linux/release/engine/editor.o
 LIN_DEPS += build_linux/release/engine/asset.o
 LIN_DEPS += build_linux/release/engine/asset_manager.o
-
+LIN_DEPS += build_linux/release/engine/gui_util.o
 
 LIN_DEPS += build_linux/release/game/entry.o
 
@@ -53,6 +53,7 @@ LIN_DEPS_DEBUG += build_linux/debug/engine/scene_loader.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/editor.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/asset.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/asset_manager.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/gui_util.o
 
 LIN_DEPS_DEBUG += build_linux/debug/game/entry.o
 

@@ -5,12 +5,14 @@
 #include <assimp/postprocess.h>
 #include <iostream>
 #include "../dflib/dflib.h"
-
+#include <filesystem>
 namespace engine {
 
 std::map<std::string, Model*> modelCache;
 
 Model::Model(std::string path) {
+  std::filesystem::path p(path);
+  this->name = p.stem().c_str();
   Assimp::Importer import;
   const aiScene *scene =
     import.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -20,19 +22,10 @@ Model::Model(std::string path) {
     return;
   }
   this->path = path;
-  auto err = ProcessNode(scene->mRootNode, scene);
+  auto success = ProcessNode(scene->mRootNode, scene);
+  success ? valid = true : valid = false;
 
-  match {
-    mcase(_implErr *) {
-        valid = false;
-        ErrTrace(err);
-    },
-    mcase(_implOk<bool> *) {
-        valid = true;
-        ErrIgnore(err);
 
-    }
-  } eval_on(err);
 }
 Model::~Model() {}
 
@@ -40,28 +33,26 @@ std::vector<Mesh *> Model::GetMeshes() {
     return meshes;
 }
 
-Error<bool> Model::ProcessNode(aiNode *node, const aiScene *scene) {
+bool Model::ProcessNode(aiNode *node, const aiScene *scene) {
   for (unsigned int i = 0; i < node->mNumMeshes; i++) {
     aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-    match {
-      mcase(_implErr*) {
-        std::cout << "Error processing mesh in " << this->path << "\n";
-      },
-      mcase(_implOk<Mesh*>*) {
-        meshes.push_back(val->val);
-      }
+    auto mesh_proc = ProcessMesh(mesh,scene);
+
+    if (mesh_proc == nullptr) {
+      std::cout << "Error processing mesh in " << this->path << "\n";
+    } else {
+      meshes.push_back(mesh_proc);
     }
-    eval_on(ProcessMesh(mesh,scene));
   }
 
   for (unsigned int i = 0; i < node->mNumChildren; i++) {
     ProcessNode(node->mChildren[i],scene);
   }
 
-  return MakeOk(true);
+  return true;
 }
 
-Error<Mesh *> Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
+Mesh* Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
   std::vector<Vertex> vertices;
   std::vector<unsigned int> indices;
   std::vector<Texture> textures;
@@ -101,7 +92,7 @@ Error<Mesh *> Model::ProcessMesh(aiMesh *mesh, const aiScene *scene) {
   m->SetVertices(vertices);
   m->SetIndices(indices);
   m->SetName(mesh->mName.C_Str());
-  return MakeOk<Mesh*>(m);
+  return m;
 }
 
 

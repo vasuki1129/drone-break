@@ -1,78 +1,34 @@
 #include "asset_manager.h"
 #include "engine.h"
+#include <filesystem>
 
 namespace engine {
 
 
-Error<Shader *> AssetManager::GetShader(std::string key) {
+Shader* AssetManager::GetShaderOrNull(std::string key) {
   if (loaded_shaders.find(key) != loaded_shaders.end()) {
-    return MakeOk(loaded_shaders.at(key));
+    return loaded_shaders.at(key);
   } else {
-    return MakeErr<Shader*>("Shader `" + key + "` not found");
+    std::cout << "Shader `" + key + "` not found" << "\n";
+    return nullptr;
   }
 }
 
-Shader *AssetManager::GetShaderOrNull(std::string key) {
-  auto err = GetShader(key);
-  Shader *out = nullptr;
-  match {
-    mcase(_implErr *){
-      ErrTrace(err);
-
-    },
-    mcase(_implOk<Shader *> *) {
-      out = val->val;
-      ErrIgnore(err);
-    }
-  } eval_on(err);
-  return out;
-}
-
-
-Error<Material *> AssetManager::GetMaterial(std::string key) {
+Material* AssetManager::GetMaterialOrNull(std::string key) {
   if (loaded_materials.find(key) != loaded_materials.end()) {
-    return MakeOk(loaded_materials.at(key));
+    return loaded_materials.at(key);
   } else {
-    return MakeErr<Material*>("Material `" + key + "` not found");
+    return nullptr;
   }
 }
 
-Material *AssetManager::GetMaterialOrNull(std::string key) {
-  auto err = GetMaterial(key);
-  Material *out = nullptr;
-  match {
-    mcase(_implErr *){
-      ErrTrace(err);
-    },
-    mcase(_implOk<Material *> *) {
-      out = val->val;
-      ErrIgnore(err);
-    }
-  } eval_on(err);
-  return out;
-}
 
-Mesh* AssetManager::GetMeshOrNull(std::string key) {
-  auto err = Engine()->GetAssetManager()->GetMesh("DefaultCube");
-  Mesh* out = nullptr;
-  match {
-    mcase(_implErr *){
-      ErrTrace(err);
-    },
-    mcase(_implOk<Mesh*>*) {
-      out = val->val;
-      ErrIgnore(err);
-    }
-  }
-  eval_on(err);
-  return out;
-}
-
-Error<Mesh *> AssetManager::GetMesh(std::string key) {
+Mesh * AssetManager::GetMeshOrNull(std::string key) {
   if (loaded_meshes.find(key) != loaded_meshes.end()) {
-    return MakeOk(loaded_meshes.at(key));
+    return loaded_meshes.at(key);
   } else {
-    return MakeErr<Mesh*>("Mesh `" + key + "` not found");
+    std::cout <<"Mesh `" + key + "` not found"<<"\n";
+    return nullptr;
   }
 }
 
@@ -101,20 +57,38 @@ void AssetManager::Rescan() {
   //then we're gonna look in the `assets` folder for files matching
   //certain extensions
 
+  std::vector<std::filesystem::directory_entry> models_ls;
+  std::vector<std::filesystem::directory_entry> materials_ls;
+  std::vector<std::filesystem::directory_entry> textures_ls;
+  std::vector<std::filesystem::directory_entry> shaders_ls;
+
   for (const auto &dir_entry :
        std::filesystem::recursive_directory_iterator("assets")) {
     if (!dir_entry.is_directory()) {
       std::cout << "found asset: " + dir_entry.path().string() + "\n";
       if (dir_entry.path().extension() == ".fbx") {
-        ProcessModel(dir_entry.path());
+        models_ls.push_back(dir_entry);
       } else if (dir_entry.path().extension() == ".mtl") {
-        ProcessMaterial(dir_entry.path());
+        materials_ls.push_back(dir_entry);
       } else if (dir_entry.path().extension() == ".png") {
-        ProcessTexture(dir_entry.path());
+        textures_ls.push_back(dir_entry);
       } else if (dir_entry.path().extension() == ".shd") {
-        ProcessShader(dir_entry.path());
+        shaders_ls.push_back(dir_entry);
       }
     }
+  }
+
+  for (auto entry : models_ls) {
+    ProcessModel(entry.path());
+  }
+  for (auto entry : shaders_ls) {
+    ProcessShader(entry.path());
+  }
+  for (auto entry : textures_ls) {
+    ProcessTexture(entry.path());
+  }
+  for (auto entry : materials_ls) {
+    ProcessMaterial(entry.path());
   }
 }
 

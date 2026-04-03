@@ -1,5 +1,14 @@
 {
     "name": "default_material",
     "shader_id": "shd_default_diffuse",
-    "uniforms": []
+    "uniforms": [
+      {
+        "key" : "band_one",
+        "value" : 0.05
+      },
+      {
+        "key" : "band_two",
+        "value" : 0.97
+      }
+    ]
 }

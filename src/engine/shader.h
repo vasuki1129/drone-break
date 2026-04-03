@@ -34,17 +34,25 @@ struct Uniform_d {
 };
 struct Uniform_mat4 {
   glm::mat4 value;
+  Uniform_mat4(glm::mat4 m) {
+    value = m;
+  }
+};
+
+struct Uniform_vec3 {
+  glm::vec3 value;
+  Uniform_vec3(glm::vec3 v) {
+    value = v;
+  }
 };
 
 using Uniform =
-    std::variant<Uniform_i, Uniform_ui, Uniform_f, Uniform_d, Uniform_mat4>;
+    std::variant<Uniform_vec3,Uniform_i, Uniform_ui, Uniform_f, Uniform_d, Uniform_mat4>;
 
 class UniformList {
 public:
   std::map<std::string,Uniform> uniforms;
 };
-
-
 
 
 //the shader is going to hold the VAO, so each shader
@@ -54,17 +62,15 @@ class Shader : public Asset{
 public:
   Shader(std::string path);
   ~Shader();
-  Error<bool> SetUniforms(UniformList& u);
-  Error<bool> SetUniform(std::string key, Uniform u);
+  bool SetUniforms(UniformList& u);
+  bool SetUniform(std::string key, Uniform u);
   void Reload();
-  Error<bool> Bind();
+  bool Bind();
 private:
   unsigned int shader_handle = 0;
   unsigned int vao = 0;
-  std::string name;
   std::string vertex_src_str;
   std::string fragment_src_str;
-  std::string path;
 };
 
 };

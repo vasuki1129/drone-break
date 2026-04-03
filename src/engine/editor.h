@@ -11,6 +11,7 @@ public:
   void Run();
   void DebugPanel();
   void AssetPanel();
+  void Inspector();
   void SceneHierarchy();
   EngineInstance* engine;
 };

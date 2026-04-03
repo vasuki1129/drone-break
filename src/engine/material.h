@@ -1,13 +1,12 @@
 #pragma once
 #include "shader.h"
 #include "asset.h"
-
+#include "gl_util.h"
 
 namespace engine {
 
   class Shader;
   class Asset;
-
 
     //we hold the uniform sets for each given material in memory
     //and they are automatically uploaded, so to change a uniform,
@@ -17,11 +16,9 @@ namespace engine {
     {
     public:
         Material(std::string path);
-        Error<bool> Reload();
-        Error<bool> Bind();
+        bool Reload();
+        bool Bind(BaseUniforms base);
       private:
-        std::string name;
-        std::string path;
         std::string shader_path;
         Shader* shader;
         UniformList uniform_set;
