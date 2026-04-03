@@ -4,7 +4,6 @@
 #include "../imgui/imgui.h"
 namespace engine {
 
-
 void Transform::DrawWidget() {
   ImGui::InputText("Name",this->name.data(),64);
   if (ImGui::CollapsingHeader("Transform")) {
@@ -12,6 +11,11 @@ void Transform::DrawWidget() {
     ImGui::InputFloat4("rotation", glm::value_ptr(this->rotation), "%.3f");
     ImGui::InputFloat3("scale", glm::value_ptr(this->scale));
   }
+
+  for (auto comp : this->components) {
+    comp->DrawWidget();
+  }
+
 }
 void Transform::AddComponent(Component *component) {
   component->SetOwner(this);

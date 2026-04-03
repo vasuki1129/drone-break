@@ -23,9 +23,15 @@ Material* AssetManager::GetMaterialOrNull(std::string key) {
 }
 
 
-Mesh * AssetManager::GetMeshOrNull(std::string key) {
+Mesh *AssetManager::GetMeshOrNull(std::string key) {
+
+
+  for (auto k : loaded_meshes) {
+    std::cout << k.first << "\n";
+  }
+  
   if (loaded_meshes.find(key) != loaded_meshes.end()) {
-    return loaded_meshes.at(key);
+    return loaded_meshes[key];
   } else {
     std::cout <<"Mesh `" + key + "` not found"<<"\n";
     return nullptr;
@@ -97,7 +103,8 @@ void AssetManager::ProcessModel(std::filesystem::path pth) {
   if (m->IsValid()) {
     loaded_models.emplace(pth.stem().string(), m);
     for (auto mesh : m->GetMeshes()) {
-      loaded_meshes.emplace(pth.stem().string() + "." + mesh->GetName(),mesh);
+      loaded_meshes.emplace(pth.stem().string() + "." + mesh->GetName(), mesh);
+      std::cout << "added mesh: "+ pth.stem().string()+"."+mesh->GetName();
     }
   } else {
     std::cout << pth.string() << " failed to load";

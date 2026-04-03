@@ -1,6 +1,6 @@
 #include "mesh_component.h"
 #include "engine.h"
-#include "../imgui/imgui.cpp"
+#include "../imgui/imgui.h"
 namespace engine {
 
 void MeshComponent::SetMesh(Mesh *mesh) {
@@ -41,17 +41,20 @@ MeshComponent::MeshComponent(std::string name)
 }
 
 void MeshComponent::DrawWidget() {
-  ImGui::InputText("Mesh", this->mesh_name.data(), 64);
-  ImGui::InputText("Material", this->material_name.data(), 64);
-  if (ImGui::Button("Update")) {
+  if (ImGui::CollapsingHeader(this->name.c_str())) {
+    ImGui::InputText("Mesh", this->mesh_name.data(), 64);
+    ImGui::InputText("Material", this->material_name.data(), 64);
+    if (ImGui::Button("Update")) {
 
-    auto mesh_try = Engine()->GetAssetManager()->GetMeshOrNull(mesh_name);
-    if (mesh_try != nullptr) {
-      this->SetMesh(mesh_try);
-    } else {
-      std::cout << "Mesh " + mesh_name + " not found in asset library.\n";
+      auto mesh_try = Engine()->GetAssetManager()->GetMeshOrNull(mesh_name);
+      if (mesh_try != nullptr) {
+        this->SetMesh(mesh_try);
+      } else {
+        std::cout << "Mesh " + mesh_name + " not found in asset library.\n";
+      }
+
+
     }
-
 
   }
 
