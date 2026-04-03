@@ -19,15 +19,25 @@ EditorInstance::EditorInstance() {
 
 EditorInstance::~EditorInstance() {}
 
+static Transform *hierarchy_selected = nullptr;
+
 void HierarchyLevel(Transform *tr) {
+  if(tr == nullptr) return;
   if (tr->GetChildren().size() == 0)
   {
-    if (ImGui::TreeNodeEx((tr->GetName() + "##" + std::to_string(tr->GetUID())).c_str(),ImGuiTreeNodeFlags_Leaf)) {
+    if (ImGui::TreeNodeEx((tr->GetName() + "##" + std::to_string(tr->GetUID())).c_str(),ImGuiTreeNodeFlags_Leaf | ((tr == hierarchy_selected) ? ImGuiTreeNodeFlags_Selected : 0))) {
+      ImGui::TreePop();
+    }
+    if (ImGui::IsItemClicked()) {
+      hierarchy_selected = tr;
     }
   }
   else
   {
-    if (ImGui::TreeNode((tr->GetName() + "##" + std::to_string(tr->GetUID())).c_str())) {
+    if (ImGui::TreeNodeEx((tr->GetName() + "##" + std::to_string(tr->GetUID())).c_str(),ImGuiTreeNodeFlags_OpenOnDoubleClick | ((tr == hierarchy_selected) ? ImGuiTreeNodeFlags_Selected : 0))) {
+      if (ImGui::IsItemClicked()) {
+        hierarchy_selected = tr;
+      }
       for (auto child : tr->GetChildren()) {
         HierarchyLevel(child);
       }
@@ -36,13 +46,12 @@ void HierarchyLevel(Transform *tr) {
   }
 }
 
-static Transform* hierarchy_selected = nullptr;
 
 void EditorInstance::Inspector() {
   if (hierarchy_selected != nullptr) {
+    hierarchy_selected->DrawWidget();
   } else {
-    gui::TextCentered("No Transform Selected");
-
+    ImGui::Text("No Transform Selected");
   }
 }
 

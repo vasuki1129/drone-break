@@ -17,6 +17,9 @@ public:
   virtual void destroy();
 
 
+  virtual void DrawWidget() =0;
+
+
   void SetOwner(Transform* own);
 
 

@@ -1,9 +1,18 @@
 #include "transform.h"
 #include <glm/gtc/quaternion.hpp>
 #include "util.h"
-
+#include "../imgui/imgui.h"
 namespace engine {
 
+
+void Transform::DrawWidget() {
+  ImGui::InputText("Name",this->name.data(),64);
+  if (ImGui::CollapsingHeader("Transform")) {
+    ImGui::InputFloat3("position", glm::value_ptr(this->position), "%.3f");
+    ImGui::InputFloat4("rotation", glm::value_ptr(this->rotation), "%.3f");
+    ImGui::InputFloat3("scale", glm::value_ptr(this->scale));
+  }
+}
 void Transform::AddComponent(Component *component) {
   component->SetOwner(this);
   this->components.push_back(component);
@@ -36,7 +45,8 @@ Transform* Transform::RemoveChild(Transform *tr) {
   }
 }
 
-Transform::Transform() {
+Transform::Transform() {\
+  name.resize(64);
   name = "Transform";
   uid = GenerateUID();
   children = std::vector<Transform*>();
@@ -46,6 +56,8 @@ Transform::Transform() {
   scale = glm::vec3(1.0f,1.0f,1.0f);
 }
 Transform::Transform(json value) {
+
+  name.resize(64);
   name = value["name"];
   uid = value["uid"];
   children = std::vector<Transform*>();
@@ -63,6 +75,8 @@ Transform::~Transform() {
 }
 
 Transform::Transform(std::string name) {
+
+  name.resize(64);
   this->name = name;
   uid = GenerateUID();
   children = std::vector<Transform*>();
@@ -155,7 +169,7 @@ glm::mat4 Transform::GetModelMatrix() {
   glm::mat4 scl = glm::scale(ident,GetGlobalScale());
   glm::mat4 rot = glm::mat4_cast(GetGlobalRotation());
   glm::mat4 trns = glm::translate(ident,GetGlobalPosition());
-  return glm::inverse(rot * scl * trns);
+  return trns * scl * rot;
 }
 
 glm::vec3 Transform::GetGlobalPosition() {

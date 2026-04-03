@@ -11,8 +11,11 @@ public:
   virtual void destroy() override;
   void SetMesh(Mesh *mesh);
   void SetMaterial(Material* material);
+  void DrawWidget() override;
   MeshComponent(std::string name);
 private:
+  std::string mesh_name;
+  std::string material_name;
   Mesh* mesh;
   Material *material;
 };

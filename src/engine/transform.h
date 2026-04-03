@@ -57,6 +57,8 @@ public:
   std::string GetName();
   uint64_t GetUID();
 
+  void DrawWidget();
+
 private:
   std::string name;
   uint64_t uid;
