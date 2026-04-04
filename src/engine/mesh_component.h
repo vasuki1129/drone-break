@@ -9,15 +9,13 @@ public:
   virtual void render() override;
   virtual void init() override;
   virtual void destroy() override;
-  void SetMesh(Mesh *mesh);
-  void SetMaterial(Material* material);
+  void SetMesh(std::string mesh);
+  void SetMaterial(std::string material);
   void DrawWidget() override;
   MeshComponent(std::string name);
 private:
   std::string mesh_name;
   std::string material_name;
-  Mesh* mesh;
-  Material *material;
 };
 
 }

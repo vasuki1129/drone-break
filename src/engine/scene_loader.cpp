@@ -14,20 +14,11 @@ void SceneLoader::LoadDefaultScene() {
   current_scene = new Scene();
   Transform *tr = new Transform(std::string("DefaultCube"));
   MeshComponent *mesh_comp = new MeshComponent("MeshComponent");
-  Mesh* success = Engine()->GetAssetManager()->GetMeshOrNull("DefaultCube.Suzanne");
 
   tr->Translate(glm::vec3(5.0,0.0,0.0));
 
-  if (success != nullptr) {
-    mesh_comp->SetMesh(success);
-  }
-
-  auto mat = Engine()->GetAssetManager()->GetMaterialOrNull("default");
-  if (mat == nullptr) {
-    std::cout << "failed to get default material\n";
-  }
-
-  mesh_comp->SetMaterial(mat);
+  mesh_comp->SetMesh("DefaultCube.Suzanne");
+  mesh_comp->SetMaterial("default");
   tr->AddComponent(mesh_comp);
   current_scene->GetRoot()->AddChild(tr);
 }

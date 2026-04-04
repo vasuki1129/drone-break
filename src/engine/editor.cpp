@@ -127,7 +127,7 @@ void EditorInstance::DebugPanel()
       if (ImGui::Button("Add Root Child w Debug Mesh")) {
         Transform *ch = new Transform(std::string("Child"));
         MeshComponent* comp = new MeshComponent(std::string("MeshComponent"));
-        comp->SetMesh(Engine()->GetAssetManager()->GetMeshOrNull("DefaultCube"));
+        comp->SetMesh("DefaultCube.Suzanne");
         ch->AddComponent(comp);
         engine->GetSceneLoader()->GetCurrentScene()->GetRoot()->AddChild(ch);
       }

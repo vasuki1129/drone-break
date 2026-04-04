@@ -3,17 +3,33 @@
 #include "../imgui/imgui.h"
 namespace engine {
 
-void MeshComponent::SetMesh(Mesh *mesh) {
-  this->mesh = mesh;
+void MeshComponent::SetMesh(std::string msh) {
+  Mesh *try_mesh = Engine()->GetAssetManager()->GetMeshOrNull(msh);
+  if (try_mesh == nullptr) {
+    std::cout << "Failed to set property: mesh `" + msh + "` not found";
+  } else {
+    this->mesh_name = msh;
+    mesh_name.resize(64);
+  }
 }
 
-void MeshComponent::SetMaterial(Material *mat) {
-  this->material = mat;
+void MeshComponent::SetMaterial(std::string mat) {
+  Material *try_material = Engine()->GetAssetManager()->GetMaterialOrNull(mat);
+  if (try_material == nullptr) {
+    std::cout << "Failed to set property: material `" + mat + "` not found";
+  } else {
+    this->material_name = mat;
+    material_name.resize(64);
+  }
 }
 
 void MeshComponent::render() {
+  Material *material =
+      Engine()->GetAssetManager()->GetMaterialOrNull(material_name);
+  Mesh *mesh = Engine()->GetAssetManager()->GetMeshOrNull(mesh_name);
+
   this->owner->Rotate(glm::vec3(0.0,1.0,0.0), Engine()->GetRenderer()->DeltaTime());
-  if (this->material == nullptr || this->mesh == nullptr) {
+  if (material == nullptr || mesh == nullptr) {
     std::cout << "MeshComponent missing required data\n";
     return;
   }
@@ -25,7 +41,7 @@ void MeshComponent::render() {
                     ->GetCurrentCameraMatrix(),
   };
 
-  this->mesh->Draw(base, material);
+  mesh->Draw(base, material);
 }
 
 void MeshComponent::init() {}
@@ -34,8 +50,8 @@ void MeshComponent::destroy() {}
 
 MeshComponent::MeshComponent(std::string name)
 : Component(name) {
-  this->mesh = nullptr;
-  this->material = nullptr;
+  this->mesh_name = "";
+  this->material_name = "";
   mesh_name.resize(64);
   material_name.resize(64);
 }
@@ -45,15 +61,7 @@ void MeshComponent::DrawWidget() {
     ImGui::InputText("Mesh", this->mesh_name.data(), 64);
     ImGui::InputText("Material", this->material_name.data(), 64);
     if (ImGui::Button("Update")) {
-
-      auto mesh_try = Engine()->GetAssetManager()->GetMeshOrNull(mesh_name);
-      if (mesh_try != nullptr) {
-        this->SetMesh(mesh_try);
-      } else {
-        std::cout << "Mesh " + mesh_name + " not found in asset library.\n";
-      }
-
-
+        this->SetMesh(mesh_name);
     }
 
   }
