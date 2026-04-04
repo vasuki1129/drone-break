@@ -10,10 +10,19 @@ void Component::tick(float dt) {}
 void Component::init() {}
 void Component::destroy() {}
 
+
+std::string Component::GetName() {
+  return name;
+}
+
+
 void Component::SetOwner(Transform *own) {
   this->owner = own;
 }
 
+Component::~Component() {
+
+}
 
 json Component::Save() {
   json out;

@@ -7,6 +7,14 @@
 
 namespace engine::editor {
 
+
+
+bool debug_panel_vis = false;
+bool asset_panel_vis = false;
+bool hierarchy_vis = false;
+bool inspector_vis = false;
+bool actions_vis = false;
+
 EditorInstance::EditorInstance() {
   auto c_i = engine::EngineCreateInfo {
     .game_name = "Light Editor",
@@ -47,107 +55,152 @@ void HierarchyLevel(Transform *tr) {
 }
 
 
-void EditorInstance::Inspector() {
-  if (hierarchy_selected != nullptr) {
-    hierarchy_selected->DrawWidget();
-  } else {
-    ImGui::Text("No Transform Selected");
+  void EditorInstance::Inspector() {
+    if (inspector_vis) {
+
+
+
+
+      if(ImGui::Begin("Inspector",&inspector_vis)){
+        if (hierarchy_selected != nullptr) {
+          hierarchy_selected->DrawWidget();
+        } else {
+          ImGui::Text("No Transform Selected");
+        }
+      }
+      ImGui::End();
+    }
   }
-}
 
-void EditorInstance::SceneHierarchy() {
+  void EditorInstance::SceneHierarchy() {
 
-  ImGui::BeginTable("SceneHierarchy",2);
-  ImGui::TableSetupColumn("Hierarchy");
-  ImGui::TableSetupColumn("Inspector");
-  ImGui::TableHeadersRow();
-  ImGui::TableNextRow();
-  ImGui::TableSetColumnIndex(0);
-  if (Transform *tr;
+    if(hierarchy_vis){
+
+      if(ImGui::Begin("Hierarchy", &hierarchy_vis)){
+        if (Transform *tr;
       (tr = engine->GetSceneLoader()->GetCurrentScene()->GetRoot()) !=
       nullptr) {
-    HierarchyLevel(tr);
-  }
-  ImGui::TableSetColumnIndex(1);
-  Inspector();
-  ImGui::EndTable();
-}
-
-void EditorInstance::AssetPanel() {
-  static Asset* selected_asset = nullptr;
-  ImGui::BeginTable("AssetPanelLayout",2);
-
-  ImGui::TableSetupColumn("List");
-  ImGui::TableSetupColumn("Details");
-
-  ImGui::TableHeadersRow();
-  ImGui::TableNextRow();
-  ImGui::TableSetColumnIndex(0);
-  if (ImGui::TreeNode("Models")) {
-    for (auto mod : Engine()->GetAssetManager()->loaded_models) {
-      if (ImGui::TreeNodeEx(mod.first.c_str(),ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | (mod.second == selected_asset ? ImGuiTreeNodeFlags_Selected : 0))) {
-        if (ImGui::IsItemClicked()) {
-          selected_asset = mod.second;
+          HierarchyLevel(tr);
         }
-        for (auto mesh : mod.second->GetMeshes()) {
-          if (ImGui::TreeNodeEx(("." +mesh->GetName()).c_str(),ImGuiTreeNodeFlags_Leaf | (mesh == selected_asset ? ImGuiTreeNodeFlags_Selected : 0))) {
-            if (ImGui::IsItemClicked()) {
-                selected_asset = mesh;
+      }
+      ImGui::End();
+    }
+  }
+
+  void EditorInstance::AssetPanel() {
+
+    static Asset* selected_asset = nullptr;
+
+    if(asset_panel_vis){
+
+
+      if(ImGui::Begin("Assets")){
+
+        if(ImGui::BeginTable("AssetLayout",2)){
+
+          ImGui::TableSetupColumn("##ASSET");
+          ImGui::TableSetupColumn("##DETAILS");
+          ImGui::TableHeadersRow();
+
+          ImGui::TableNextRow();
+          ImGui::TableSetColumnIndex(0);
+          if (ImGui::TreeNode("Models")) {
+            for (auto mod : Engine()->GetAssetManager()->loaded_models) {
+              if (ImGui::TreeNodeEx(mod.first.c_str(),ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | (mod.second == selected_asset ? ImGuiTreeNodeFlags_Selected : 0))) {
+                if (ImGui::IsItemClicked()) {
+                  selected_asset = mod.second;
+                }
+                for (auto mesh : mod.second->GetMeshes()) {
+                  if (ImGui::TreeNodeEx(("." +mesh->GetName()).c_str(),ImGuiTreeNodeFlags_Leaf | (mesh == selected_asset ? ImGuiTreeNodeFlags_Selected : 0))) {
+                    if (ImGui::IsItemClicked()) {
+                      selected_asset = mesh;
+                    }
+                    ImGui::TreePop();
+                  }
+                }
+                ImGui::TreePop();
+              }
             }
             ImGui::TreePop();
           }
+          ImGui::TableSetColumnIndex(1);
+          if (selected_asset != nullptr) {
+            ImGui::Text("%s", selected_asset->GetName().c_str());
+            ImGui::Text("%s", selected_asset->GetPath().c_str());
+          }
+          ImGui::EndTable();
         }
-        ImGui::TreePop();
       }
+      ImGui::End();
     }
-    ImGui::TreePop();
   }
-  ImGui::TableSetColumnIndex(1);
-  if (selected_asset != nullptr) {
-    ImGui::Text("%s", selected_asset->GetName().c_str());
-    ImGui::Text("%s", selected_asset->GetPath().c_str());
+
+
+  void EditorInstance::ActionsPanel() {
+    if(actions_vis){
+
+
+      if(ImGui::Begin("Actions"),&actions_vis){
+        if (ImGui::Button("Reload Assets")) {
+          engine->GetAssetManager()->Rescan();
+        }
+        if (ImGui::Button("Add Root Child")) {
+          Transform* ch = new Transform(std::string("Child"));
+          engine->GetSceneLoader()->GetCurrentScene()->GetRoot()->AddChild(ch);
+        }
+        if (ImGui::Button("Add Root Child w Debug Mesh")) {
+          Transform *ch = new Transform(std::string("Child"));
+          MeshComponent* comp = new MeshComponent(std::string("MeshComponent"));
+          comp->SetMesh("DefaultCube.Suzanne");
+          ch->AddComponent(comp);
+          engine->GetSceneLoader()->GetCurrentScene()->GetRoot()->AddChild(ch);
+        }
+      }
+      ImGui::End();
+    }
   }
-  ImGui::EndTable();
+
+
+
+
+void EditorInstance::DebugPanel() {
+  if (debug_panel_vis) {
+    if (ImGui::Begin("Debug"), &debug_panel_vis) {
+      ImGui::Text("%s",Engine()->GetVersionString().c_str());
+      ImGui::Text("Frame Time: %.3fms", Engine()->GetRenderer()->DeltaTime() * 1000.0f );
+      ImGui::Text("FPS: %.3fms", (1.0f / Engine()->GetRenderer()->DeltaTime()) );
+    }
+    ImGui::End();
+  }
 }
 
-void EditorInstance::DebugPanel()
-{
-  ImGui::Begin("Debug");
 
-  if (ImGui::BeginTabBar("DebugTabs", ImGuiTabBarFlags_None))
-  {
-    if (ImGui::BeginTabItem("Actions")) {
-      if (ImGui::Button("Reload Assets")) {
-        engine->GetAssetManager()->Rescan();
+void EditorInstance::MenuBar() {
+
+    if (ImGui::BeginMainMenuBar()) {
+      if (ImGui::BeginMenu("File")) {
+        if (ImGui::MenuItem("Open Scene")) {
+        }
+        ImGui::EndMenu();
       }
-      if (ImGui::Button("Add Root Child")) {
-        Transform* ch = new Transform(std::string("Child"));
-        engine->GetSceneLoader()->GetCurrentScene()->GetRoot()->AddChild(ch);
+
+      if (ImGui::BeginMenu("Tools")) {
+        if (ImGui::MenuItem("Hierarchy")) {
+          hierarchy_vis = true;
+        }
+        if (ImGui::MenuItem("Inspector")) {
+          inspector_vis = true;
+        }
+        if (ImGui::MenuItem("Debug Info")) {
+          debug_panel_vis = true;
+        }
+        ImGui::EndMenu();
       }
-      if (ImGui::Button("Add Root Child w Debug Mesh")) {
-        Transform *ch = new Transform(std::string("Child"));
-        MeshComponent* comp = new MeshComponent(std::string("MeshComponent"));
-        comp->SetMesh("DefaultCube.Suzanne");
-        ch->AddComponent(comp);
-        engine->GetSceneLoader()->GetCurrentScene()->GetRoot()->AddChild(ch);
-      }
-      ImGui::EndTabItem();
+      ImGui::EndMainMenuBar();
     }
-
-    if (ImGui::BeginTabItem("View")) {
-      SceneHierarchy();
-      ImGui::EndTabItem();
-    }
-
-    if (ImGui::BeginTabItem("Assets")) {
-      AssetPanel();
-      ImGui::EndTabItem();
-    }
-
-    ImGui::EndTabBar();
-  }
-  ImGui::End();
 }
+
+
 
 
 void EditorInstance::Run() {
@@ -157,9 +210,16 @@ void EditorInstance::Run() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+    ImGui::DockSpaceOverViewport(0,NULL,ImGuiDockNodeFlags_PassthruCentralNode,NULL);
 
+    MenuBar();
     //ImGui::ShowDemoWindow();
     DebugPanel();
+    ActionsPanel();
+    Inspector();
+    SceneHierarchy();
+    AssetPanel();
+
     int display_w, display_h;
     glfwGetFramebufferSize(engine->GetWindow(), &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);

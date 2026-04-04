@@ -10,9 +10,12 @@ public:
   ~EditorInstance();
   void Run();
   void DebugPanel();
+  void ActionsPanel();
   void AssetPanel();
   void Inspector();
   void SceneHierarchy();
+  void MenuBar();
+
   EngineInstance* engine;
 };
 

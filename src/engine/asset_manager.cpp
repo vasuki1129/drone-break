@@ -4,36 +4,47 @@
 
 namespace engine {
 
+std::string trim_str(std::string in) {
+  std::string nk = "";
+  int ind = 0;
+  while (in[ind] != '\0') {
+    nk += in[ind];
+    ind++;
+  }
+  return nk;
+}
 
 Shader* AssetManager::GetShaderOrNull(std::string key) {
-  if (loaded_shaders.find(key) != loaded_shaders.end()) {
-    return loaded_shaders.at(key);
+
+  std::string nk = trim_str(key);
+
+  if (loaded_shaders.find(nk) != loaded_shaders.end()) {
+    return loaded_shaders.at(nk);
   } else {
-    std::cout << "Shader `" + key + "` not found" << "\n";
+    //std::cout << "Shader `" + nk + "` not found" << "\n";
     return nullptr;
   }
 }
 
-Material* AssetManager::GetMaterialOrNull(std::string key) {
-  if (loaded_materials.find(key) != loaded_materials.end()) {
-    return loaded_materials.at(key);
+Material *AssetManager::GetMaterialOrNull(std::string key) {
+  std::string nk = trim_str(key);
+  if (loaded_materials.find(nk) != loaded_materials.end()) {
+    return loaded_materials.at(nk);
   } else {
     return nullptr;
   }
 }
+
+
 
 
 Mesh *AssetManager::GetMeshOrNull(std::string key) {
+  std::string nk = trim_str(key);
 
-
-  for (auto k : loaded_meshes) {
-    std::cout << k.first << "\n";
-  }
-  
-  if (loaded_meshes.find(key) != loaded_meshes.end()) {
-    return loaded_meshes[key];
+  if (loaded_meshes.find(nk) != loaded_meshes.end()) {
+    return loaded_meshes[nk];
   } else {
-    std::cout <<"Mesh `" + key + "` not found"<<"\n";
+    //std::cout <<"Mesh `" + key + "` not found"<<"\n";
     return nullptr;
   }
 }

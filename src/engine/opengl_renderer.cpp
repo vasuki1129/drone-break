@@ -3,6 +3,7 @@
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_impl_glfw.h"
 #include "../imgui/imgui_impl_opengl3.h"
+#include "../imgui/icon_fonts.h"
 namespace engine {
 
 
@@ -64,6 +65,13 @@ void OpenGLRenderer::InitForImGui() {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGui::StyleColorsDark();
+
+    ImGuiIO &io = ImGui::GetIO();
+    io.Fonts->AddFontFromFileTTF("ProggyCleanCENerdFont-Regular.ttf",13.0f);
+
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 130");

@@ -9,6 +9,10 @@
       {
         "key" : "band_two",
         "value" : 0.97
+      },
+      {
+        "key" : "albedo_color",
+        "value" : [0.0,1.0,0.0]
       }
     ]
 }

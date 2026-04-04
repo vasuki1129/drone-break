@@ -53,6 +53,12 @@ namespace engine
            {
                Uniform u = Uniform_f(val["value"]);
                uniform_set.uniforms.emplace(val["key"],u);
+           } else if (val["value"].is_array()) {
+
+             Uniform u = Uniform_vec3(
+                 glm::vec3(val["value"][0], val["value"][1], val["value"][2]));
+             uniform_set.uniforms.emplace(val["key"],u);
+
            }
            else
            {

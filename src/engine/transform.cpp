@@ -1,28 +1,99 @@
 #include "transform.h"
 #include <glm/gtc/quaternion.hpp>
 #include "util.h"
+#include "../imgui/icon_fonts.h"
 #include "../imgui/imgui.h"
 namespace engine {
 
-void Transform::DrawWidget() {
-  ImGui::InputText("Name",this->name.data(),64);
-  if (ImGui::CollapsingHeader("Transform")) {
-    ImGui::InputFloat3("position", glm::value_ptr(this->position), "%.3f");
-    ImGui::InputFloat4("rotation", glm::value_ptr(this->rotation), "%.3f");
-    ImGui::InputFloat3("scale", glm::value_ptr(this->scale));
-  }
 
-  for (auto comp : this->components) {
-    comp->DrawWidget();
-  }
+static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
+    if (data->EventFlag == ImGuiInputTextFlags_CallbackEdit) {
 
+    }
+    return 0;
 }
+
+  void Transform::DrawWidget() {
+    ImGui::InputText("Name",this->name.data(),64);
+
+    if (ImGui::CollapsingHeader("Transform",
+                                ImGuiTreeNodeFlags_CollapsingHeader |
+                                ImGuiTreeNodeFlags_Framed)) {
+
+
+      if(ImGui::BeginChild("TransformWidge",ImVec2(0,0),ImGuiChildFlags_Borders | ImGuiChildFlags_AutoResizeY,0)){
+        ImGui::InputFloat3("position", glm::value_ptr(this->position), "%.3f");
+        ImGui::InputFloat4("rotation", glm::value_ptr(this->rotation), "%.3f");
+        ImGui::InputFloat3("scale", glm::value_ptr(this->scale));
+
+        ImGui::EndChild();
+      }
+    }
+
+
+
+    for (auto comp : this->components) {
+
+      if (ImGui::CollapsingHeader(comp->GetName().c_str())) {
+
+        if (ImGui::BeginPopupContextItem((comp->GetName() + "ContextMenu").c_str())) {
+          if (ImGui::MenuItem("Remove", NULL, false, true)) {
+          }
+          ImGui::EndPopup();
+        }
+
+
+      if(ImGui::BeginChild((comp->GetName() + "Widge").c_str(),ImVec2(0,0),ImGuiChildFlags_Borders | ImGuiChildFlags_AutoResizeY,0)){
+
+        comp->DrawWidget();
+        ImGui::EndChild();
+      }
+      }
+    }
+
+    if (ImGui::Button( (std::string(ICON_CI_GIST_NEW) +" ").c_str())) {
+      ImGui::OpenPopup("ComponentPicker");
+    }
+
+    static std::string comp_picker_srch;
+    if (comp_picker_srch.size() < 60) {
+      comp_picker_srch.resize(60);
+    }
+    if (ImGui::BeginPopup("ComponentPicker")) {
+      std::vector<std::string> results;
+      ImGui::InputText("##COMPONENTPICKERSEARCH",comp_picker_srch.data(),60,ImGuiInputTextFlags_None,CompSearchCallback,&results);
+
+
+      if (ImGui::BeginListBox("Results")) {
+
+
+        ImGui::EndListBox();
+      }
+
+
+
+
+
+      ImGui::EndPopup();
+
+    }
+
+
+
+
+
+
+
+  
+
+  }
 void Transform::AddComponent(Component *component) {
   component->SetOwner(this);
   this->components.push_back(component);
 }
 
 void Transform::AddChild(Transform *tr) {
+  tr->parent = this;
   this->children.push_back(tr);
 }
 
@@ -49,7 +120,7 @@ Transform* Transform::RemoveChild(Transform *tr) {
   }
 }
 
-Transform::Transform() {\
+Transform::Transform() {
   name.resize(64);
   name = "Transform";
   uid = GenerateUID();
@@ -59,8 +130,8 @@ Transform::Transform() {\
   rotation = glm::identity<glm::quat>();
   scale = glm::vec3(1.0f,1.0f,1.0f);
 }
-Transform::Transform(json value) {
 
+Transform::Transform(json value) {
   name.resize(64);
   name = value["name"];
   uid = value["uid"];
@@ -79,7 +150,6 @@ Transform::~Transform() {
 }
 
 Transform::Transform(std::string name) {
-
   name.resize(64);
   this->name = name;
   uid = GenerateUID();
@@ -173,7 +243,7 @@ glm::mat4 Transform::GetModelMatrix() {
   glm::mat4 scl = glm::scale(ident,GetGlobalScale());
   glm::mat4 rot = glm::mat4_cast(GetGlobalRotation());
   glm::mat4 trns = glm::translate(ident,GetGlobalPosition());
-  return trns * scl * rot;
+  return trns  * rot * scl;
 }
 
 glm::vec3 Transform::GetGlobalPosition() {

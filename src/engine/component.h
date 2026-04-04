@@ -11,6 +11,7 @@ public:
   Component();
   Component(std::string name);
   Component(json value); //load constructor
+  virtual ~Component();
   virtual void render();
   virtual void tick(float dt);
   virtual void init();
@@ -22,6 +23,7 @@ public:
 
   void SetOwner(Transform* own);
 
+  std::string GetName();
 
   json Save() override;
 

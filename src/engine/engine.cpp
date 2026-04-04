@@ -5,8 +5,7 @@ namespace engine {
 
 std::string EngineInstance::GetVersionString() {
   std::string out;
-  out += "LIGHT v0.2.2\n";
-  out += "Copyright 2026 Deepfrog\n";
+  out += "LIGHT v0.2.2";
   return out;
 }
 
@@ -43,15 +42,12 @@ EngineInstance *CreateEngine(EngineCreateInfo &create_info) {
   return instance;
 }
 
-
 void EngineInstance::Initialize() {
   asset_loader = new AssetManager();
   scheme_interpreter = s7_init();
   asset_loader->Rescan();
   scene_loader = new engine::SceneLoader();
 }
-
-
 
 EngineInstance::EngineInstance(EngineCreateInfo &create_info) {
   renderer = new engine::OpenGLRenderer(&window, create_info);
