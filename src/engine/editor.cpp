@@ -27,9 +27,7 @@ EditorInstance::EditorInstance() {
 
 EditorInstance::~EditorInstance() {}
 
-static Transform *hierarchy_selected = nullptr;
-
-void HierarchyLevel(Transform *tr) {
+void EditorInstance::HierarchyLevel(Transform *tr) {
   if(tr == nullptr) return;
   if (tr->GetChildren().size() == 0) {
     ImGui::PushID(tr->GetUID());
@@ -175,7 +173,18 @@ void HierarchyLevel(Transform *tr) {
 
 
 
+  void EditorInstance::DrawTransformGizmo() {
+    if (hierarchy_selected == nullptr)
+      return;
 
+
+
+
+  }
+
+
+
+  
 void EditorInstance::DebugPanel() {
   if (debug_panel_vis) {
     if (ImGui::Begin("Debug"), &debug_panel_vis) {

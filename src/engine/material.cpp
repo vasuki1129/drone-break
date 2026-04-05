@@ -34,6 +34,11 @@ namespace engine
       glBindTexture(GL_TEXTURE_2D,0);
       if (this->texture != nullptr) {
         this->texture->Bind();
+      } else {
+        this->texture =
+            Engine()->GetAssetManager()->GetTextureOrNull("default_texture");
+        this->texture->Bind();
+
       }
       this->shader->Bind();
       this->shader->SetUniform("model", Uniform_mat4(base.model));
