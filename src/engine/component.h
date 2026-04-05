@@ -2,6 +2,21 @@
 #include "transform.h"
 #include "saveable.h"
 #include <string>
+#include "../imgui/imgui.h"
+
+
+
+#define FACTORY(type) engine::Component *__Get ## type()
+
+#define FACTORY_DEF(type)                                                      \
+  engine ::Component *__Get##type() {                                           \
+    return (engine::Component *)(new type());                                 \
+  }                                                                            \
+
+
+#define FACTORY_REF(type) __Get ## type
+
+
 namespace engine {
 
 class Transform;
@@ -27,6 +42,7 @@ public:
 
   json Save() override;
 
+  uint64_t GetUID();
 protected:
   std::string name;
   uint64_t uid;

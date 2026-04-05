@@ -3,6 +3,7 @@
 #include "util.h"
 #include "../imgui/icon_fonts.h"
 #include "../imgui/imgui.h"
+#include "engine.h"
 namespace engine {
 
 
@@ -34,16 +35,16 @@ static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
 
     for (auto comp : this->components) {
 
-      if (ImGui::CollapsingHeader(comp->GetName().c_str())) {
+      if (ImGui::CollapsingHeader((comp->GetName() + "##" + std::to_string(comp->GetUID())).c_str())) {
 
-        if (ImGui::BeginPopupContextItem((comp->GetName() + "ContextMenu").c_str())) {
+        if (ImGui::BeginPopupContextItem((comp->GetName() + "ContextMenu" + std::to_string(comp->GetUID())).c_str())) {
           if (ImGui::MenuItem("Remove", NULL, false, true)) {
           }
           ImGui::EndPopup();
         }
 
 
-      if(ImGui::BeginChild((comp->GetName() + "Widge").c_str(),ImVec2(0,0),ImGuiChildFlags_Borders | ImGuiChildFlags_AutoResizeY,0)){
+      if(ImGui::BeginChild((comp->GetName() + "Widge"+ std::to_string(comp->GetUID())).c_str(),ImVec2(0,0),ImGuiChildFlags_Borders | ImGuiChildFlags_AutoResizeY,0)){
 
         comp->DrawWidget();
         ImGui::EndChild();
@@ -60,13 +61,23 @@ static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
       comp_picker_srch.resize(60);
     }
     if (ImGui::BeginPopup("ComponentPicker")) {
-      std::vector<std::string> results;
+      std::vector<std::string> results = Engine()->GetRegisteredComponentsList();
+
+
       ImGui::InputText("##COMPONENTPICKERSEARCH",comp_picker_srch.data(),60,ImGuiInputTextFlags_None,CompSearchCallback,&results);
 
 
       if (ImGui::BeginListBox("Results")) {
-
-
+        for (int i = 0; i < results.size(); i++) {
+          if (ImGui::Selectable(
+                  (results[i] + "##" + std::to_string(i)).c_str())) {
+            Component *c = Engine()->CreateComponent(results[i]);
+            if (c != nullptr) {
+              this->AddComponent(c);
+              ImGui::CloseCurrentPopup();
+            }
+          }
+        }
         ImGui::EndListBox();
       }
 

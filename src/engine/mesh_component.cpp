@@ -4,6 +4,16 @@
 #include "../imgui/icon_fonts.h"
 namespace engine {
 
+
+FACTORY(MeshComponent) {
+  MeshComponent *mesh_comp = new MeshComponent("MeshComponent");
+  mesh_comp->SetMesh("DefaultCube.Suzanne");
+  mesh_comp->SetMaterial("default");
+  return mesh_comp;
+}
+
+
+
 bool MeshComponent::SetMesh(std::string msh) {
   Mesh *try_mesh = Engine()->GetAssetManager()->GetMeshOrNull(msh);
   if (try_mesh == nullptr) {
@@ -32,8 +42,6 @@ void MeshComponent::render() {
   Material *material =
       Engine()->GetAssetManager()->GetMaterialOrNull(material_name);
   Mesh *mesh = Engine()->GetAssetManager()->GetMeshOrNull(mesh_name);
-
-  this->owner->Rotate(glm::vec3(0.0,1.0,0.0), Engine()->GetRenderer()->DeltaTime());
   if (material == nullptr) {
     material_valid = false;
     return;
@@ -93,7 +101,14 @@ void MeshComponent::DrawWidget() {
 
     ImGui::SameLine();
     ImGui::InputText("Material", this->material_name.data(), 64);
+    if (ImGui::CollapsingHeader(
+            ("MaterialEdit" + std::to_string(this->GetUID())).c_str())) {
+      auto mat = Engine()->GetAssetManager()->GetMaterialOrNull(material_name);
+      if (mat != nullptr) {
+        mat->DrawEditWidget();
+      }
 
+    }
   }
 
 

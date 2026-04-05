@@ -1,5 +1,7 @@
 #pragma once
 
+#include <concepts>
+
 #include <vector>
 
 #include "../s7/s7.h"
@@ -9,6 +11,7 @@
 #include "script_engine.h"
 #include "scene_loader.h"
 #include "asset_manager.h"
+#include "input.h"
 
 namespace engine {
 
@@ -31,13 +34,33 @@ public:
   GLFWwindow *GetWindow();
   AssetManager* GetAssetManager();
   void Initialize();
+
+
+  std::vector<std::string> GetRegisteredComponentsList();
+
+  Component *CreateComponent(std::string component_type_name);
+
+  void RegisterComponent(std::string type_name, Component* (*factory)(void))
+  {
+      registered_component_types[type_name] = factory;
+  };
+
+
+  InputHandler* GetInput();
+
 private:
+  void RegisterBuiltinComponents();
   glm::vec2 window_size;
   GLFWwindow *window;
   AssetManager* asset_loader;
-  engine::SceneLoader* scene_loader;
+  SceneLoader* scene_loader;
   s7_scheme *scheme_interpreter;
-  engine::OpenGLRenderer* renderer;
+  OpenGLRenderer* renderer;
+  InputHandler* input_handler;
+
+
+
+  std::map<std::string, Component* (*) ()> registered_component_types;
 };
 
 EngineInstance* CreateEngine(EngineCreateInfo& create_info);

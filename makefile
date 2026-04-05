@@ -1,7 +1,7 @@
 PROJ_NAME := light
 
 #LINUX (any posix probably idfk)
-LIN_FLAGS := -g -std=c++20 -w
+LIN_FLAGS := -g -std=c++24 -w
 
 LIN_DEPS := build_linux/release/engine/camera_component.o
 LIN_DEPS += build_linux/release/engine/mesh_component.o
@@ -22,8 +22,10 @@ LIN_DEPS += build_linux/release/engine/editor.o
 LIN_DEPS += build_linux/release/engine/asset.o
 LIN_DEPS += build_linux/release/engine/asset_manager.o
 LIN_DEPS += build_linux/release/engine/gui_util.o
+LIN_DEPS += build_linux/release/engine/input.o
 
 LIN_DEPS += build_linux/release/game/entry.o
+LIN_DEPS += build_linux/release/game/test_component.o
 
 LIN_DEPS += build_linux/release/s7/s7.o
 
@@ -54,8 +56,10 @@ LIN_DEPS_DEBUG += build_linux/debug/engine/editor.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/asset.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/asset_manager.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/gui_util.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/input.o
 
 LIN_DEPS_DEBUG += build_linux/debug/game/entry.o
+LIN_DEPS_DEBUG += build_linux/debug/game/test_component.o
 
 LIN_DEPS_DEBUG += build_linux/debug/s7/s7.o
 
@@ -78,22 +82,22 @@ linux : $(LIN_DEPS)
 	g++ $(LIN_DEPS) -o bin/linux/x64/release/light $(LIN_LIBS)
 
 build_linux/debug/engine/%.o : src/engine/%.cpp
-	g++ -c -o $@ $< -std=c++20 -g
+	g++ -c -o $@ $< -std=c++23 -g
 build_linux/debug/game/%.o : src/game/%.cpp
-	g++ -c -o $@ $< -std=c++20 -g
+	g++ -c -o $@ $< -std=c++23 -g
 build_linux/debug/s7/%.o : src/s7/%.c
 	gcc -c -o $@ $< -g
 build_linux/debug/imgui/%.o : src/imgui/%.cpp
-	g++ -c -o $@ $< -std=c++20 -g
+	g++ -c -o $@ $< -std=c++23 -g
 
 build_linux/release/engine/%.o : src/engine/%.cpp
-	g++ -c -o $@ $< -std=c++20
+	g++ -c -o $@ $< -std=c++23
 build_linux/release/game/%.o : src/game/%.cpp
-	g++ -c -o $@ $< -std=c++20
+	g++ -c -o $@ $< -std=c++23
 build_linux/release/s7/%.o : src/s7/%.c
 	gcc -c -o $@ $<
 build_linux/release/imgui/%.o : src/imgui/%.cpp
-	g++ -c -o $@ $< -std=c++20
+	g++ -c -o $@ $< -std=c++23
 
 #WINDOWS
 NT_FLAGS := /DGLEW_STATIC /MDd /EHsc /IC:\lib\glm\include /IC:\lib\glew\include /IC:\lib\glfw\include /IC:\lib\assimp\include

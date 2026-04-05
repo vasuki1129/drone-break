@@ -4,6 +4,10 @@
 #include "../imgui/imgui_impl_glfw.h"
 #include "../imgui/imgui_impl_opengl3.h"
 #include "../imgui/icon_fonts.h"
+
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "../stb/stb_image.h"
 namespace engine {
 
 
@@ -33,8 +37,6 @@ int OpenGLRenderer::WindowWidth() { return window_width; }
 
 int OpenGLRenderer::WindowHeight() {return window_height;}
 
-
-
 OpenGLRenderer::OpenGLRenderer(GLFWwindow** smuggle, EngineCreateInfo& create_info) {
     glfwInit();
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT,true);
@@ -51,6 +53,8 @@ OpenGLRenderer::OpenGLRenderer(GLFWwindow** smuggle, EngineCreateInfo& create_in
     glDebugMessageCallback(MessageCallback, 0);
     glfwSetWindowSizeCallback(window, window_size_callback);
 
+    //pass input to the input handler
+    glfwSetKeyCallback(window, InputHandlerKeyCallback);
 
     glCullFace(GL_BACK);
     glEnable(GL_CULL_FACE);

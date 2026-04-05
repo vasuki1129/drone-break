@@ -13,7 +13,7 @@ namespace engine
     {
       this->path = path;
       auto success = this->Reload();
-
+      this->texture_path.resize(64);
       if (success) {
         valid = true;
       } else {
@@ -21,11 +21,19 @@ namespace engine
       }
     }
 
+    void Material::DrawEditWidget() {
+      ImGui::InputText("Texture", this->texture_path.data(), 64);
+    }
     bool Material::Bind(BaseUniforms base) {
       if (this->shader == nullptr) {
           this->shader = Engine()->GetAssetManager()->GetShaderOrNull(this->shader_path);
           std::cout << "Material " + this->name + " has no shader\n";
           return false;
+      }
+      this->texture = Engine()->GetAssetManager()->GetTextureOrNull(texture_path);
+      glBindTexture(GL_TEXTURE_2D,0);
+      if (this->texture != nullptr) {
+        this->texture->Bind();
       }
       this->shader->Bind();
       this->shader->SetUniform("model", Uniform_mat4(base.model));
@@ -42,6 +50,7 @@ namespace engine
        name = data["name"];
        shader_path = data["shader_id"];
        this->shader = Engine()->GetAssetManager()->GetShaderOrNull(this->shader_path);
+       this->texture = Engine()->GetAssetManager()->GetTextureOrNull(this->texture_path);
        for(json val : data["uniforms"])
        {
            if(val["value"].is_number_integer())

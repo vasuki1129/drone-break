@@ -21,7 +21,7 @@ public:
   Material* GetMaterialOrNull(std::string key);
 
   Shader* GetShaderOrNull(std::string key);
-
+  Texture* GetTextureOrNull(std::string key);
 
   std::map<std::string, Model*> loaded_models;            //.fbx
   std::map<std::string, Mesh*> loaded_meshes;

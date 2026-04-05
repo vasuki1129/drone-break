@@ -11,6 +11,12 @@ void Component::init() {}
 void Component::destroy() {}
 
 
+
+uint64_t Component::GetUID() {
+  return uid;
+}
+
+
 std::string Component::GetName() {
   return name;
 }
@@ -32,7 +38,8 @@ json Component::Save() {
 }
 
 
-Component::Component(std::string name) {
+Component::Component(std::string name) : Component(){
+
   this->name = name;
 }
 

@@ -31,18 +31,33 @@ static Transform *hierarchy_selected = nullptr;
 
 void HierarchyLevel(Transform *tr) {
   if(tr == nullptr) return;
-  if (tr->GetChildren().size() == 0)
-  {
-    if (ImGui::TreeNodeEx((tr->GetName() + "##" + std::to_string(tr->GetUID())).c_str(),ImGuiTreeNodeFlags_Leaf | ((tr == hierarchy_selected) ? ImGuiTreeNodeFlags_Selected : 0))) {
+  if (tr->GetChildren().size() == 0) {
+    ImGui::PushID(tr->GetUID());
+    if (ImGui::TreeNodeEx((tr->GetName() + "##" + std::to_string(tr->GetUID())).c_str(), ImGuiTreeNodeFlags_Bullet | ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_Leaf | ((tr == hierarchy_selected) ? ImGuiTreeNodeFlags_Selected : 0))) {
+
+      if (ImGui::BeginPopupContextItem((tr->GetName() + "ContextMenu##" + std::to_string(tr->GetUID())+"a").c_str())) {
+        if (ImGui::MenuItem("Add Child Node", NULL, false, true)) {
+          Transform *t = new Transform(std::string("Child"));
+          tr->AddChild(t);
+        }
+        ImGui::EndPopup();
+      }
       ImGui::TreePop();
     }
+    ImGui::PopID();
     if (ImGui::IsItemClicked()) {
       hierarchy_selected = tr;
     }
-  }
-  else
-  {
-    if (ImGui::TreeNodeEx((tr->GetName() + "##" + std::to_string(tr->GetUID())).c_str(),ImGuiTreeNodeFlags_OpenOnDoubleClick | ((tr == hierarchy_selected) ? ImGuiTreeNodeFlags_Selected : 0))) {
+  } else {
+
+    if (ImGui::TreeNodeEx((tr->GetName() + "##" + std::to_string(tr->GetUID())).c_str(),ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_OpenOnDoubleClick | ((tr == hierarchy_selected) ? ImGuiTreeNodeFlags_Selected : 0))) {
+      if (ImGui::BeginPopupContextItem((tr->GetName() + "ContextMenu" + std::to_string(tr->GetUID())+ "b").c_str())) {
+        if (ImGui::MenuItem("Add Child Node", NULL, false, true)) {
+          Transform *t = new Transform(std::string("Child"));
+          tr->AddChild(t);
+        }
+        ImGui::EndPopup();
+      }
       if (ImGui::IsItemClicked()) {
         hierarchy_selected = tr;
       }
@@ -138,8 +153,6 @@ void HierarchyLevel(Transform *tr) {
 
   void EditorInstance::ActionsPanel() {
     if(actions_vis){
-
-
       if(ImGui::Begin("Actions"),&actions_vis){
         if (ImGui::Button("Reload Assets")) {
           engine->GetAssetManager()->Rescan();

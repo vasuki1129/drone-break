@@ -9,6 +9,8 @@ class Texture : public Asset{
 public:
   Texture(std::string path);
   ~Texture();
+  void Bind();
 private:
+  unsigned int texture_handle;
 };
 }

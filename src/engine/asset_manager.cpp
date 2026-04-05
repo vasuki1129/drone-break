@@ -14,6 +14,17 @@ std::string trim_str(std::string in) {
   return nk;
 }
 
+
+Texture *AssetManager::GetTextureOrNull(std::string key) {
+  std::string nk = trim_str(key);
+  if (loaded_textures.find(nk) != loaded_textures.end()) {
+    return loaded_textures.at(nk);
+  } else {
+    return nullptr;
+  }
+}
+
+
 Shader* AssetManager::GetShaderOrNull(std::string key) {
 
   std::string nk = trim_str(key);

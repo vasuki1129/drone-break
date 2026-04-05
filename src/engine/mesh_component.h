@@ -20,4 +20,9 @@ private:
   bool material_valid = false;
 };
 
+
+FACTORY(MeshComponent);
+
+
+
 }

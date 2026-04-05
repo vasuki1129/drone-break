@@ -1,4 +1,5 @@
 #pragma once
+#include "texture.h"
 #include "shader.h"
 #include "asset.h"
 #include "gl_util.h"
@@ -18,9 +19,12 @@ namespace engine {
         Material(std::string path);
         bool Reload();
         bool Bind(BaseUniforms base);
+        void DrawEditWidget();
       private:
+        std::string texture_path;
         std::string shader_path;
         Shader* shader;
+        Texture* texture;
         UniformList uniform_set;
     };
 };
