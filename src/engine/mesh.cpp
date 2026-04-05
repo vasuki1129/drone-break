@@ -96,8 +96,13 @@ Mesh::Mesh() {
 
 
 Mesh::~Mesh() {
+
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+  glBindVertexArray(0);
   glDeleteBuffers(1, &this->vertex_buffer_handle);
   glDeleteBuffers(1, &this->index_buffer_handle);
+  glDeleteVertexArrays(1,&vertex_array_handle);
 }
 
 }

@@ -24,10 +24,14 @@ Model::Model(std::string path) {
   this->path = path;
   auto success = ProcessNode(scene->mRootNode, scene);
   success ? valid = true : valid = false;
-
+  import.FreeScene();
 
 }
-Model::~Model() {}
+Model::~Model() {
+  for (auto msh : this->meshes) {
+    delete msh;
+  }
+}
 
 std::vector<Mesh *> Model::GetMeshes() {
     return meshes;

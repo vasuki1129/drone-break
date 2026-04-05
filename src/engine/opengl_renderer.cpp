@@ -10,12 +10,8 @@
 #include "../stb/stb_image.h"
 namespace engine {
 
-
 int window_w = 0;
-
 int window_h = 0;
-
-
 
 void APIENTRY MessageCallback(GLenum source, GLenum type, GLuint id,
                               GLenum severity, GLsizei length,
@@ -72,7 +68,7 @@ void OpenGLRenderer::InitForImGui() {
 
     ImGuiIO &io = ImGui::GetIO();
     io.Fonts->AddFontFromFileTTF("ProggyCleanCENerdFont-Regular.ttf",13.0f);
-
+    io.Fonts->AddFontFromFileTTF("ArimoNerdFont-Regular.ttf",13.0f);
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
 

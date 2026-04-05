@@ -33,8 +33,7 @@ void Texture::Bind() {
 }
 
 Texture::~Texture() {
-
-
+  glDeleteTextures(1,&this->texture_handle);
 }
 
 }

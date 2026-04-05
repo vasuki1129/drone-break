@@ -46,9 +46,6 @@ Material *AssetManager::GetMaterialOrNull(std::string key) {
   }
 }
 
-
-
-
 Mesh *AssetManager::GetMeshOrNull(std::string key) {
   std::string nk = trim_str(key);
 

@@ -15,12 +15,9 @@ public:
   void Inspector();
   void SceneHierarchy();
   void MenuBar();
-
+  void PreferencesWindow();
   void DrawTransformGizmo();
-
-
   EngineInstance* engine;
-
 private:
   Transform *hierarchy_selected = nullptr;
   void HierarchyLevel(Transform* tr);

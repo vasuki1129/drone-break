@@ -14,6 +14,9 @@ bool asset_panel_vis = false;
 bool hierarchy_vis = false;
 bool inspector_vis = false;
 bool actions_vis = false;
+bool preferences_vis = false;
+
+
 
 EditorInstance::EditorInstance() {
   auto c_i = engine::EngineCreateInfo {
@@ -107,13 +110,9 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
     if(asset_panel_vis){
 
 
-      if(ImGui::Begin("Assets")){
+      if(ImGui::Begin("Assets",&asset_panel_vis)){
 
         if(ImGui::BeginTable("AssetLayout",2)){
-
-          ImGui::TableSetupColumn("##ASSET");
-          ImGui::TableSetupColumn("##DETAILS");
-          ImGui::TableHeadersRow();
 
           ImGui::TableNextRow();
           ImGui::TableSetColumnIndex(0);
@@ -136,6 +135,16 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
             }
             ImGui::TreePop();
           }
+
+          if (ImGui::TreeNode("Textures")) {
+            for (auto tx : Engine()->GetAssetManager()->loaded_textures) {
+
+
+            }
+            
+          }
+
+
           ImGui::TableSetColumnIndex(1);
           if (selected_asset != nullptr) {
             ImGui::Text("%s", selected_asset->GetName().c_str());
@@ -203,10 +212,17 @@ void EditorInstance::MenuBar() {
       if (ImGui::BeginMenu("File")) {
         if (ImGui::MenuItem("Open Scene")) {
         }
+        if (ImGui::MenuItem("Editor Settings")) {
+          preferences_vis = true;
+
+        }
         ImGui::EndMenu();
       }
 
       if (ImGui::BeginMenu("Tools")) {
+        if (ImGui::MenuItem("Assets")) {
+          asset_panel_vis = true;
+        }
         if (ImGui::MenuItem("Hierarchy")) {
           hierarchy_vis = true;
         }
@@ -216,16 +232,123 @@ void EditorInstance::MenuBar() {
         if (ImGui::MenuItem("Debug Info")) {
           debug_panel_vis = true;
         }
+        if (ImGui::MenuItem("Actions")) {
+          actions_vis = true;
+        }
         ImGui::EndMenu();
       }
       ImGui::EndMainMenuBar();
     }
 }
 
+enum class PrefsPage {
+  APPEARANCE,
+  GENERAL
+};
 
+PrefsPage current_page = PrefsPage::GENERAL;
 
+void EditorInstance::PreferencesWindow() {
+  if (!preferences_vis) return;
+
+  ImGui::Begin("Preferences", &preferences_vis);
+
+  ImGui::BeginTable("PrefsTable", 2,
+                    ImGuiTableFlags_Resizable | ImGuiTableFlags_BordersInner,ImVec2{0.0f,-FLT_MIN});
+  ImGui::TableNextRow(0,ImGui::GetWindowHeight() - 50);
+  ImGui::TableSetColumnIndex(0);
+  if (ImGui::TreeNodeEx("Editor")) {
+    if (ImGui::TreeNodeEx("General",ImGuiTreeNodeFlags_Leaf | (current_page == PrefsPage::GENERAL ? ImGuiTreeNodeFlags_Selected : 0))) {
+      if (ImGui::IsItemClicked()) {
+        current_page = PrefsPage::GENERAL;
+      }
+      ImGui::TreePop();
+    }
+    if (ImGui::TreeNodeEx("Appearance",ImGuiTreeNodeFlags_Leaf | (current_page == PrefsPage::APPEARANCE ? ImGuiTreeNodeFlags_Selected : 0))) {
+      if (ImGui::IsItemClicked()) {
+        current_page = PrefsPage::APPEARANCE;
+      }
+      ImGui::TreePop();
+    }
+
+    ImGui::TreePop();
+  }
+  ImGui::TableSetColumnIndex(1);
+
+  ImGui::EndTable();
+
+  ImGui::End();
+}
 
 void EditorInstance::Run() {
+
+
+ImVec4* colors = ImGui::GetStyle().Colors;
+colors[ImGuiCol_Text]                   = ImVec4(0.72f, 0.74f, 0.77f, 1.00f);
+colors[ImGuiCol_TextDisabled]           = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
+colors[ImGuiCol_WindowBg]               = ImVec4(0.19f, 0.21f, 0.19f, 1.00f);
+colors[ImGuiCol_ChildBg]                = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+colors[ImGuiCol_PopupBg]                = ImVec4(0.08f, 0.08f, 0.08f, 1.00f);
+colors[ImGuiCol_Border]                 = ImVec4(0.26f, 0.31f, 0.26f, 0.98f);
+colors[ImGuiCol_BorderShadow]           = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
+colors[ImGuiCol_FrameBg]                = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
+colors[ImGuiCol_FrameBgHovered]         = ImVec4(0.26f, 0.59f, 0.98f, 0.45f);
+colors[ImGuiCol_FrameBgActive]          = ImVec4(0.26f, 0.59f, 0.98f, 0.67f);
+colors[ImGuiCol_TitleBg]                = ImVec4(0.04f, 0.04f, 0.04f, 1.00f);
+colors[ImGuiCol_TitleBgActive]          = ImVec4(0.08f, 0.09f, 0.08f, 1.00f);
+colors[ImGuiCol_TitleBgCollapsed]       = ImVec4(0.00f, 0.00f, 0.00f, 0.51f);
+colors[ImGuiCol_MenuBarBg]              = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
+colors[ImGuiCol_ScrollbarBg]            = ImVec4(0.02f, 0.02f, 0.02f, 0.53f);
+colors[ImGuiCol_ScrollbarGrab]          = ImVec4(0.31f, 0.31f, 0.31f, 1.00f);
+colors[ImGuiCol_ScrollbarGrabHovered]   = ImVec4(0.41f, 0.41f, 0.41f, 1.00f);
+colors[ImGuiCol_ScrollbarGrabActive]    = ImVec4(0.51f, 0.51f, 0.51f, 1.00f);
+colors[ImGuiCol_CheckMark]              = ImVec4(0.31f, 0.31f, 0.31f, 1.00f);
+colors[ImGuiCol_SliderGrab]             = ImVec4(0.24f, 0.52f, 0.88f, 1.00f);
+colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+colors[ImGuiCol_Button]                 = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
+colors[ImGuiCol_ButtonHovered]          = ImVec4(0.31f, 0.31f, 0.31f, 1.00f);
+colors[ImGuiCol_ButtonActive]           = ImVec4(0.47f, 0.47f, 0.47f, 1.00f);
+colors[ImGuiCol_Header]                 = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
+colors[ImGuiCol_HeaderHovered]          = ImVec4(0.31f, 0.31f, 0.31f, 1.00f);
+colors[ImGuiCol_HeaderActive]           = ImVec4(0.47f, 0.47f, 0.47f, 1.00f);
+colors[ImGuiCol_Separator]              = ImVec4(0.43f, 0.43f, 0.50f, 0.30f);
+colors[ImGuiCol_SeparatorHovered]       = ImVec4(0.50f, 0.50f, 0.50f, 0.30f);
+colors[ImGuiCol_SeparatorActive]        = ImVec4(0.50f, 0.50f, 0.50f, 0.30f);
+colors[ImGuiCol_ResizeGrip]             = ImVec4(0.26f, 0.59f, 0.98f, 0.20f);
+colors[ImGuiCol_ResizeGripHovered]      = ImVec4(0.26f, 0.59f, 0.98f, 0.67f);
+colors[ImGuiCol_ResizeGripActive]       = ImVec4(0.26f, 0.59f, 0.98f, 0.95f);
+colors[ImGuiCol_InputTextCursor]        = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
+colors[ImGuiCol_TabHovered]             = ImVec4(0.26f, 0.59f, 0.98f, 0.80f);
+colors[ImGuiCol_Tab]                    = ImVec4(0.18f, 0.35f, 0.58f, 0.86f);
+colors[ImGuiCol_TabSelected]            = ImVec4(0.20f, 0.41f, 0.68f, 1.00f);
+colors[ImGuiCol_TabSelectedOverline]    = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+colors[ImGuiCol_TabDimmed]              = ImVec4(0.07f, 0.10f, 0.15f, 0.97f);
+colors[ImGuiCol_TabDimmedSelected]      = ImVec4(0.14f, 0.26f, 0.42f, 1.00f);
+colors[ImGuiCol_TabDimmedSelectedOverline]  = ImVec4(0.50f, 0.50f, 0.50f, 0.00f);
+colors[ImGuiCol_DockingPreview]         = ImVec4(0.51f, 0.51f, 0.51f, 0.39f);
+colors[ImGuiCol_DockingEmptyBg]         = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
+colors[ImGuiCol_PlotLines]              = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);
+colors[ImGuiCol_PlotLinesHovered]       = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
+colors[ImGuiCol_PlotHistogram]          = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
+colors[ImGuiCol_PlotHistogramHovered]   = ImVec4(1.00f, 0.60f, 0.00f, 1.00f);
+colors[ImGuiCol_TableHeaderBg]          = ImVec4(0.19f, 0.19f, 0.20f, 1.00f);
+colors[ImGuiCol_TableBorderStrong]      = ImVec4(0.31f, 0.31f, 0.35f, 1.00f);
+colors[ImGuiCol_TableBorderLight]       = ImVec4(0.33f, 0.33f, 0.33f, 1.00f);
+colors[ImGuiCol_TableRowBg]             = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+colors[ImGuiCol_TableRowBgAlt]          = ImVec4(1.00f, 1.00f, 1.00f, 0.00f);
+colors[ImGuiCol_TextLink]               = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+colors[ImGuiCol_TextSelectedBg]         = ImVec4(0.26f, 0.59f, 0.98f, 0.35f);
+colors[ImGuiCol_TreeLines]              = ImVec4(0.43f, 0.43f, 0.50f, 0.50f);
+colors[ImGuiCol_DragDropTarget]         = ImVec4(1.00f, 1.00f, 0.00f, 0.90f);
+colors[ImGuiCol_DragDropTargetBg]       = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+colors[ImGuiCol_UnsavedMarker]          = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
+colors[ImGuiCol_NavCursor]              = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+colors[ImGuiCol_NavWindowingHighlight]  = ImVec4(1.00f, 1.00f, 1.00f, 0.70f);
+colors[ImGuiCol_NavWindowingDimBg]      = ImVec4(0.80f, 0.80f, 0.80f, 0.20f);
+colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
+
+
+
   while (!glfwWindowShouldClose(engine->GetWindow())) {
     glfwPollEvents();
     engine->GetRenderer()->StartFrame();
@@ -233,15 +356,14 @@ void EditorInstance::Run() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
     ImGui::DockSpaceOverViewport(0,NULL,ImGuiDockNodeFlags_PassthruCentralNode,NULL);
-
+    ImGui::ShowDemoWindow();
     MenuBar();
-    //ImGui::ShowDemoWindow();
     DebugPanel();
     ActionsPanel();
     Inspector();
     SceneHierarchy();
     AssetPanel();
-
+    PreferencesWindow();
     int display_w, display_h;
     glfwGetFramebufferSize(engine->GetWindow(), &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);
