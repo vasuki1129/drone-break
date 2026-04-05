@@ -153,6 +153,8 @@ void AssetManager::ProcessShader(std::filesystem::path pth) {
 
 void AssetManager::ProcessTexture(std::filesystem::path pth) {
   Texture *tex = new Texture(pth.string());
+  tex->SetName(pth.stem());
+  tex->SetPath(pth);
   if (tex->IsValid()) {
     loaded_textures.emplace(pth.stem().string(), tex);
   } else {

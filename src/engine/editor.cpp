@@ -138,10 +138,16 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
 
           if (ImGui::TreeNode("Textures")) {
             for (auto tx : Engine()->GetAssetManager()->loaded_textures) {
-
+              if(ImGui::TreeNodeEx(tx.first.c_str(),ImGuiTreeNodeFlags_Leaf)){
+                if(ImGui::IsItemClicked())
+                {
+                  selected_asset = tx.second;
+                }
+                ImGui::TreePop();
+              }
 
             }
-            
+            ImGui::TreePop();
           }
 
 
