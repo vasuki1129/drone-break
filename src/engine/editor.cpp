@@ -4,6 +4,8 @@
 #include "../imgui/imgui_impl_opengl3.h"
 #include "mesh_component.h"
 #include "gui_util.h"
+#include "opengl_renderer.h"
+#include <deque>
 
 namespace engine::editor {
 
@@ -17,6 +19,7 @@ bool actions_vis = false;
 bool preferences_vis = false;
 
 
+int fps_smooth_samples = 100;
 
 EditorInstance::EditorInstance() {
   auto c_i = engine::EngineCreateInfo {
@@ -26,6 +29,7 @@ EditorInstance::EditorInstance() {
   };
   engine = engine::CreateEngine(c_i);
   engine->GetRenderer()->InitForImGui();
+  glGenVertexArrays(1,&grid_vao);
 }
 
 EditorInstance::~EditorInstance() {}
@@ -151,6 +155,24 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
           }
 
 
+          if (ImGui::TreeNode("Shaders")) {
+            for (auto sh : Engine()->GetAssetManager()->loaded_shaders) {
+              if (ImGui::TreeNodeEx(sh.first.c_str(),
+                                    ImGuiTreeNodeFlags_Leaf)) {
+                if (ImGui::IsItemClicked()) {
+                  selected_asset = sh.second;
+                }
+                ImGui::TreePop();
+
+              }
+              
+            }
+            ImGui::TreePop();
+          }
+
+
+
+
           ImGui::TableSetColumnIndex(1);
           if (selected_asset != nullptr) {
             ImGui::Text("%s", selected_asset->GetName().c_str());
@@ -199,13 +221,52 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
 
 
 
+  void EditorInstance::DrawGrid() {
+    glBindVertexArray(this->grid_vao);
+    auto shd = Engine()->GetAssetManager()->GetShaderOrNull("shd_editor_grid");
+
+    if (shd == nullptr) {
+      std::cout << "grid shader not found\n";
+      return;
+    }
+
+    shd->Bind();
+    shd->SetUniform("camera", Engine()
+                                  ->GetSceneLoader()
+                                  ->GetCurrentScene()
+                                  ->GetCurrentCameraMatrix());
+    shd->SetUniform("cam_pos", Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraPosition());
+
+
+    glEnable(GL_BLEND);
+    glDrawArrays(GL_TRIANGLES,0,6);
+  }
+
+
   
 void EditorInstance::DebugPanel() {
+  static std::vector<float> fps_smooth;
+
+
+
   if (debug_panel_vis) {
-    if (ImGui::Begin("Debug"), &debug_panel_vis) {
+    if (ImGui::Begin("Debug", &debug_panel_vis)) {
       ImGui::Text("%s",Engine()->GetVersionString().c_str());
       ImGui::Text("Frame Time: %.3fms", Engine()->GetRenderer()->DeltaTime() * 1000.0f );
-      ImGui::Text("FPS: %.3fms", (1.0f / Engine()->GetRenderer()->DeltaTime()) );
+
+      fps_smooth.push_back(1.0f/Engine()->GetRenderer()->DeltaTime());
+      if (fps_smooth.size() >= fps_smooth_samples) {
+        fps_smooth.erase(fps_smooth.begin());
+      }
+
+      float tot = 0.0f;
+      for (auto f : fps_smooth) {
+        tot += f;
+      }
+      tot /= fps_smooth.size();
+
+      ImGui::Text("FPS: %.3fms", (tot));
+      ImGui::PlotLines("FPS Graph",fps_smooth.data(), fps_smooth.size(),0,NULL,0,120,ImVec2(0,100));
     }
     ImGui::End();
   }
@@ -370,6 +431,7 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     SceneHierarchy();
     AssetPanel();
     PreferencesWindow();
+    DrawGrid();
     int display_w, display_h;
     glfwGetFramebufferSize(engine->GetWindow(), &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);

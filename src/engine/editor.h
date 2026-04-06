@@ -17,8 +17,12 @@ public:
   void MenuBar();
   void PreferencesWindow();
   void DrawTransformGizmo();
+
+  void DrawGrid();
   EngineInstance* engine;
+
 private:
+  unsigned int grid_vao;
   Transform *hierarchy_selected = nullptr;
   void HierarchyLevel(Transform* tr);
 };

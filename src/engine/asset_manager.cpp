@@ -123,7 +123,7 @@ void AssetManager::ProcessModel(std::filesystem::path pth) {
     loaded_models.emplace(pth.stem().string(), m);
     for (auto mesh : m->GetMeshes()) {
       loaded_meshes.emplace(pth.stem().string() + "." + mesh->GetName(), mesh);
-      std::cout << "added mesh: "+ pth.stem().string()+"."+mesh->GetName();
+      std::cout << "added mesh: "+ pth.stem().string()+"."+mesh->GetName() << "\n";
     }
   } else {
     std::cout << pth.string() << " failed to load";

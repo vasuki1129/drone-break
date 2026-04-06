@@ -16,6 +16,7 @@ public:
   Transform *GetRoot();
   bool IsValid();
   glm::mat4 GetCurrentCameraMatrix();
+  glm::vec3 GetCurrentCameraPosition();
 private:
   CameraComponent* current_camera;
   std::string name;

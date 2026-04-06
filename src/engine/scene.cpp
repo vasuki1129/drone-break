@@ -3,6 +3,19 @@
 #include "engine.h"
 namespace engine {
 
+
+
+glm::vec3 Scene::GetCurrentCameraPosition() {
+  if (this->current_camera == nullptr) {
+    return glm::vec3(-5.0f,4.0f,5.0f);
+  } else {
+    return current_camera->GetOwner()->GetGlobalPosition();
+  }
+}
+
+
+
+
 glm::mat4 Scene::GetCurrentCameraMatrix() {
   //return a default if there is no main camera
   if (this->current_camera == nullptr) {

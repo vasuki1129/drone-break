@@ -27,8 +27,6 @@ void window_size_callback(GLFWwindow *window, int width, int height) {
   glViewport(0,0,width,height);
 }
 
-
-
 int OpenGLRenderer::WindowWidth() { return window_width; }
 
 int OpenGLRenderer::WindowHeight() {return window_height;}

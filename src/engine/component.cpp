@@ -17,6 +17,12 @@ uint64_t Component::GetUID() {
 }
 
 
+
+Transform *Component::GetOwner() {
+  return owner;
+}
+
+
 std::string Component::GetName() {
   return name;
 }

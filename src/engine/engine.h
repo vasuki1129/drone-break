@@ -1,3 +1,23 @@
+/*
+ * * * * * *
+ *
+ *     _/        _/_/_/    _/_/_/  _/    _/  _/_/_/_/_/
+ *    _/          _/    _/        _/    _/      _/
+ *   _/          _/    _/  _/_/  _/_/_/_/      _/
+ *  _/          _/    _/    _/  _/    _/      _/
+ * _/_/_/_/  _/_/_/    _/_/_/  _/    _/      _/
+ *
+ *
+ *    hyper minimalist editor based game engine
+ *
+ *
+ * * * * * *
+ *
+ * This engine is proudly AI free, and will remain so
+ *
+ * * * * * *
+ */
+
 #pragma once
 
 #include <concepts>
@@ -35,7 +55,6 @@ public:
   AssetManager* GetAssetManager();
   void Initialize();
 
-
   std::vector<std::string> GetRegisteredComponentsList();
 
   Component *CreateComponent(std::string component_type_name);
@@ -44,7 +63,6 @@ public:
   {
       registered_component_types[type_name] = factory;
   };
-
 
   InputHandler* GetInput();
 
@@ -57,8 +75,6 @@ private:
   s7_scheme *scheme_interpreter;
   OpenGLRenderer* renderer;
   InputHandler* input_handler;
-
-
 
   std::map<std::string, Component* (*) ()> registered_component_types;
 };

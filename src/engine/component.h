@@ -36,6 +36,7 @@ public:
   virtual void DrawWidget() =0;
 
 
+  Transform* GetOwner();
   void SetOwner(Transform* own);
 
   std::string GetName();

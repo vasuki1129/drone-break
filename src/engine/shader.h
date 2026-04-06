@@ -55,9 +55,6 @@ public:
 };
 
 
-//the shader is going to hold the VAO, so each shader
-//can have its own vertex attrib set, and they can
-//be set up once, at shader creation
 class Shader : public Asset{
 public:
   Shader(std::string path);
@@ -66,7 +63,7 @@ public:
   bool SetUniform(std::string key, Uniform u);
   void Reload();
   bool Bind();
-private:
+protected:
   unsigned int shader_handle = 0;
   unsigned int vao = 0;
   std::string vertex_src_str;
