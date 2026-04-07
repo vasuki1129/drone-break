@@ -15,6 +15,9 @@ public:
   json Save() override;
   Transform *GetRoot();
   bool IsValid();
+
+  void SetCamera(CameraComponent* cam);
+
   glm::mat4 GetCurrentCameraMatrix();
   glm::vec3 GetCurrentCameraPosition();
 private:

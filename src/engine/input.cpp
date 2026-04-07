@@ -9,10 +9,32 @@ namespace engine {
     Engine()->GetInput()->SendInput(key,action,mods);
   }
 
+  void InputHandlerMousePositionCallback(GLFWwindow* window, double xpos, double ypos)
+  {
+    Engine()->GetInput()->SendMousePosition(glm::vec2(xpos,ypos));
+  }
 
   int MakeKeyval(int key, int mod) { return GLFW_KEY_LAST * mod + key; }
+  void InputHandler::SendMousePosition(glm::vec2 position)
+  {
+    mouse_delta = (position - last_mouse_pos);
+    last_mouse_pos = position;
+  }
+
+  glm::vec2 InputHandler::MouseDelta()
+  {
+    return this->mouse_delta;
+  }
+
+  glm::vec2 InputHandler::MousePosition()
+  {
+    return this->last_mouse_pos;
+  }
 
   void InputHandler::Update() {
+
+    this->mouse_delta.x = 0.0;
+    this->mouse_delta.y = 0.0;
     for (auto v : key_state) {
       if (v.second == KeyState::KEY_PRESSED) {
         key_state[v.first] = KeyState::KEY_DOWN;

@@ -214,12 +214,7 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
     if (hierarchy_selected == nullptr)
       return;
 
-
-
-
   }
-
-
 
   void EditorInstance::DrawGrid() {
     glBindVertexArray(this->grid_vao);
@@ -236,14 +231,15 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
                                   ->GetCurrentScene()
                                   ->GetCurrentCameraMatrix());
     shd->SetUniform("cam_pos", Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraPosition());
-
+    shd->SetUniform("grid_color_thin", glm::vec3(1.0,0.0,0.0));
+    shd->SetUniform("grid_color_thick", glm::vec3(1.0,1.0,1.0));
+    shd->SetUniform("grid_size", Uniform_f(1.0f));
 
     glEnable(GL_BLEND);
     glDrawArrays(GL_TRIANGLES,0,6);
   }
 
 
-  
 void EditorInstance::DebugPanel() {
   static std::vector<float> fps_smooth;
 
@@ -267,6 +263,8 @@ void EditorInstance::DebugPanel() {
 
       ImGui::Text("FPS: %.3fms", (tot));
       ImGui::PlotLines("FPS Graph",fps_smooth.data(), fps_smooth.size(),0,NULL,0,120,ImVec2(0,100));
+
+      ImGui::Text("Mouse Delta: ( %f, %f )",Engine()->GetInput()->MouseDelta().x, Engine()->GetInput()->MouseDelta().y);
     }
     ImGui::End();
   }
@@ -438,6 +436,7 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     engine->GetSceneLoader()->UpdateCurrentScene(engine->GetRenderer()->DeltaTime());
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    engine->GetInput()->Update();
     engine->GetRenderer()->EndFrame();
   }
 }

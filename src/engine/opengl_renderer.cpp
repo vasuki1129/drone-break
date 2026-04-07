@@ -4,6 +4,7 @@
 #include "../imgui/imgui_impl_glfw.h"
 #include "../imgui/imgui_impl_opengl3.h"
 #include "../imgui/icon_fonts.h"
+#include "input.h"
 
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -49,7 +50,7 @@ OpenGLRenderer::OpenGLRenderer(GLFWwindow** smuggle, EngineCreateInfo& create_in
 
     //pass input to the input handler
     glfwSetKeyCallback(window, InputHandlerKeyCallback);
-
+    glfwSetCursorPosCallback(window, InputHandlerMousePositionCallback);
     glCullFace(GL_BACK);
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);

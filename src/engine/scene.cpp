@@ -5,6 +5,11 @@ namespace engine {
 
 
 
+void Scene::SetCamera(CameraComponent* cam)
+{
+  this->current_camera = cam;
+}
+
 glm::vec3 Scene::GetCurrentCameraPosition() {
   if (this->current_camera == nullptr) {
     return glm::vec3(-5.0f,4.0f,5.0f);
@@ -13,15 +18,14 @@ glm::vec3 Scene::GetCurrentCameraPosition() {
   }
 }
 
-
-
-
 glm::mat4 Scene::GetCurrentCameraMatrix() {
   //return a default if there is no main camera
   if (this->current_camera == nullptr) {
     glm::mat4 view = glm::lookAt(glm::vec3(-5.0f,4.0f,5.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
     glm::mat4 projection = glm::perspective(90.0f, (float)Engine()->GetRenderer()->WindowWidth() / (float)Engine()->GetRenderer()->WindowHeight(), 0.01f, 100.0f);
     //glm::mat4 projection = glm::ortho(-20.0f,20.0f,-20.0f,20.0f,0.01f,100.0f);
+
+    std::cout << "Using default camera.\n";
     return projection * view;
   }
   return this->current_camera->GetCameraMatrix();

@@ -54,6 +54,7 @@ void EngineInstance::Run() {
     glfwPollEvents();
     renderer->StartFrame();
     GetSceneLoader()->UpdateCurrentScene(this->GetRenderer()->DeltaTime());
+    input_handler->Update();
     renderer->EndFrame();
   }
 }
