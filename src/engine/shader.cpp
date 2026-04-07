@@ -103,7 +103,7 @@ bool Shader::SetUniform(std::string key, Uniform u) {
 
           auto location = glGetUniformLocation(this->shader_handle, key.c_str());
           if (location == -1) {
-            std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name << "\n";
+            //std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name << "\n";
             return false;
           }
           glUniform3fv(location,1, glm::value_ptr(val.value));
@@ -113,7 +113,7 @@ bool Shader::SetUniform(std::string key, Uniform u) {
       mcase(Uniform_i) {
           auto location = glGetUniformLocation(this->shader_handle, key.c_str());
           if (location == -1) {
-            std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name << "\n";
+            //std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name << "\n";
             return false;
           }
           glUniform1i(location, val.value);
@@ -123,7 +123,7 @@ bool Shader::SetUniform(std::string key, Uniform u) {
           auto location =
               glGetUniformLocation(this->shader_handle, key.c_str());
           if (location == -1) {
-            std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name + "\n";
+            //std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name + "\n";
             return false;
           }
           glUniform1f(location, val.value);
@@ -133,8 +133,8 @@ bool Shader::SetUniform(std::string key, Uniform u) {
           auto location =
               glGetUniformLocation(this->shader_handle, key.c_str());
           if (location == -1) {
-            std::cout << std::string("Uniform ") + key +
-                                     " does not exist on shader " + this->name << "\n";
+            //std::cout << std::string("Uniform ") + key +
+            //                         " does not exist on shader " + this->name << "\n";
 
             return false;
           }
@@ -145,8 +145,8 @@ bool Shader::SetUniform(std::string key, Uniform u) {
           auto location =
               glGetUniformLocation(this->shader_handle, key.c_str());
           if (location == -1) {
-            std::cout << std::string("Uniform ") + key +
-                                     " does not exist on shader " + this->name << "\n";
+            //std::cout << std::string("Uniform ") + key +
+            //                         " does not exist on shader " + this->name << "\n";
             return false;
           }
             glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(val.value));
@@ -156,7 +156,7 @@ bool Shader::SetUniform(std::string key, Uniform u) {
           auto location =
               glGetUniformLocation(this->shader_handle, key.c_str());
           if (location == -1) {
-            std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name << "\n";
+            //std::cout << std::string("Uniform ") + key + " does not exist on shader " + this->name << "\n";
             return false;
 
           }

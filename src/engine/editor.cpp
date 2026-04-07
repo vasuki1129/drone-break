@@ -231,19 +231,16 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
                                   ->GetCurrentScene()
                                   ->GetCurrentCameraMatrix());
     shd->SetUniform("cam_pos", Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraPosition());
-    shd->SetUniform("grid_color_thin", glm::vec3(1.0,0.0,0.0));
+    shd->SetUniform("grid_color_thin", glm::vec3(0.6,0.6,0.6));
     shd->SetUniform("grid_color_thick", glm::vec3(1.0,1.0,1.0));
     shd->SetUniform("grid_size", Uniform_f(1.0f));
-
+    shd->SetUniform("min_pixels", Uniform_f(2.0f));
     glEnable(GL_BLEND);
     glDrawArrays(GL_TRIANGLES,0,6);
   }
 
-
 void EditorInstance::DebugPanel() {
   static std::vector<float> fps_smooth;
-
-
 
   if (debug_panel_vis) {
     if (ImGui::Begin("Debug", &debug_panel_vis)) {

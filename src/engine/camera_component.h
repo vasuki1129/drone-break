@@ -12,6 +12,8 @@ public:
   virtual ~CameraComponent();
   virtual void tick(float dt) override;
   virtual glm::mat4 GetCameraMatrix();
+protected:
+  float movement_speed = 5.0f;
 };
 
 class EditorCameraComponent : public CameraComponent {
