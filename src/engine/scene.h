@@ -20,6 +20,7 @@ public:
 
   glm::mat4 GetCurrentCameraMatrix();
   glm::vec3 GetCurrentCameraPosition();
+  CameraComponent* GetCurrentCamera();
 private:
   CameraComponent* current_camera;
   std::string name;

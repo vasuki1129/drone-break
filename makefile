@@ -23,6 +23,7 @@ LIN_DEPS += build_linux/release/engine/asset.o
 LIN_DEPS += build_linux/release/engine/asset_manager.o
 LIN_DEPS += build_linux/release/engine/gui_util.o
 LIN_DEPS += build_linux/release/engine/input.o
+LIN_DEPS += build_linux/release/engine/physics.o
 
 LIN_DEPS += build_linux/release/game/entry.o
 LIN_DEPS += build_linux/release/game/test_component.o
@@ -57,6 +58,7 @@ LIN_DEPS_DEBUG += build_linux/debug/engine/asset.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/asset_manager.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/gui_util.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/input.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/physics.o
 
 LIN_DEPS_DEBUG += build_linux/debug/game/entry.o
 LIN_DEPS_DEBUG += build_linux/debug/game/test_component.o

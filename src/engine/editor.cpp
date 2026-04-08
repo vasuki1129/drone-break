@@ -5,8 +5,10 @@
 #include "mesh_component.h"
 #include "gui_util.h"
 #include "opengl_renderer.h"
+#include "physics.h"
+#include <GL/gl.h>
 #include <deque>
-
+#include "camera_component.h"
 namespace engine::editor {
 
 
@@ -213,7 +215,39 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
   void EditorInstance::DrawTransformGizmo() {
     if (hierarchy_selected == nullptr)
       return;
+    glBindVertexArray(gizmo_vao);
 
+    Shader* shader = Engine()->GetAssetManager()->GetShaderOrNull("shd_transform_gizmo");
+    if(shader->IsValid())
+    {
+
+      shader->Bind();
+
+      shader->SetUniform("gizmo_location", hierarchy_selected->GetGlobalPosition());
+      shader->SetUniform("camera", Engine()
+                                  ->GetSceneLoader()
+                                  ->GetCurrentScene()
+                                  ->GetCurrentCameraMatrix());
+
+
+      Ray r = engine->GetSceneLoader()->GetCurrentScene()->GetCurrentCamera()->ScreenPointToRay(Engine()->GetInput()->MousePosition());
+      float int_dist;
+      if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(2.0f,0.1f,0.1f), hierarchy_selected->GetModelMatrix(), int_dist))
+      {
+        shader->SetUniform("x_hovered", Uniform_f(1.0f));
+      }
+      else
+      {
+        shader->SetUniform("x_hovered", Uniform_f(0.0f));
+      }
+
+      glLineWidth(3.0);
+      glDepthFunc(GL_ALWAYS);
+      glDrawArrays(GL_LINES,0,6);
+      glDepthFunc(GL_LESS);
+    }
+
+    glBindVertexArray(0);
   }
 
   void EditorInstance::DrawGrid() {
@@ -231,11 +265,11 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
                                   ->GetCurrentScene()
                                   ->GetCurrentCameraMatrix());
     shd->SetUniform("cam_pos", Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraPosition());
-    shd->SetUniform("grid_color_thin", glm::vec3(0.6,0.6,0.6));
+    shd->SetUniform("grid_color_thin", glm::vec3(0.3,0.3,0.3));
     shd->SetUniform("grid_color_thick", glm::vec3(1.0,1.0,1.0));
     shd->SetUniform("grid_size", Uniform_f(1.0f));
     shd->SetUniform("min_pixels", Uniform_f(2.0f));
-    glEnable(GL_BLEND);
+    glEnable(GL_MULTISAMPLE);
     glDrawArrays(GL_TRIANGLES,0,6);
   }
 
@@ -431,6 +465,10 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     glfwGetFramebufferSize(engine->GetWindow(), &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);
     engine->GetSceneLoader()->UpdateCurrentScene(engine->GetRenderer()->DeltaTime());
+
+
+    DrawTransformGizmo();
+
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     engine->GetInput()->Update();

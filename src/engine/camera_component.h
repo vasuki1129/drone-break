@@ -2,6 +2,7 @@
 #include "../json/json.hpp"
 #include "component.h"
 #include <string>
+#include "physics.h"
 
 namespace engine {
 
@@ -12,6 +13,7 @@ public:
   virtual ~CameraComponent();
   virtual void tick(float dt) override;
   virtual glm::mat4 GetCameraMatrix();
+  virtual Ray ScreenPointToRay(glm::vec2 screen_point);
 protected:
   float movement_speed = 5.0f;
 };

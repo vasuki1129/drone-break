@@ -14,11 +14,42 @@ namespace engine {
     Engine()->GetInput()->SendMousePosition(glm::vec2(xpos,ypos));
   }
 
+  void InputHandlerMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+  {
+    Engine()->GetInput()->SendMouseButton(button, action, mods);
+  }
+
   int MakeKeyval(int key, int mod) { return GLFW_KEY_LAST * mod + key; }
   void InputHandler::SendMousePosition(glm::vec2 position)
   {
     mouse_delta = (position - last_mouse_pos);
     last_mouse_pos = position;
+  }
+
+  void InputHandler::SendMouseButton(int button, int action, int mods)
+  {
+    if(action == GLFW_PRESS)
+    {
+      switch (button) {
+      case GLFW_MOUSE_BUTTON_LEFT:
+        leftClick = KeyState::KEY_PRESSED;
+        break;
+      case GLFW_MOUSE_BUTTON_RIGHT:
+        rightClick = KeyState::KEY_PRESSED;
+        break;
+      }
+    }
+    else if(action == GLFW_RELEASE)
+    {
+      switch (button) {
+      case GLFW_MOUSE_BUTTON_LEFT:
+        leftClick = KeyState::KEY_RELEASED;
+        break;
+      case GLFW_MOUSE_BUTTON_RIGHT:
+        rightClick = KeyState::KEY_RELEASED;
+        break;
+      }
+    }
   }
 
   glm::vec2 InputHandler::MouseDelta()
@@ -43,7 +74,75 @@ namespace engine {
         key_state[v.first] = KeyState::KEY_UP;
       }
     }
+
+    if(leftClick == KeyState::KEY_PRESSED)
+    {
+      leftClick = KeyState::KEY_DOWN;
+    }
+    else if(leftClick == KeyState::KEY_RELEASED)
+    {
+      leftClick == KeyState::KEY_UP;
+    }
+
+    if(rightClick == KeyState::KEY_PRESSED)
+    {
+      rightClick = KeyState::KEY_DOWN;
+    }
+    else if(rightClick == KeyState::KEY_RELEASED)
+    {
+      rightClick == KeyState::KEY_UP;
+    }
+
+
+
   }
+
+  void InputHandler::DisableCursor()
+  {
+    glfwSetInputMode(Engine()->GetWindow(),GLFW_CURSOR,GLFW_CURSOR_DISABLED);
+  }
+
+
+  void InputHandler::EnableCursor()
+  {
+    glfwSetInputMode(Engine()->GetWindow(),GLFW_CURSOR,GLFW_CURSOR_NORMAL);
+  }
+
+
+  bool InputHandler::MouseButtonPressed(int button)
+  {
+    if(button == 0)
+      {
+        return leftClick == KeyState::KEY_PRESSED;
+      }
+    else if(button == 1)
+     {
+        return rightClick == KeyState::KEY_PRESSED;
+     }
+    else
+     {
+      return false;
+     }
+  }
+
+
+  bool InputHandler::MouseButtonReleased(int button)
+  {
+    if(button == 0)
+      {
+        return leftClick == KeyState::KEY_RELEASED;
+      }
+    else if(button == 1)
+     {
+        return rightClick == KeyState::KEY_RELEASED;
+     }
+    else
+     {
+      return false;
+     }
+  }
+
+
 
   bool InputHandler::KeyDown(int key) {
     if (key_state.find(key) != key_state.end() &&
@@ -93,6 +192,25 @@ namespace engine {
   bool InputHandler::KeyReleased(int key, int mods) {
     return KeyReleased(MakeKeyval(key, mods));
   }
+
+  bool InputHandler::MouseButtonDown(int button)
+  {
+    if(button == 0)
+      {
+        return leftClick == KeyState::KEY_DOWN || leftClick == KeyState::KEY_PRESSED;
+      }
+    else if(button == 1)
+     {
+        return rightClick == KeyState::KEY_DOWN || rightClick == KeyState::KEY_PRESSED;
+     }
+    else
+     {
+      return false;
+     }
+  }
+
+
+
 
   void InputHandler::SendInput(int key, int action, int mods) {
     int mods_filtered = mods & 0b111; //filter out all but shift, ctrl, and alt

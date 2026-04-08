@@ -12,8 +12,6 @@ FACTORY(MeshComponent) {
   return mesh_comp;
 }
 
-
-
 bool MeshComponent::SetMesh(std::string msh) {
   Mesh *try_mesh = Engine()->GetAssetManager()->GetMeshOrNull(msh);
   if (try_mesh == nullptr) {

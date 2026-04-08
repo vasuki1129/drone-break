@@ -49,6 +49,7 @@ OpenGLRenderer::OpenGLRenderer(GLFWwindow** smuggle, EngineCreateInfo& create_in
     glfwSetWindowSizeCallback(window, window_size_callback);
 
     //pass input to the input handler
+    glfwSetMouseButtonCallback(window, InputHandlerMouseButtonCallback);
     glfwSetKeyCallback(window, InputHandlerKeyCallback);
     glfwSetCursorPosCallback(window, InputHandlerMousePositionCallback);
     glCullFace(GL_BACK);

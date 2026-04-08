@@ -23,6 +23,7 @@ public:
 
 private:
   unsigned int grid_vao;
+  unsigned int gizmo_vao;
   Transform *hierarchy_selected = nullptr;
   void HierarchyLevel(Transform* tr);
 };

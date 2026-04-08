@@ -3,7 +3,10 @@
 #include "engine.h"
 namespace engine {
 
-
+CameraComponent* Scene::GetCurrentCamera()
+{
+  return current_camera;
+}
 
 void Scene::SetCamera(CameraComponent* cam)
 {
