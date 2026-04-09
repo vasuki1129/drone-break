@@ -6,7 +6,6 @@
 #include "engine.h"
 namespace engine {
 
-
 static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
     if (data->EventFlag == ImGuiInputTextFlags_CallbackEdit) {
 
@@ -21,7 +20,6 @@ static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
                                 ImGuiTreeNodeFlags_CollapsingHeader |
                                 ImGuiTreeNodeFlags_Framed)) {
 
-
       if(ImGui::BeginChild("TransformWidge",ImVec2(0,0),ImGuiChildFlags_Borders | ImGuiChildFlags_AutoResizeY,0)){
         ImGui::InputFloat3("position", glm::value_ptr(this->position), "%.3f");
         ImGui::InputFloat4("rotation", glm::value_ptr(this->rotation), "%.3f");
@@ -30,8 +28,6 @@ static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
         ImGui::EndChild();
       }
     }
-
-
 
     for (auto comp : this->components) {
 
@@ -80,23 +76,9 @@ static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
         }
         ImGui::EndListBox();
       }
-
-
-
-
-
       ImGui::EndPopup();
 
     }
-
-
-
-
-
-
-
-  
-
   }
 void Transform::AddComponent(Component *component) {
   component->SetOwner(this);

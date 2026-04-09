@@ -7,6 +7,8 @@
 #include "opengl_renderer.h"
 #include "physics.h"
 #include <GL/gl.h>
+#include <glm/geometric.hpp>
+#include <glm/glm.hpp>
 #include <deque>
 #include "camera_component.h"
 namespace engine::editor {
@@ -187,7 +189,6 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
     }
   }
 
-
   void EditorInstance::ActionsPanel() {
     if(actions_vis){
       if(ImGui::Begin("Actions"),&actions_vis){
@@ -210,11 +211,34 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
     }
   }
 
-
-
   void EditorInstance::DrawTransformGizmo() {
+      static bool x_axis_translate_dragging = false;
+      static bool y_axis_translate_dragging = false;
+      static bool z_axis_translate_dragging = false;
     if (hierarchy_selected == nullptr)
       return;
+
+
+    if(!Engine()->GetInput()->MouseButtonDown(0))
+    {
+        x_axis_translate_dragging = false;
+        y_axis_translate_dragging = false;
+        z_axis_translate_dragging = false;
+    }
+
+    if(x_axis_translate_dragging)
+    {
+        glm::vec3 pA = hierarchy_selected->GetGlobalPosition();
+        glm::vec3 pB = pA + hierarchy_selected->Right()*1.0f;
+        glm::vec3 pA_t = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraMatrix() * glm::vec4(pA,1.0);
+        glm::vec3 pB_t = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraMatrix() * glm::vec4(pB,1.0);
+        glm::vec3 dir = pB_t - pA_t;
+        glm::vec2 pr = glm::vec2(dir.x,dir.y);
+        float proj = glm::dot(Engine()->GetInput()->MouseDelta(),pr)/glm::length(dir);
+
+        hierarchy_selected->Translate((glm::vec3(1.0,0.0,0.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()) * 0.1f);
+    }
+
     glBindVertexArray(gizmo_vao);
 
     Shader* shader = Engine()->GetAssetManager()->GetShaderOrNull("shd_transform_gizmo");
@@ -224,22 +248,56 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
       shader->Bind();
 
       shader->SetUniform("gizmo_location", hierarchy_selected->GetGlobalPosition());
+      shader->SetUniform("model", hierarchy_selected->GetModelMatrix());
       shader->SetUniform("camera", Engine()
                                   ->GetSceneLoader()
                                   ->GetCurrentScene()
                                   ->GetCurrentCameraMatrix());
-
 
       Ray r = engine->GetSceneLoader()->GetCurrentScene()->GetCurrentCamera()->ScreenPointToRay(Engine()->GetInput()->MousePosition());
       float int_dist;
       if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(2.0f,0.1f,0.1f), hierarchy_selected->GetModelMatrix(), int_dist))
       {
         shader->SetUniform("x_hovered", Uniform_f(1.0f));
+        if(Engine()->GetInput()->MouseButtonPressed(0))
+        {
+            x_axis_translate_dragging = true;
+        }
+
+
       }
       else
       {
         shader->SetUniform("x_hovered", Uniform_f(0.0f));
       }
+
+
+      r = engine->GetSceneLoader()->GetCurrentScene()->GetCurrentCamera()->ScreenPointToRay(Engine()->GetInput()->MousePosition());
+      if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(0.1f,2.0f,0.1f), hierarchy_selected->GetModelMatrix(), int_dist))
+      {
+        shader->SetUniform("y_hovered", Uniform_f(1.0f));
+        if(Engine()->GetInput()->MouseButtonPressed(0))
+        {
+            y_axis_translate_dragging = true;
+        }
+      }
+      else
+      {
+        shader->SetUniform("y_hovered", Uniform_f(0.0f));
+      }
+
+
+      r = engine->GetSceneLoader()->GetCurrentScene()->GetCurrentCamera()->ScreenPointToRay(Engine()->GetInput()->MousePosition());
+      if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(0.1f,0.1f,2.0f), hierarchy_selected->GetModelMatrix(), int_dist))
+      {
+        shader->SetUniform("z_hovered", Uniform_f(1.0f));
+        z_axis_translate_dragging = true;
+      }
+      else
+      {
+        shader->SetUniform("z_hovered", Uniform_f(0.0f));
+      }
+
 
       glLineWidth(3.0);
       glDepthFunc(GL_ALWAYS);

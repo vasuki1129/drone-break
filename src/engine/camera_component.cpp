@@ -94,17 +94,19 @@ void CameraComponent::tick(float dt) {
 
 Ray CameraComponent::ScreenPointToRay(glm::vec2 screen_point)
 {
-  glm::vec2 device_coords = glm::vec2(((2.0f * screen_point.x)/Engine()->GetRenderer()->WindowWidth())-1.0,((2.0f * screen_point.y)/Engine()->GetRenderer()->WindowHeight())-1.0);
+  glm::vec2 device_coords = glm::vec2(
+                                      ((2.0f * screen_point.x)/Engine()->GetRenderer()->WindowWidth())-1.0,
+                                      (1.0f-(2.0f * screen_point.y)/Engine()->GetRenderer()->WindowHeight()));
   glm::vec4 near = glm::vec4(device_coords.x,device_coords.y,-1.0,1.0);
   glm::vec4 far = glm::vec4(device_coords.x,device_coords.y,1.0,1.0);
-  glm::vec4 near_p = glm::inverseTranspose(GetCameraMatrix()) * near;
-  glm::vec4 far_p = glm::inverseTranspose(GetCameraMatrix()) * far;
+  glm::vec4 near_p = glm::inverse(GetCameraMatrix()) * near;
+  glm::vec4 far_p = glm::inverse(GetCameraMatrix()) * far;
   glm::vec3 near_f = glm::vec3(near_p.x/near_p.w,near_p.y/near_p.w,near_p.z/near_p.w);
   glm::vec3 far_f = glm::vec3(far_p.x/far_p.w,far_p.y/far_p.w,far_p.z/far_p.w);
 
   glm::vec3 dir = far_f - near_f;
   glm::vec3 dir_norm = glm::normalize(dir);
-  return Ray{this->GetOwner()->GetGlobalPosition(),dir_norm};
+  return Ray{near_f,dir_norm};
 }
 
 
