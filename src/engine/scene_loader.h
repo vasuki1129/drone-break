@@ -13,6 +13,9 @@ public:
   bool CueScene(std::string path); // async load scene from json dump to on deck scene, for streaming
   bool LoadScene(std::string path); // sync load scene from json dump to current scene
   void LoadDefaultScene();                 // immediately load the startup scene
+  void SaveScene(std::string path);
+  void DeloadScene();
+
 
   bool UpdateCurrentScene(float dt);
   Scene* GetCurrentScene();

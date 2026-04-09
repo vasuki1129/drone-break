@@ -8,6 +8,7 @@ namespace engine
 class Scene : public Saveable {
 public:
   Scene();
+  Scene(std::string name);
   Scene(json value);
   ~Scene();
   void Render();

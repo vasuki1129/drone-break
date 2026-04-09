@@ -13,6 +13,9 @@ public:
   bool SetMaterial(std::string material);
   void DrawWidget() override;
   MeshComponent(std::string name);
+
+  MeshComponent(json value);
+  json Save() override;
 private:
   std::string mesh_name;
   bool mesh_valid = false;

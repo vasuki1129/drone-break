@@ -2,18 +2,50 @@
 #include "camera_component.h"
 #include "mesh_component.h"
 #include "engine.h"
+#include <fstream>
 namespace engine {
 bool SceneLoader::CueScene(std::string path) {}
 
-bool SceneLoader::LoadScene(std::string path) {}
+bool SceneLoader::LoadScene(std::string path) {
+  std::ifstream f(path);
+  json data = json::parse(f);
+  Scene* scn = new Scene(data);
+
+  if (scn->IsValid()) {
+    this->DeloadScene();
+    this->current_scene = scn;
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+void SceneLoader::DeloadScene()
+{
+  delete this->current_scene;
+}
+
+void SceneLoader::SaveScene(std::string path)
+{
+  json output = this->current_scene->Save();
+  std::cout << output.dump(2) << "\n";
+  std::ofstream outfile(path);
+  if(outfile.is_open())
+  {
+    outfile << output.dump(2);
+  }
+
+}
 
 void SceneLoader::LoadDefaultScene() {
   if (current_scene != nullptr)
     delete current_scene;
 
-  current_scene = new Scene();
+  current_scene = new Scene(std::string("DefaultScene"));
   Transform *tr = new Transform(std::string("DefaultCube"));
-  MeshComponent *mesh_comp = new MeshComponent("MeshComponent");
+  MeshComponent *mesh_comp = new MeshComponent(std::string("MeshComponent"));
 
   Transform* cam_tr = new Transform(std::string("EditorCamera"));
   EditorCameraComponent* cam_comp = new EditorCameraComponent(std::string("EditorCamera"));

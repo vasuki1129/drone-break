@@ -1,4 +1,5 @@
 #include "mesh_component.h"
+#include "component.h"
 #include "engine.h"
 #include "../imgui/imgui.h"
 #include "../imgui/icon_fonts.h"
@@ -6,11 +7,29 @@ namespace engine {
 
 
 FACTORY(MeshComponent) {
-  MeshComponent *mesh_comp = new MeshComponent("MeshComponent");
+  MeshComponent *mesh_comp = new MeshComponent(std::string("MeshComponent"));
   mesh_comp->SetMesh("DefaultCube.Suzanne");
   mesh_comp->SetMaterial("default");
   return mesh_comp;
 }
+
+
+
+  json MeshComponent::Save(){
+    json j = Component::Save();
+    j["mesh_name"] = this->mesh_name.c_str();
+    j["material_name"] = this->material_name.c_str();
+    return j;
+  }
+
+
+
+  MeshComponent::MeshComponent(json value)
+    :Component(value)
+  {
+    this->mesh_name = value["mesh_name"];
+    this->material_name = value["material_name"];
+  }
 
 bool MeshComponent::SetMesh(std::string msh) {
   Mesh *try_mesh = Engine()->GetAssetManager()->GetMeshOrNull(msh);
@@ -73,10 +92,10 @@ MeshComponent::MeshComponent(std::string name)
   this->material_name = "";
   mesh_name.resize(64);
   material_name.resize(64);
+  this->component_type_id = "MeshComponent";
 }
 
 void MeshComponent::DrawWidget() {
-
     if (!mesh_valid) {
       ImGui::TextColored(ImVec4{1.0,0.0,0.0,1.0}, ICON_CI_WARNING);
       if (ImGui::IsItemHovered()) {

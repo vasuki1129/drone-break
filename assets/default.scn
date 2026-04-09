@@ -1,0 +1,84 @@
+{
+  "name": "DefaultScene",
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "DefaultCube.Suzanne",
+            "name": "MeshComponent",
+            "uid": 3
+          }
+        ],
+        "name": "DefaultCube",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 2
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "EditorCameraComponent",
+            "name": "EditorCamera",
+            "uid": 5
+          }
+        ],
+        "name": "EditorCamera",
+        "position": [
+          0.0,
+          2.0,
+          5.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 4
+      }
+    ],
+    "components": [],
+    "name": "Root",
+    "position": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "uid": 1
+  }
+}

@@ -155,8 +155,20 @@ Transform::Transform(std::string name) {
 
 json Transform::Save() {
   json out;
-  out["name"] = this->name;
+  out["name"] = this->name.c_str();
   out["uid"] = this->uid;
+  out["position"][0] = this->position.x;
+  out["position"][1] = this->position.y;
+  out["position"][2] = this->position.z;
+
+  out["rotation"][0] = this->rotation.x;
+  out["rotation"][1] = this->rotation.y;
+  out["rotation"][2] = this->rotation.z;
+  out["rotation"][3] = this->rotation.w;
+
+  out["scale"][0] = this->scale.x;
+  out["scale"][1] = this->scale.y;
+  out["scale"][2] = this->scale.z;
 
   std::vector<json> serialized_components;
   for (auto comp : components) {
@@ -167,6 +179,7 @@ json Transform::Save() {
     serialized_children.push_back(child->Save());
   }
   out["children"] = serialized_children;
+  out["components"] = serialized_components;
   return out;
 }
 

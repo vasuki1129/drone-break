@@ -3,8 +3,9 @@
 FACTORY_DEF(TestComponent);
 
 
-TestComponent::TestComponent() {
+TestComponent::TestComponent() :engine::Component(){
   this->name = "RotationComponent";
+  this->component_type_id="RotationComponent";
 }
 
 void TestComponent::tick(float dt) {

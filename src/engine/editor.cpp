@@ -11,6 +11,7 @@
 #include <glm/glm.hpp>
 #include <deque>
 #include "camera_component.h"
+#include "../imgui/imfilebrowser.h"
 namespace engine::editor {
 
 bool debug_panel_vis = false;
@@ -19,6 +20,13 @@ bool hierarchy_vis = false;
 bool inspector_vis = false;
 bool actions_vis = false;
 bool preferences_vis = false;
+
+bool scene_load_menu_open = false;
+
+ImGui::FileBrowser loadBrowser;
+ImGui::FileBrowser saveBrowser(ImGuiFileBrowserFlags_EnterNewFilename);
+
+
 
 int fps_smooth_samples = 100;
 
@@ -223,7 +231,6 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
         z_axis_translate_dragging = false;
     }
 
-
     static glm::vec3 dragging_start_pos;
 
     if(x_axis_translate_dragging)
@@ -393,16 +400,41 @@ void EditorInstance::DebugPanel() {
 }
 
 
+  void EditorInstance::OpenSceneLoadMenu(){
+      loadBrowser.Open();
+  }
+  void EditorInstance::OpenSceneSaveMenu()
+  {
+      saveBrowser.Open();
+  }
+
+
+void EditorInstance::SceneLoadMenu()
+{
+
+
+}
+
+
+
+
 void EditorInstance::MenuBar() {
 
     if (ImGui::BeginMainMenuBar()) {
       if (ImGui::BeginMenu("File")) {
         if (ImGui::MenuItem("Open Scene")) {
+          OpenSceneLoadMenu();
+        }
+        if(ImGui::MenuItem("Save Scene"))
+        {
+          OpenSceneSaveMenu();
         }
         if (ImGui::MenuItem("Editor Settings")) {
           preferences_vis = true;
 
         }
+
+
         ImGui::EndMenu();
       }
 
@@ -424,8 +456,12 @@ void EditorInstance::MenuBar() {
         }
         ImGui::EndMenu();
       }
+
+
+
       ImGui::EndMainMenuBar();
     }
+
 }
 
 enum class PrefsPage {
@@ -551,6 +587,21 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     SceneHierarchy();
     AssetPanel();
     PreferencesWindow();
+    SceneLoadMenu();
+
+    loadBrowser.Display();
+    if (loadBrowser.HasSelected()) {
+      std::string path = loadBrowser.GetSelected().string();
+      std::cout << "loading " << path <<"\n";
+      loadBrowser.ClearSelected();
+    }
+
+    saveBrowser.Display();
+    if (saveBrowser.HasSelected()) {
+      std::string path = saveBrowser.GetSelected().string();
+      Engine()->GetSceneLoader()->SaveScene(path);
+      saveBrowser.ClearSelected();
+    }
     DrawGrid();
     int display_w, display_h;
     glfwGetFramebufferSize(engine->GetWindow(), &display_w, &display_h);

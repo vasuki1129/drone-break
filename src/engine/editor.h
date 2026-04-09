@@ -15,8 +15,15 @@ public:
   void Inspector();
   void SceneHierarchy();
   void MenuBar();
+
+  void OpenSceneLoadMenu();
+  void OpenSceneSaveMenu();
+
   void PreferencesWindow();
   void DrawTransformGizmo();
+
+  void SceneLoadMenu();
+
 
   void DrawGrid();
   EngineInstance* engine;

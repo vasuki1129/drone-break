@@ -38,15 +38,18 @@ Component::~Component() {
 
 json Component::Save() {
   json out;
-  out["name"] = this->name;
-  out["uid"] = this->name;
+  out["name"] = this->name.c_str();
+  out["uid"] = this->uid;
+  out["component_type"] = this->component_type_id;
   return out;
 }
 
 
-Component::Component(std::string name) : Component(){
+Component::Component(std::string name){
 
   this->name = name;
+  this->uid = GenerateUID();
+
 }
 
 

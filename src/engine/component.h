@@ -46,6 +46,7 @@ public:
   uint64_t GetUID();
 protected:
   std::string name;
+  std::string component_type_id;
   uint64_t uid;
   Transform* owner;
 

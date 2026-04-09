@@ -59,12 +59,13 @@ EditorCameraComponent::EditorCameraComponent(std::string name)
     :CameraComponent(name)
 {
     this->name = name;
+    this->component_type_id = "EditorCameraComponent";
 }
 
 EditorCameraComponent::EditorCameraComponent(json value)
     :CameraComponent(value)
 {
-
+  this->component_type_id = "EditorCameraComponent";
 }
 
 void EditorCameraComponent::DrawWidget()

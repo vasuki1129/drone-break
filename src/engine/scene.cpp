@@ -34,6 +34,12 @@ glm::mat4 Scene::GetCurrentCameraMatrix() {
   return this->current_camera->GetCameraMatrix();
 }
 
+Scene::Scene(std::string name)
+  :Scene()
+{
+  this->name = name;
+}
+
 void Scene::Render() {
   root->ProcessRender();
 }
@@ -58,7 +64,10 @@ Scene::Scene(json value) {
 }
 
 json Scene::Save() {
-  return root->Save();
+  json j;
+  j["name"] = name;
+  j["root"] = root->Save();
+  return j;
 }
 
 Transform *Scene::GetRoot() {
