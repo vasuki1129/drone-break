@@ -60,13 +60,15 @@ Scene::~Scene() {
 Scene::Scene(json value) {
   name = value["name"];
   root = new Transform(value["root"]);
-  this->current_camera = nullptr;
+
+  this->current_camera = (CameraComponent*)root->FindComponentByUID(value["active_camera"]);
 }
 
 json Scene::Save() {
   json j;
   j["name"] = name;
   j["root"] = root->Save();
+  j["active_camera"] = current_camera->GetUID();
   return j;
 }
 

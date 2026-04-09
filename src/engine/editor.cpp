@@ -592,7 +592,7 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     loadBrowser.Display();
     if (loadBrowser.HasSelected()) {
       std::string path = loadBrowser.GetSelected().string();
-      std::cout << "loading " << path <<"\n";
+      Engine()->GetSceneLoader()->LoadScene(path);
       loadBrowser.ClearSelected();
     }
 

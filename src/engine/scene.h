@@ -17,6 +17,10 @@ public:
   Transform *GetRoot();
   bool IsValid();
 
+
+
+
+
   void SetCamera(CameraComponent* cam);
 
   glm::mat4 GetCurrentCameraMatrix();

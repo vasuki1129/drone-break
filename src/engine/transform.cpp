@@ -1,4 +1,5 @@
 #include "transform.h"
+#include <cstdint>
 #include <glm/gtc/quaternion.hpp>
 #include "util.h"
 #include "../imgui/icon_fonts.h"
@@ -89,6 +90,50 @@ void Transform::AddChild(Transform *tr) {
   tr->parent = this;
   this->children.push_back(tr);
 }
+
+
+Component* Transform::FindComponentByUID(uint64_t id)
+{
+  for(auto comp : components)
+  {
+    if(comp->GetUID() == id)
+    {
+      return comp;
+    }
+  }
+  for(auto ch : children)
+  {
+    Component* c = ch->FindComponentByUID(id);
+    if(c!=nullptr)
+    {
+      return c;
+    }
+  }
+  return nullptr;
+}
+
+
+Transform* Transform::FindTransformByUID(uint64_t id)
+{
+  if(this->GetUID() == id)
+  {
+    return this;
+  }
+  else
+  {
+    for(auto ch : children)
+    {
+      Transform* t = ch->FindTransformByUID(id);
+      if(t != nullptr)
+      {
+        return t;
+      }
+    }
+    return nullptr;
+  }
+}
+
+
 
 Transform *Transform::FindChildByName(std::string name) {
   auto it = std::find_if(children.begin(), children.end(), [name](Transform* t) {return t->name == name;});

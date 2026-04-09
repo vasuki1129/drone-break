@@ -26,6 +26,11 @@ public:
   void AddComponent(Component* component);
 
   void AddChild(Transform *tr);
+
+  Transform* FindTransformByUID(uint64_t id);
+  Component* FindComponentByUID(uint64_t id);
+
+
   Transform* FindChildByName(std::string name);
   Transform* RemoveChild(Transform *tr);
   std::vector<Transform*> GetChildren();
