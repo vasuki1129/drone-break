@@ -43,6 +43,9 @@ public:
   glm::vec3 Right();
 
   glm::mat4 GetModelMatrix();
+  glm::mat4 GetModelMatrixUnscaled();
+
+
 
   glm::vec3 GetGlobalPosition();
   glm::vec3 GetLocalPosition();

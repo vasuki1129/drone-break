@@ -13,15 +13,12 @@
 #include "camera_component.h"
 namespace engine::editor {
 
-
-
 bool debug_panel_vis = false;
 bool asset_panel_vis = false;
 bool hierarchy_vis = false;
 bool inspector_vis = false;
 bool actions_vis = false;
 bool preferences_vis = false;
-
 
 int fps_smooth_samples = 100;
 
@@ -226,18 +223,47 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
         z_axis_translate_dragging = false;
     }
 
+
+    static glm::vec3 dragging_start_pos;
+
     if(x_axis_translate_dragging)
     {
-        glm::vec3 pA = hierarchy_selected->GetGlobalPosition();
+        glm::vec3 pA = dragging_start_pos;
         glm::vec3 pB = pA + hierarchy_selected->Right()*1.0f;
         glm::vec3 pA_t = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraMatrix() * glm::vec4(pA,1.0);
         glm::vec3 pB_t = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraMatrix() * glm::vec4(pB,1.0);
         glm::vec3 dir = pB_t - pA_t;
         glm::vec2 pr = glm::vec2(dir.x,dir.y);
         float proj = glm::dot(Engine()->GetInput()->MouseDelta(),pr)/glm::length(dir);
-
         hierarchy_selected->Translate((glm::vec3(1.0,0.0,0.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()) * 0.1f);
     }
+
+    if(y_axis_translate_dragging)
+    {
+        glm::vec3 pA = dragging_start_pos;
+        glm::vec3 pB = pA + hierarchy_selected->Up()*1.0f;
+        glm::vec3 pA_t = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraMatrix() * glm::vec4(pA,1.0);
+        glm::vec3 pB_t = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraMatrix() * glm::vec4(pB,1.0);
+        glm::vec3 dir = pB_t - pA_t;
+        glm::vec2 pr = glm::vec2(dir.x,dir.y);
+        float proj = glm::dot(Engine()->GetInput()->MouseDelta(),pr)/glm::length(dir);
+        hierarchy_selected->Translate((glm::vec3(0.0,-1.0,0.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()) * 0.1f);
+    }
+
+
+    if(z_axis_translate_dragging)
+    {
+        glm::vec3 pA = dragging_start_pos;
+        glm::vec3 pB = pA + hierarchy_selected->Up()*1.0f;
+        glm::vec3 pA_t = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraMatrix() * glm::vec4(pA,1.0);
+        glm::vec3 pB_t = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraMatrix() * glm::vec4(pB,1.0);
+        glm::vec3 dir = pB_t - pA_t;
+        glm::vec2 pr = glm::vec2(dir.x,dir.y);
+        float proj = glm::dot(Engine()->GetInput()->MouseDelta(),pr)/glm::length(dir);
+        hierarchy_selected->Translate((glm::vec3(0.0,0.0,1.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()) * 0.1f);
+    }
+
+
 
     glBindVertexArray(gizmo_vao);
 
@@ -248,7 +274,7 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
       shader->Bind();
 
       shader->SetUniform("gizmo_location", hierarchy_selected->GetGlobalPosition());
-      shader->SetUniform("model", hierarchy_selected->GetModelMatrix());
+      shader->SetUniform("model", hierarchy_selected->GetModelMatrixUnscaled());
       shader->SetUniform("camera", Engine()
                                   ->GetSceneLoader()
                                   ->GetCurrentScene()
@@ -256,12 +282,14 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
 
       Ray r = engine->GetSceneLoader()->GetCurrentScene()->GetCurrentCamera()->ScreenPointToRay(Engine()->GetInput()->MousePosition());
       float int_dist;
-      if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(2.0f,0.1f,0.1f), hierarchy_selected->GetModelMatrix(), int_dist))
+      if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(2.0f,0.1f,0.1f), hierarchy_selected->GetModelMatrixUnscaled(), int_dist)
+         && !(y_axis_translate_dragging || z_axis_translate_dragging))
       {
         shader->SetUniform("x_hovered", Uniform_f(1.0f));
         if(Engine()->GetInput()->MouseButtonPressed(0))
         {
             x_axis_translate_dragging = true;
+            dragging_start_pos = hierarchy_selected->GetGlobalPosition();
         }
 
 
@@ -273,12 +301,15 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
 
 
       r = engine->GetSceneLoader()->GetCurrentScene()->GetCurrentCamera()->ScreenPointToRay(Engine()->GetInput()->MousePosition());
-      if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(0.1f,2.0f,0.1f), hierarchy_selected->GetModelMatrix(), int_dist))
+      if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(0.1f,2.0f,0.1f), hierarchy_selected->GetModelMatrixUnscaled(), int_dist)
+         && !(x_axis_translate_dragging || z_axis_translate_dragging))
       {
         shader->SetUniform("y_hovered", Uniform_f(1.0f));
         if(Engine()->GetInput()->MouseButtonPressed(0))
         {
             y_axis_translate_dragging = true;
+
+            dragging_start_pos = hierarchy_selected->GetGlobalPosition();
         }
       }
       else
@@ -288,10 +319,12 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
 
 
       r = engine->GetSceneLoader()->GetCurrentScene()->GetCurrentCamera()->ScreenPointToRay(Engine()->GetInput()->MousePosition());
-      if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(0.1f,0.1f,2.0f), hierarchy_selected->GetModelMatrix(), int_dist))
+      if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(0.1f,0.1f,2.0f), hierarchy_selected->GetModelMatrixUnscaled(), int_dist)
+         && !(x_axis_translate_dragging || y_axis_translate_dragging))
       {
         shader->SetUniform("z_hovered", Uniform_f(1.0f));
         z_axis_translate_dragging = true;
+        dragging_start_pos = hierarchy_selected->GetGlobalPosition();
       }
       else
       {

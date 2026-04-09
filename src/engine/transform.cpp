@@ -239,6 +239,13 @@ glm::mat4 Transform::GetModelMatrix() {
   return trns  * rot * scl;
 }
 
+glm::mat4 Transform::GetModelMatrixUnscaled() {
+  auto ident = glm::identity<glm::mat4>();
+  glm::mat4 rot = glm::mat4_cast(GetGlobalRotation());
+  glm::mat4 trns = glm::translate(ident,GetGlobalPosition());
+  return trns  * rot;
+}
+
 glm::vec3 Transform::GetGlobalPosition() {
   glm::vec3 tot(0.0f, 0.0f, 0.0f);
   Transform *tr = this;
