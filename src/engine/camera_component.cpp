@@ -88,7 +88,7 @@ EditorCameraComponent::EditorCameraComponent()
 
 glm::mat4 CameraComponent::GetCameraMatrix() {
   glm::mat4 view = glm::lookAt(this->owner->GetGlobalPosition(), this->owner->GetGlobalPosition() + this->owner->Forward(), this->owner->Up());
-  glm::mat4 projection = glm::perspective(glm::radians(90.0f),(float)Engine()->GetRenderer()->WindowWidth()/(float)Engine()->GetRenderer()->WindowHeight(), 0.01f, 100.0f);
+  glm::mat4 projection = glm::perspective(glm::radians(90.0f),(float)Engine()->GetRenderer()->WindowWidth()/(float)Engine()->GetRenderer()->WindowHeight(), 0.01f, 300.0f);
   return  projection * view;
 }
 

@@ -81,7 +81,7 @@ namespace engine {
     }
     else if(leftClick == KeyState::KEY_RELEASED)
     {
-      leftClick == KeyState::KEY_UP;
+      leftClick = KeyState::KEY_UP;
     }
 
     if(rightClick == KeyState::KEY_PRESSED)
@@ -90,7 +90,7 @@ namespace engine {
     }
     else if(rightClick == KeyState::KEY_RELEASED)
     {
-      rightClick == KeyState::KEY_UP;
+      rightClick = KeyState::KEY_UP;
     }
 
 
@@ -100,7 +100,11 @@ namespace engine {
   void InputHandler::DisableCursor()
   {
     glfwSetInputMode(Engine()->GetWindow(),GLFW_CURSOR,GLFW_CURSOR_DISABLED);
+    if (glfwRawMouseMotionSupported())
+      glfwSetInputMode(Engine()->GetWindow(), GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
   }
+
+
 
 
   void InputHandler::EnableCursor()

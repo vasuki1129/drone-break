@@ -23,7 +23,15 @@ static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
 
       if(ImGui::BeginChild("TransformWidge",ImVec2(0,0),ImGuiChildFlags_Borders | ImGuiChildFlags_AutoResizeY,0)){
         ImGui::InputFloat3("position", glm::value_ptr(this->position), "%.3f");
-        ImGui::InputFloat4("rotation", glm::value_ptr(this->rotation), "%.3f");
+
+        ImGui::InputFloat3("rotation", glm::value_ptr(this->rotationEuler), "%.3f");
+        if (ImGui::IsItemDeactivatedAfterEdit()) {
+          this->rotation = glm::quat(
+              glm::vec3(glm::radians(rotationEuler.x), glm::radians(rotationEuler.y), glm::radians(rotationEuler.z)));
+          glm::vec3 rot_rad = glm::eulerAngles(rotation);
+          this->rotationEuler = glm::vec3(glm::degrees(rot_rad.x),glm::degrees(rot_rad.y),glm::degrees(rot_rad.z));
+        }
+
         ImGui::InputFloat3("scale", glm::value_ptr(this->scale));
 
         ImGui::EndChild();

@@ -30,7 +30,7 @@
         "vec3 final_color = vec3(texture(texture_0, tCoord));",
         "vec3 light_dir = normalize(light_pos - frag_pos);",
         "float diff = max(dot(norm,light_dir),0);",
-        "vec3 result = (diff * vec3(1.0,1.0,1.0) + 0.08 * vec3(1.0,1.0,1.0)) * final_color;",
+        "vec3 result = (diff * vec3(0.8,0.8,0.8) + 0.19 * vec3(1.0,1.0,1.0)) * final_color;",
         "frag_color = vec4(result,1.0);",
         "}"
     ]

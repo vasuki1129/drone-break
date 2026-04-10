@@ -69,6 +69,8 @@ private:
   uint64_t uid;
   glm::vec3 position;
   glm::quat rotation;
+  glm::vec3 rotationEuler; //slaved to the quaternion
+
   glm::vec3 scale;
   Transform *parent = nullptr;
   std::vector<Transform *> children;
