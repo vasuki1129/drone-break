@@ -3,3 +3,5 @@ build_windows/
 build_linux/
 light_debug
 light_release
+deploy/
+light.exe

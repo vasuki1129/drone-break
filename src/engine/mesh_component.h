@@ -16,7 +16,6 @@ public:
 
   MeshComponent(json value);
 
-
   bool Load(json value) override;
   json Save() override;
 private:

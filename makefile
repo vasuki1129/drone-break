@@ -104,6 +104,7 @@ build_linux/release/imgui/%.o : src/imgui/%.cpp
 #WINDOWS
 NT_FLAGS := /DGLEW_STATIC /MDd /EHsc /IC:\lib\glm\include /IC:\lib\glew\include /IC:\lib\glfw\include /IC:\lib\assimp\include
 NT_DEPS := build_windows/engine/camera_component.obj
+NT_DEPS += build_windows/engine/mesh_component.obj
 NT_DEPS += build_windows/engine/component.obj
 NT_DEPS += build_windows/engine/engine.obj
 NT_DEPS += build_windows/engine/mesh.obj
@@ -117,10 +118,15 @@ NT_DEPS += build_windows/engine/transform.obj
 NT_DEPS += build_windows/engine/material.obj
 NT_DEPS += build_windows/engine/util.obj
 NT_DEPS += build_windows/engine/scene_loader.obj
-NT_DEPS += build_windows/engine/editor.o
-
+NT_DEPS += build_windows/engine/editor.obj
+NT_DEPS += build_windows/engine/asset.obj
+NT_DEPS += build_windows/engine/asset_manager.obj
+NT_DEPS += build_windows/engine/gui_util.obj
+NT_DEPS += build_windows/engine/input.obj
+NT_DEPS += build_windows/engine/physics.obj
 
 NT_DEPS += build_windows/game/entry.obj
+NT_DEPS += build_windows/game/test_component.obj
 
 NT_DEPS += build_windows/s7/s7.obj
 
@@ -139,7 +145,7 @@ NT_LIBDIRS += /LIBPATH:"C:\\lib\\assimp\\lib\\x64"
 NT_LIBS := glfw3.lib glew32s.lib opengl32.lib assimp-vc143-mt.lib Gdi32.lib
 
 windows_debug : $(NT_DEPS)
-	link $(NT_DEPS)
+	link $(NT_LIBDIRS) /OUT:"bin/windows/x64/debug/$(PROJ_NAME).exe" $(NT_DEPS) $(NT_LIBS)
 windows : $(NT_DEPS)
 	link $(NT_LIBDIRS) /OUT:"bin/windows/x64/debug/$(PROJ_NAME).exe" $(NT_DEPS) $(NT_LIBS)
 

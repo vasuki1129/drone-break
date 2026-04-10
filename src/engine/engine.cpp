@@ -2,6 +2,8 @@
 #include "input.h"
 #include "opengl_renderer.h"
 #include "mesh_component.h"
+#include <GLFW/glfw3.h>
+#include <GL/glew.h>
 
 namespace engine {
 

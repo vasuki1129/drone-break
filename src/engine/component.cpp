@@ -33,7 +33,7 @@ json Component::Save() {
   json out;
   out["name"] = this->name.c_str();
   out["uid"] = this->uid;
-  out["component_type"] = this->component_type_id;
+  out["component_type"] = this->component_type;
   return out;
 }
 

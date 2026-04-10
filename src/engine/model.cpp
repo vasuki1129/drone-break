@@ -12,7 +12,7 @@ std::map<std::string, Model*> modelCache;
 
 Model::Model(std::string path) {
   std::filesystem::path p(path);
-  this->name = p.stem().c_str();
+  this->name = p.stem().string();
   Assimp::Importer import;
   const aiScene *scene =
     import.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs);

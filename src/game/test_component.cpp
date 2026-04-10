@@ -3,7 +3,7 @@
 
 TestComponent::TestComponent() :engine::Component(){
   this->name = "RotationComponent";
-  this->component_type_id="RotationComponent";
+  this->component_type="RotationComponent";
 }
 
 void TestComponent::tick(float dt) {
@@ -23,11 +23,12 @@ json TestComponent::Save() {
 }
 
 
-void TestComponent::Load(json value)
-{
-  this->name = value["name"];
-  this->uid = value["uid"];
-  this->component_type_id = value["component_type"];
+bool TestComponent::Load(json value) {
+
+  PROPERTY_LOAD(name)
+  PROPERTY_LOAD(uid)
+  PROPERTY_LOAD(component_type)
+  return true;
 }
 
 FACTORY_DEF(TestComponent);
