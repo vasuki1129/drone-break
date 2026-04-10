@@ -57,11 +57,27 @@ Scene::~Scene() {
   delete root;
 }
 
-Scene::Scene(json value) {
-  name = value["name"];
-  root = new Transform(value["root"]);
+bool Scene::Load(json value)
+{
 
+  if(!value.contains("name"))
+  {
+    std::cout << "Scene has malformed header.\n";
+    return false;
+  }
+  name = value["name"];
+
+
+  if(!value.contains("root"))
+  {
+    std::cout << "Scene has no root component.\n";
+  }
+
+  root = new Transform();
+  root->Load(value["root"]);
   this->current_camera = (CameraComponent*)root->FindComponentByUID(value["active_camera"]);
+  this->finalized = true;
+  return true;
 }
 
 json Scene::Save() {

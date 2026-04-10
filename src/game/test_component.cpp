@@ -1,7 +1,5 @@
 #include "test_component.h"
 #include "../engine/input.h"
-FACTORY_DEF(TestComponent);
-
 
 TestComponent::TestComponent() :engine::Component(){
   this->name = "RotationComponent";
@@ -10,14 +8,26 @@ TestComponent::TestComponent() :engine::Component(){
 
 void TestComponent::tick(float dt) {
 
-  if (engine::Engine()->GetInput()->KeyDown(GLFW_KEY_D)) {
-    this->owner->Rotate(this->rotation_axis, dt * this->rotation_speed);
-    this->rotation_axis = glm::normalize(this->rotation_axis);
-  }
-
 }
 
 void TestComponent::DrawWidget() {
-  ImGui::InputFloat("Speed", &this->rotation_speed);
-  ImGui::InputFloat3("Axis", glm::value_ptr(this->rotation_axis));
+
 }
+
+json TestComponent::Save() {
+  json j;
+  j["name"] = name;
+  j["uid"] = uid;
+  j["component_type"] = "RotationComponent";
+  return j;
+}
+
+
+void TestComponent::Load(json value)
+{
+  this->name = value["name"];
+  this->uid = value["uid"];
+  this->component_type_id = value["component_type"];
+}
+
+FACTORY_DEF(TestComponent);

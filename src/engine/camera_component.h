@@ -6,26 +6,37 @@
 
 namespace engine {
 
+FACTORY(EditorCameraComponent);
+
 class CameraComponent : public Component {
 public:
   CameraComponent();
-  CameraComponent(json value);
+  CameraComponent(std::string name);
   virtual ~CameraComponent();
   virtual void tick(float dt) override;
   virtual glm::mat4 GetCameraMatrix();
   virtual Ray ScreenPointToRay(glm::vec2 screen_point);
-protected:
-  float movement_speed = 5.0f;
+  virtual json Save() override;
+  virtual bool Load(json value) override;
+
 };
 
 class EditorCameraComponent : public CameraComponent {
-  public:
-    EditorCameraComponent();
-    EditorCameraComponent(std::string name);
-    EditorCameraComponent(json value);
-    virtual ~EditorCameraComponent();
-    virtual void tick(float dt) override;
-    virtual void DrawWidget() override;
+public:
+  EditorCameraComponent();
+  EditorCameraComponent(std::string name);
+  virtual ~EditorCameraComponent();
+  virtual void tick(float dt) override;
+  virtual void DrawWidget() override;
+
+  virtual json Save() override;
+  virtual bool Load(json value) override;
+
+
+
+
+protected:
+  float movement_speed = 5.0f;
 };
 
 

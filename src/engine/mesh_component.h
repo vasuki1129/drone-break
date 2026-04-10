@@ -15,6 +15,9 @@ public:
   MeshComponent(std::string name);
 
   MeshComponent(json value);
+
+
+  bool Load(json value) override;
   json Save() override;
 private:
   std::string mesh_name;

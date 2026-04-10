@@ -13,8 +13,6 @@ FACTORY(MeshComponent) {
   return mesh_comp;
 }
 
-
-
   json MeshComponent::Save(){
     json j = Component::Save();
     j["mesh_name"] = this->mesh_name.c_str();
@@ -22,7 +20,13 @@ FACTORY(MeshComponent) {
     return j;
   }
 
-
+  bool MeshComponent::Load(json value){
+    PROPERTY_LOAD(name)
+    PROPERTY_LOAD(uid)
+    PROPERTY_LOAD(mesh_name)
+    PROPERTY_LOAD(material_name)
+    return true;
+  }
 
   MeshComponent::MeshComponent(json value)
     :Component(value)
@@ -92,7 +96,7 @@ MeshComponent::MeshComponent(std::string name)
   this->material_name = "";
   mesh_name.resize(64);
   material_name.resize(64);
-  this->component_type_id = "MeshComponent";
+  this->component_type = "MeshComponent";
 }
 
 void MeshComponent::DrawWidget() {

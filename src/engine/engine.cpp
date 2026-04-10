@@ -3,7 +3,6 @@
 #include "opengl_renderer.h"
 #include "mesh_component.h"
 
-
 namespace engine {
 
 std::string EngineInstance::GetVersionString() {
@@ -14,20 +13,27 @@ std::string EngineInstance::GetVersionString() {
 
 EngineInstance* instance = nullptr;
 
-
 Component *EngineInstance::CreateComponent(std::string component_type_name) {
   if (registered_component_types.find(component_type_name) !=
       registered_component_types.end()) {
     return registered_component_types[component_type_name]();
-
   } else {
     std::cout << "Component type `" + component_type_name + "` not found\n";
     return nullptr;
   }
 }
 
-
-
+Component *EngineInstance::LoadComponent(std::string component_type_name, json value) {
+  if (registered_component_types.find(component_type_name) !=
+      registered_component_types.end()) {
+    Component* comp =  registered_component_types[component_type_name]();
+    comp->Load(value);
+    return comp;
+  } else {
+    std::cout << "Component type `" + component_type_name + "` not found\n";
+    return nullptr;
+  }
+}
 
 std::vector<std::string> EngineInstance::GetRegisteredComponentsList() {
   std::vector<std::string> out;
@@ -71,8 +77,8 @@ EngineInstance *CreateEngine(EngineCreateInfo &create_info) {
 
 void EngineInstance::RegisterBuiltinComponents() {
   RegisterComponent("MeshComponent", FACTORY_REF(MeshComponent));
+  RegisterComponent("EditorCameraComponent", FACTORY_REF(EditorCameraComponent));
 }
-
 
 void EngineInstance::Initialize() {
   input_handler = new InputHandler();
@@ -81,11 +87,7 @@ void EngineInstance::Initialize() {
   asset_loader->Rescan();
   scene_loader = new engine::SceneLoader();
 
-
-
-
   RegisterBuiltinComponents();
-
 }
 
 InputHandler *EngineInstance::GetInput() {

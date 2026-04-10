@@ -9,7 +9,8 @@ bool SceneLoader::CueScene(std::string path) {return false;}
 bool SceneLoader::LoadScene(std::string path) {
   std::ifstream f(path);
   json data = json::parse(f);
-  Scene* scn = new Scene(data);
+  Scene* scn = new Scene();
+  scn->Load(data);
   if (scn->IsValid()) {
     this->DeloadScene();
     this->current_scene = scn;

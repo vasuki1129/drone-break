@@ -7,6 +7,21 @@
 #include <string>
 namespace engine {
 
+FACTORY_DEF(EditorCameraComponent);
+
+json EditorCameraComponent::Save()
+{
+  json value = CameraComponent::Save();
+  PROPERTY_SAVE(movement_speed)
+  return value;
+}
+
+bool EditorCameraComponent::Load(json value)
+{
+  if(!CameraComponent::Load(value)) return false;
+  PROPERTY_LOAD(movement_speed)
+  return true;
+}
 
 EditorCameraComponent::~EditorCameraComponent()
 {
@@ -20,13 +35,10 @@ void EditorCameraComponent::tick(float dt) {
     Engine()->GetInput()->DisableCursor();
   }
 
-
   if(Engine()->GetInput()->MouseButtonReleased(1))
   {
     Engine()->GetInput()->EnableCursor();
   }
-
-
 
     if(Engine()->GetInput()->MouseButtonDown(1))
     {
@@ -59,14 +71,9 @@ EditorCameraComponent::EditorCameraComponent(std::string name)
     :CameraComponent(name)
 {
     this->name = name;
-    this->component_type_id = "EditorCameraComponent";
+    this->component_type = "EditorCameraComponent";
 }
 
-EditorCameraComponent::EditorCameraComponent(json value)
-    :CameraComponent(value)
-{
-  this->component_type_id = "EditorCameraComponent";
-}
 
 void EditorCameraComponent::DrawWidget()
 {
@@ -74,8 +81,9 @@ void EditorCameraComponent::DrawWidget()
 }
 
 EditorCameraComponent::EditorCameraComponent()
+  :CameraComponent()
 {
-
+  this->component_type = "EditorCameraComponent";
 }
 
 glm::mat4 CameraComponent::GetCameraMatrix() {
@@ -84,11 +92,29 @@ glm::mat4 CameraComponent::GetCameraMatrix() {
   return  projection * view;
 }
 
-CameraComponent::CameraComponent() {}
+bool CameraComponent::Load(json value)
+{
+  PROPERTY_LOAD(name)
+  PROPERTY_LOAD(uid)
+  PROPERTY_LOAD(component_type)
+  return true;
+}
 
+json CameraComponent::Save()
+{
+  json j;
+  j["name"] = name;
+  j["uid"] = uid;
+  j["component_type"] = component_type;
+  return j;
+}
+
+CameraComponent::CameraComponent() :Component() {}
+
+CameraComponent::CameraComponent(std::string name) : Component(name) {
+
+}
 CameraComponent::~CameraComponent() {}
-
-CameraComponent::CameraComponent(json val) {}
 
 void CameraComponent::tick(float dt) {
 }

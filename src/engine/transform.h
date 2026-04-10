@@ -20,6 +20,8 @@ public:
   void SetName(std::string name);
 
   json Save() override;
+  bool Load(json value) override;
+
   void ProcessRender();
   void ProcessTick(float dt);
 
@@ -30,7 +32,6 @@ public:
   Transform* FindTransformByUID(uint64_t id);
   Component* FindComponentByUID(uint64_t id);
 
-
   Transform* FindChildByName(std::string name);
   Transform* RemoveChild(Transform *tr);
   std::vector<Transform*> GetChildren();
@@ -38,7 +39,6 @@ public:
   void Translate(glm::vec3 offset);
   void Scale(glm::vec3 amount);
   void Rotate(glm::vec3 axis, float amount);
-
 
   glm::vec3 Forward();
   glm::vec3 Backward();
@@ -50,8 +50,6 @@ public:
   glm::mat4 GetModelMatrix();
   glm::mat4 GetModelMatrixUnscaled();
 
-
-
   glm::vec3 GetGlobalPosition();
   glm::vec3 GetLocalPosition();
 
@@ -60,7 +58,6 @@ public:
 
   glm::vec3 GetGlobalScale();
   glm::vec3 GetLocalScale();
-
 
   std::string GetName();
   uint64_t GetUID();

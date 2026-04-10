@@ -261,16 +261,14 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
     if(z_axis_translate_dragging)
     {
         glm::vec3 pA = dragging_start_pos;
-        glm::vec3 pB = pA + hierarchy_selected->Up()*1.0f;
+        glm::vec3 pB = pA + hierarchy_selected->Forward()*1.0f;
         glm::vec3 pA_t = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraMatrix() * glm::vec4(pA,1.0);
         glm::vec3 pB_t = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCameraMatrix() * glm::vec4(pB,1.0);
         glm::vec3 dir = pB_t - pA_t;
         glm::vec2 pr = glm::vec2(dir.x,dir.y);
         float proj = glm::dot(Engine()->GetInput()->MouseDelta(),pr)/glm::length(dir);
-        hierarchy_selected->Translate((glm::vec3(0.0,0.0,1.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()) * 0.1f);
+        hierarchy_selected->Translate((glm::vec3(0.0,0.0,1.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()));
     }
-
-
 
     glBindVertexArray(gizmo_vao);
 
@@ -592,7 +590,20 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     loadBrowser.Display();
     if (loadBrowser.HasSelected()) {
       std::string path = loadBrowser.GetSelected().string();
-      Engine()->GetSceneLoader()->LoadScene(path);
+      if(!Engine()->GetSceneLoader()->LoadScene(path)){
+          ImGui::OpenPopup("Scene Load Failure");
+          std::cout << "Scene failed to load: " << path << "\n";
+      }
+      if(ImGui::BeginPopupModal("Scene Load Failure"))
+      {
+
+          ImGui::Text("Scene failed to load, it may be corrupted.");
+          if(ImGui::Button("Close##SceneLoadFailure"))
+          {
+              ImGui::CloseCurrentPopup();
+          }
+          ImGui::EndPopup();
+      }
       loadBrowser.ClearSelected();
     }
 

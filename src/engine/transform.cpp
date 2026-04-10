@@ -112,7 +112,6 @@ Component* Transform::FindComponentByUID(uint64_t id)
   return nullptr;
 }
 
-
 Transform* Transform::FindTransformByUID(uint64_t id)
 {
   if(this->GetUID() == id)
@@ -132,8 +131,6 @@ Transform* Transform::FindTransformByUID(uint64_t id)
     return nullptr;
   }
 }
-
-
 
 Transform *Transform::FindChildByName(std::string name) {
   auto it = std::find_if(children.begin(), children.end(), [name](Transform* t) {return t->name == name;});
@@ -169,14 +166,6 @@ Transform::Transform() {
   scale = glm::vec3(1.0f,1.0f,1.0f);
 }
 
-Transform::Transform(json value) {
-  name.resize(64);
-  name = value["name"];
-  uid = value["uid"];
-  children = std::vector<Transform*>();
-  components = std::vector<Component*>();
-}
-
 Transform::~Transform() {
   for (auto cmp : components) {
     delete cmp;
@@ -197,6 +186,55 @@ Transform::Transform(std::string name) {
   rotation = glm::identity<glm::quat>();
   scale = glm::vec3(1.0f,1.0f,1.0f);
 }
+
+bool Transform::Load(json value)
+{
+  name.resize(64);
+
+  PROPERTY_LOAD(name)
+  PROPERTY_LOAD(uid)
+
+  PROPERTY_CHECK(position)
+  position = glm::vec3();
+  position.x = value["position"][0];
+  position.y = value["position"][1];
+  position.z = value["position"][2];
+
+  PROPERTY_CHECK(rotation)
+  rotation = glm::quat();
+  rotation.x = value["rotation"][0];
+  rotation.y = value["rotation"][1];
+  rotation.z = value["rotation"][2];
+  rotation.w = value["rotation"][3];
+
+  PROPERTY_CHECK(scale)
+  scale = glm::vec3();
+  scale.x = value["scale"][0];
+  scale.y = value["scale"][1];
+  scale.z = value["scale"][2];
+
+  children = std::vector<Transform*>();
+  components = std::vector<Component*>();
+
+  PROPERTY_CHECK(children)
+  for(auto val : value["children"])
+  {
+    Transform* t = new Transform();
+    t->Load(val);
+    children.push_back(t);
+  }
+
+  PROPERTY_CHECK(components)
+  for(auto val : value["components"])
+  {
+    if(!val.contains("component_type")) return false;
+    Component* c = Engine()->LoadComponent(val["component_type"],val);
+    c->SetOwner(this);
+    components.push_back(c);
+  }
+  return true;
+}
+
 
 json Transform::Save() {
   json out;

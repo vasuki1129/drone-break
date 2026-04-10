@@ -58,7 +58,7 @@ public:
   std::vector<std::string> GetRegisteredComponentsList();
 
   Component *CreateComponent(std::string component_type_name);
-
+  Component* LoadComponent(std::string component_type_name,json value);
   void RegisterComponent(std::string type_name, Component* (*factory)(void))
   {
       registered_component_types[type_name] = factory;

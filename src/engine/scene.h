@@ -9,17 +9,15 @@ class Scene : public Saveable {
 public:
   Scene();
   Scene(std::string name);
-  Scene(json value);
   ~Scene();
   void Render();
   void Tick(float dt);
+
   json Save() override;
+  bool Load(json value) override;
+
   Transform *GetRoot();
   bool IsValid();
-
-
-
-
 
   void SetCamera(CameraComponent* cam);
 

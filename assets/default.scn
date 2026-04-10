@@ -9,14 +9,14 @@
           {
             "component_type": "MeshComponent",
             "material_name": "default",
-            "mesh_name": "DefaultCube.Suzanne",
+            "mesh_name": "TestBlocks.Cube",
             "name": "MeshComponent",
             "uid": 3
           }
         ],
         "name": "DefaultCube",
         "position": [
-          0.0,
+          3.964163303375244,
           0.0,
           0.0
         ],
@@ -27,8 +27,8 @@
           1.0
         ],
         "scale": [
-          1.0,
-          1.0,
+          10.0,
+          10.0,
           1.0
         ],
         "uid": 2
@@ -38,21 +38,22 @@
         "components": [
           {
             "component_type": "EditorCameraComponent",
+            "movement_speed": 5.0,
             "name": "EditorCamera",
             "uid": 5
           }
         ],
         "name": "EditorCamera",
         "position": [
-          -0.574940025806427,
-          3.227811574935913,
-          8.130903244018555
+          2.7423694133758545,
+          3.0552139282226563,
+          7.580239772796631
         ],
         "rotation": [
-          0.0031747424509376287,
-          0.9797993302345276,
-          -0.1993533968925476,
-          -0.015602258034050465
+          0.03729633241891861,
+          -0.9618529677391052,
+          0.16988927125930786,
+          -0.21115277707576752
         ],
         "scale": [
           1.0,
@@ -60,36 +61,6 @@
           1.0
         ],
         "uid": 4
-      },
-      {
-        "children": [],
-        "components": [
-          {
-            "component_type": "MeshComponent",
-            "material_name": "default",
-            "mesh_name": "DefaultCube.Suzanne",
-            "name": "MeshComponent",
-            "uid": 7
-          }
-        ],
-        "name": "Child",
-        "position": [
-          0.0,
-          3.978015422821045,
-          0.0
-        ],
-        "rotation": [
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ],
-        "scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "uid": 6
       }
     ],
     "components": [],
