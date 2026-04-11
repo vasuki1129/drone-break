@@ -72,6 +72,7 @@ EditorCameraComponent::EditorCameraComponent(std::string name)
 {
     this->name = name;
     this->component_type = "EditorCameraComponent";
+    this->movement_speed = 2.0f;
 }
 
 

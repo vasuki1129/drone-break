@@ -65,7 +65,6 @@ public:
   bool Bind();
 protected:
   unsigned int shader_handle = 0;
-  unsigned int vao = 0;
   std::string vertex_src_str;
   std::string fragment_src_str;
 };

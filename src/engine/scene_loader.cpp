@@ -36,31 +36,19 @@ void SceneLoader::SaveScene(std::string path)
   {
     outfile << output.dump(2);
   }
-
 }
 
 void SceneLoader::LoadDefaultScene() {
   if (current_scene != nullptr)
     delete current_scene;
-
   current_scene = new Scene(std::string("DefaultScene"));
   Transform *tr = new Transform(std::string("DefaultCube"));
   MeshComponent *mesh_comp = new MeshComponent(std::string("MeshComponent"));
-
-  Transform* cam_tr = new Transform(std::string("EditorCamera"));
-  EditorCameraComponent* cam_comp = new EditorCameraComponent(std::string("EditorCamera"));
-  cam_tr->Translate(glm::vec3(0.0,2.0,5.0));
-
   tr->Translate(glm::vec3(0.0,0.0,0.0));
-
-  cam_tr->AddComponent(cam_comp);
-
   mesh_comp->SetMesh("DefaultCube.Suzanne");
   mesh_comp->SetMaterial("default");
   tr->AddComponent(mesh_comp);
   current_scene->GetRoot()->AddChild(tr);
-  current_scene->GetRoot()->AddChild(cam_tr);
-  current_scene->SetCamera(cam_comp);
 }
 
 bool SceneLoader::UpdateCurrentScene(float dt) {
@@ -71,12 +59,25 @@ bool SceneLoader::UpdateCurrentScene(float dt) {
   else
   {
     this->current_scene->Tick(dt);
+    return true;
+  }
+}
+
+bool SceneLoader::RenderCurrentScene()
+{
+  if (this->current_scene == nullptr) {
+    std::cout << "Error, cannot render scene as there is no scene loaded\n";
+    return false;
+  }
+  else
+  {
     this->current_scene->Render();
     return true;
   }
 }
 
 Scene *SceneLoader::GetCurrentScene() {
+  if(current_scene == nullptr) std::cout << "WARNING: No scene loaded!\n";
   return current_scene;
 }
 
@@ -85,17 +86,12 @@ SceneLoader::SceneLoader() {
 }
 
 SceneLoader::~SceneLoader() {
-
   if (current_scene != nullptr) {
     delete current_scene;
   }
   if (scene_in_progress_load != nullptr) {
     delete scene_in_progress_load;
   }
-
 }
-
-
-
 
 }

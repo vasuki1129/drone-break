@@ -172,6 +172,7 @@ Transform::Transform() {
   position = glm::vec3(0.0f);
   rotation = glm::identity<glm::quat>();
   scale = glm::vec3(1.0f,1.0f,1.0f);
+  this->parent = nullptr;
 }
 
 Transform::~Transform() {
@@ -193,6 +194,7 @@ Transform::Transform(std::string name) {
   position = glm::vec3(0.0f);
   rotation = glm::identity<glm::quat>();
   scale = glm::vec3(1.0f,1.0f,1.0f);
+  this->parent = nullptr;
 }
 
 bool Transform::Load(json value)

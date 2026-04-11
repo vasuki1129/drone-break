@@ -12,7 +12,7 @@ mkdir -p build_linux/release/imgui
 mkdir -p bin/linux/x64/release
 mkdir -p bin/linux/x64/debug
 
-make linux_all -j 6
+make linux_all -j 16
 
 cp bin/linux/x64/release/light ./light_release
 cp bin/linux/x64/debug/light ./light_debug

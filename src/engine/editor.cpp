@@ -12,6 +12,7 @@
 #include <deque>
 #include "camera_component.h"
 #include "../imgui/imfilebrowser.h"
+#include "../imgui/icon_fonts.h"
 namespace engine::editor {
 
 bool debug_panel_vis = false;
@@ -26,8 +27,6 @@ bool scene_load_menu_open = false;
 ImGui::FileBrowser loadBrowser;
 ImGui::FileBrowser saveBrowser(ImGuiFileBrowserFlags_EnterNewFilename);
 
-
-
 int fps_smooth_samples = 100;
 
 EditorInstance::EditorInstance() {
@@ -37,8 +36,15 @@ EditorInstance::EditorInstance() {
     .initial_window_height = 800
   };
   engine = engine::CreateEngine(c_i);
+  engine->Initialize();
   engine->GetRenderer()->InitForImGui();
   glGenVertexArrays(1,&grid_vao);
+
+  Transform* editor_camera_transform = new Transform(std::string("EditorCameraNode"));
+  EditorCameraComponent* comp = new EditorCameraComponent("EditorCamera");
+  editor_camera_transform->AddComponent(comp);
+  this->editor_camera = comp;
+  Engine()->GetSceneLoader()->GetCurrentScene()->SetCamera(comp);
 }
 
 EditorInstance::~EditorInstance() {}
@@ -586,6 +592,10 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     AssetPanel();
     PreferencesWindow();
     SceneLoadMenu();
+    TransportPanel();
+
+
+    DrawGrid();
 
     loadBrowser.Display();
     if (loadBrowser.HasSelected()) {
@@ -613,12 +623,19 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
       Engine()->GetSceneLoader()->SaveScene(path);
       saveBrowser.ClearSelected();
     }
-    DrawGrid();
     int display_w, display_h;
     glfwGetFramebufferSize(engine->GetWindow(), &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);
-    engine->GetSceneLoader()->UpdateCurrentScene(engine->GetRenderer()->DeltaTime());
 
+
+
+    editor_camera->GetOwner()->ProcessTick(engine->GetRenderer()->DeltaTime());
+    editor_camera->GetOwner()->ProcessRender();
+    if(game_running_switch)
+    {
+        engine->GetSceneLoader()->UpdateCurrentScene(engine->GetRenderer()->DeltaTime());
+    }
+    engine->GetSceneLoader()->RenderCurrentScene();
 
     DrawTransformGizmo();
 
@@ -628,6 +645,47 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     engine->GetRenderer()->EndFrame();
   }
 }
+
+
+void EditorInstance::TransportPanel()
+{
+    ImGui::Begin("Transport##PanelToplevel");
+
+    if(ImGui::Button((std::string(ICON_CI_ARROW_LEFT) + " ##TransportRewind").c_str(),ImVec2{30,20}))
+    {
+
+    }
+
+    ImGui::SameLine();
+
+    if(this->game_running_switch)
+    {
+        if(ImGui::Button((std::string(ICON_CI_STOP_CIRCLE)+" ##TransportStop").c_str(),ImVec2{30,20}))
+        {
+            game_running_switch = false;
+        }
+    }
+    else
+    {
+      if (ImGui::Button(
+              (std::string(ICON_CI_PLAY_CIRCLE) + " ##TransportPlay").c_str(),
+              ImVec2{30, 20})) {
+          game_running_switch = true;
+      }
+    }
+
+    ImGui::SameLine();
+
+    if(ImGui::Button((std::string(ICON_CI_SAVE) + " ##TransportSave").c_str(),ImVec2(30,20)))
+    {
+
+    }
+
+    ImGui::End();
+}
+
+
+
 
 
 }

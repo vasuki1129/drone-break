@@ -18,7 +18,9 @@ public:
 
 
   bool UpdateCurrentScene(float dt);
+  bool RenderCurrentScene();
   Scene* GetCurrentScene();
+
 
 private:
   Scene* current_scene = nullptr;

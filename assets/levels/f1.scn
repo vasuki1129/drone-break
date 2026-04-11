@@ -1,0 +1,93 @@
+{
+  "active_camera": 5,
+  "name": "DefaultScene",
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "Floor1.OuterHullFacade",
+            "name": "MeshComponent",
+            "uid": 3
+          },
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "Floor1.EntranceTube",
+            "name": "MeshComponent",
+            "uid": 6
+          }
+        ],
+        "name": "DefaultCube",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.7071067690849304,
+          -5.2515960011705366e-18,
+          5.2515960011705366e-18,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 2
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "EditorCameraComponent",
+            "movement_speed": 5.0,
+            "name": "EditorCamera",
+            "uid": 5
+          }
+        ],
+        "name": "EditorCamera",
+        "position": [
+          1.8655569553375244,
+          7.677751541137695,
+          25.62315559387207
+        ],
+        "rotation": [
+          0.0005475643556565046,
+          0.9835062026977539,
+          0.0029774121940135956,
+          0.18084965646266937
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 4
+      }
+    ],
+    "components": [],
+    "name": "Root",
+    "position": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "uid": 1
+  }
+}

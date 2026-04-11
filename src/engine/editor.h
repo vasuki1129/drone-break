@@ -16,6 +16,10 @@ public:
   void SceneHierarchy();
   void MenuBar();
 
+
+  void TransportPanel();
+
+
   void OpenSceneLoadMenu();
   void OpenSceneSaveMenu();
 
@@ -29,6 +33,11 @@ public:
   EngineInstance* engine;
 
 private:
+
+  bool game_running_switch = false;
+
+  EditorCameraComponent* editor_camera = nullptr;
+
   unsigned int grid_vao;
   unsigned int gizmo_vao;
   Transform *hierarchy_selected = nullptr;
