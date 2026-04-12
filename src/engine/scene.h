@@ -21,6 +21,8 @@ public:
 
   void SetCamera(CameraComponent* cam);
 
+  Scene *Clone();
+
   glm::mat4 GetCurrentCameraMatrix();
   glm::vec3 GetCurrentCameraPosition();
   CameraComponent* GetCurrentCamera();

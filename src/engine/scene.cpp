@@ -3,6 +3,14 @@
 #include "engine.h"
 namespace engine {
 
+Scene *Scene::Clone()
+{
+  Scene *scn_out = new Scene();
+  scn_out->Load(this->Save());
+  return scn_out;
+}
+
+
 CameraComponent* Scene::GetCurrentCamera()
 {
   return current_camera;
@@ -84,7 +92,11 @@ json Scene::Save() {
   json j;
   j["name"] = name;
   j["root"] = root->Save();
-  j["active_camera"] = current_camera->GetUID();
+  if (current_camera != nullptr) {
+    j["active_camera"] = current_camera->GetUID();
+  } else {
+    j["active_camera"] = -1;
+  }
   return j;
 }
 

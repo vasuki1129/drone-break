@@ -1,5 +1,5 @@
 {
-  "active_camera": 5,
+  "active_camera": 16,
   "name": "DefaultScene",
   "root": {
     "children": [
@@ -11,26 +11,26 @@
             "material_name": "default",
             "mesh_name": "Floor1.OuterHullFacade",
             "name": "MeshComponent",
-            "uid": 3
+            "uid": 10
           },
           {
             "component_type": "MeshComponent",
             "material_name": "default",
             "mesh_name": "Floor1.EntranceTube",
             "name": "MeshComponent",
-            "uid": 6
+            "uid": 17
           }
         ],
-        "name": "DefaultCube",
+        "name": "Floor1",
         "position": [
           0.0,
-          0.0,
-          0.0
+          20.0,
+          84.53790283203125
         ],
         "rotation": [
-          0.7071067690849304,
-          -5.2515960011705366e-18,
-          5.2515960011705366e-18,
+          -0.7071067690849304,
+          -0.0,
+          0.0,
           0.7071067690849304
         ],
         "scale": [
@@ -38,36 +38,37 @@
           1.0,
           1.0
         ],
-        "uid": 2
+        "uid": 9
       },
       {
         "children": [],
         "components": [
           {
-            "component_type": "EditorCameraComponent",
-            "movement_speed": 5.0,
-            "name": "EditorCamera",
-            "uid": 5
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "DefaultShip.Body.001",
+            "name": "MeshComponent",
+            "uid": 33
           }
         ],
-        "name": "EditorCamera",
+        "name": "Player",
         "position": [
-          1.8655569553375244,
-          7.677751541137695,
-          25.62315559387207
+          0.0,
+          0.0,
+          0.0
         ],
         "rotation": [
-          0.0005475643556565046,
-          0.9835062026977539,
-          0.0029774121940135956,
-          0.18084965646266937
+          -0.4999999701976776,
+          0.4999999701976776,
+          0.4999999701976776,
+          0.4999999701976776
         ],
         "scale": [
           1.0,
           1.0,
           1.0
         ],
-        "uid": 4
+        "uid": 32
       }
     ],
     "components": [],
@@ -88,6 +89,6 @@
       1.0,
       1.0
     ],
-    "uid": 1
+    "uid": 8
   }
 }

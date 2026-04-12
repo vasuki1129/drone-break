@@ -102,7 +102,7 @@ build_linux/release/imgui/%.o : src/imgui/%.cpp
 	g++ -c -o $@ $< -std=c++23
 
 #WINDOWS
-NT_FLAGS := /DGLEW_STATIC /MDd /EHsc /IC:\lib\glm\include /IC:\lib\glew\include /IC:\lib\glfw\include /IC:\lib\assimp\include
+NT_FLAGS := /FS /DGLEW_STATIC /Zi /MDd /EHsc /IC:\lib\glm\include /IC:\lib\glew\include /IC:\lib\glfw\include /IC:\lib\assimp\include
 NT_DEPS := build_windows/engine/camera_component.obj
 NT_DEPS += build_windows/engine/mesh_component.obj
 NT_DEPS += build_windows/engine/component.obj
@@ -145,9 +145,9 @@ NT_LIBDIRS += /LIBPATH:"C:\\lib\\assimp\\lib\\x64"
 NT_LIBS := glfw3.lib glew32s.lib opengl32.lib assimp-vc143-mt.lib Gdi32.lib
 
 windows_debug : $(NT_DEPS)
-	link $(NT_LIBDIRS) /OUT:"bin/windows/x64/debug/$(PROJ_NAME).exe" $(NT_DEPS) $(NT_LIBS)
+	link $(NT_LIBDIRS) /DEBUG /OUT:"bin/windows/x64/debug/$(PROJ_NAME).exe" $(NT_DEPS) $(NT_LIBS)
 windows : $(NT_DEPS)
-	link $(NT_LIBDIRS) /OUT:"bin/windows/x64/debug/$(PROJ_NAME).exe" $(NT_DEPS) $(NT_LIBS)
+	link $(NT_LIBDIRS) /DEBUG /OUT:"bin/windows/x64/debug/$(PROJ_NAME).exe" $(NT_DEPS) $(NT_LIBS)
 
 build_windows/engine/%.obj : src/engine/%.cpp
 	cl /std:c++20 $(NT_FLAGS) /Fo$@ /c $<

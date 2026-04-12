@@ -651,9 +651,12 @@ void EditorInstance::TransportPanel()
 {
     ImGui::Begin("Transport##PanelToplevel");
 
-    if(ImGui::Button((std::string(ICON_CI_ARROW_LEFT) + " ##TransportRewind").c_str(),ImVec2{30,20}))
-    {
-
+    if (ImGui::Button(
+            (std::string(ICON_CI_ARROW_LEFT) + " ##TransportRewind").c_str(),
+            ImVec2{30, 20})) {
+      hierarchy_selected = nullptr;
+      Engine()->GetSceneLoader()->RewindToCheckpoint();
+      Engine()->GetSceneLoader()->GetCurrentScene()->SetCamera(this->editor_camera);
     }
 
     ImGui::SameLine();
@@ -678,7 +681,7 @@ void EditorInstance::TransportPanel()
 
     if(ImGui::Button((std::string(ICON_CI_SAVE) + " ##TransportSave").c_str(),ImVec2(30,20)))
     {
-
+      Engine()->GetSceneLoader()->SaveAsCheckpoint();
     }
 
     ImGui::End();

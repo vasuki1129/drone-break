@@ -86,10 +86,13 @@ void EngineInstance::Initialize() {
   input_handler = new InputHandler();
   asset_loader = new AssetManager();
   scheme_interpreter = s7_init();
+
+
+
   asset_loader->Rescan();
+  RegisterBuiltinComponents();
   scene_loader = new engine::SceneLoader();
 
-  RegisterBuiltinComponents();
 }
 
 InputHandler *EngineInstance::GetInput() {

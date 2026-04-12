@@ -10,7 +10,7 @@ void PlayerComponent::tick(float dt) {
 
   this->GetOwner()->Translate(velocity * dt);
 
-  if(Engine()->GetInput()->)
+  if(Engine()->GetInput()->Ke)
 
 
 

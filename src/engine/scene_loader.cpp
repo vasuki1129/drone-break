@@ -4,7 +4,18 @@
 #include "engine.h"
 #include <fstream>
 namespace engine {
-bool SceneLoader::CueScene(std::string path) {return false;}
+//bool SceneLoader::CueScene(std::string path) {return false;}
+
+void SceneLoader::SaveAsCheckpoint() {
+  rewind_scene = current_scene->Clone();
+}
+
+void SceneLoader::RewindToCheckpoint() {
+  Scene *disc = current_scene;
+  current_scene = rewind_scene->Clone();
+  delete disc;
+}
+
 
 bool SceneLoader::LoadScene(std::string path) {
   std::ifstream f(path);
@@ -14,6 +25,7 @@ bool SceneLoader::LoadScene(std::string path) {
   if (scn->IsValid()) {
     this->DeloadScene();
     this->current_scene = scn;
+    this->rewind_scene = scn->Clone();
     return true;
   }
   else
@@ -49,6 +61,8 @@ void SceneLoader::LoadDefaultScene() {
   mesh_comp->SetMaterial("default");
   tr->AddComponent(mesh_comp);
   current_scene->GetRoot()->AddChild(tr);
+
+  rewind_scene = current_scene->Clone();
 }
 
 bool SceneLoader::UpdateCurrentScene(float dt) {

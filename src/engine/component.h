@@ -38,7 +38,6 @@ public:
   virtual json Save() override =0;
   virtual bool Load(json value) override =0;
   uint64_t GetUID();
-protected:
   std::string name;
   std::string component_type;
   uint64_t uid;

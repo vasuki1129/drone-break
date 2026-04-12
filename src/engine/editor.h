@@ -25,7 +25,6 @@ public:
 
   void PreferencesWindow();
   void DrawTransformGizmo();
-
   void SceneLoadMenu();
 
 
