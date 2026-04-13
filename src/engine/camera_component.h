@@ -7,6 +7,7 @@
 namespace engine {
 
 FACTORY(EditorCameraComponent);
+FACTORY(CameraComponent);
 
 class CameraComponent : public Component {
 public:
@@ -18,7 +19,7 @@ public:
   virtual Ray ScreenPointToRay(glm::vec2 screen_point);
   virtual json Save() override;
   virtual bool Load(json value) override;
-
+  virtual void DrawWidget() override;
 };
 
 class EditorCameraComponent : public CameraComponent {

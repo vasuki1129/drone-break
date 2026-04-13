@@ -20,6 +20,8 @@ public:
   bool IsValid();
 
   void SetCamera(CameraComponent* cam);
+  void SetMainCamera(CameraComponent* cam);
+  void SetCameraToMain();
 
   Scene *Clone();
 
@@ -28,6 +30,7 @@ public:
   CameraComponent* GetCurrentCamera();
 private:
   CameraComponent* current_camera;
+  CameraComponent* main_camera;
   std::string name;
   std::string path;
   Transform* root;

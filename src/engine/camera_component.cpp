@@ -8,6 +8,8 @@
 namespace engine {
 
 FACTORY_DEF(EditorCameraComponent);
+FACTORY_DEF(CameraComponent);
+
 
 json EditorCameraComponent::Save()
 {
@@ -75,7 +77,6 @@ EditorCameraComponent::EditorCameraComponent(std::string name)
     this->movement_speed = 2.0f;
 }
 
-
 void EditorCameraComponent::DrawWidget()
 {
 
@@ -110,14 +111,28 @@ json CameraComponent::Save()
   return j;
 }
 
-CameraComponent::CameraComponent() :Component() {}
+void CameraComponent::DrawWidget()
+{
+  if(ImGui::Button("Set As Main Camera"))
+  {
+    Engine()->GetSceneLoader()->GetCurrentScene()->SetMainCamera(this);
+  }
+}
+
+CameraComponent::CameraComponent() :Component() {
+  this->component_type = "CameraComponent";
+}
 
 CameraComponent::CameraComponent(std::string name) : Component(name) {
+  this->component_type = "CameraComponent";
+}
+
+CameraComponent::~CameraComponent() {
 
 }
-CameraComponent::~CameraComponent() {}
 
 void CameraComponent::tick(float dt) {
+
 }
 
 Ray CameraComponent::ScreenPointToRay(glm::vec2 screen_point)

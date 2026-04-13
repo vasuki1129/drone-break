@@ -41,10 +41,12 @@ EditorInstance::EditorInstance() {
   glGenVertexArrays(1,&grid_vao);
 
   Transform* editor_camera_transform = new Transform(std::string("EditorCameraNode"));
+  this->game_start_camera = Engine()->GetSceneLoader()->GetCurrentScene()->GetCurrentCamera();
   EditorCameraComponent* comp = new EditorCameraComponent("EditorCamera");
   editor_camera_transform->AddComponent(comp);
   this->editor_camera = comp;
   Engine()->GetSceneLoader()->GetCurrentScene()->SetCamera(comp);
+  Engine()->GetInput()->EnableCursor();
 }
 
 EditorInstance::~EditorInstance() {}
@@ -583,19 +585,20 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
     ImGui::DockSpaceOverViewport(0,NULL,ImGuiDockNodeFlags_PassthruCentralNode,NULL);
-    ImGui::ShowDemoWindow();
-    MenuBar();
-    DebugPanel();
-    ActionsPanel();
-    Inspector();
-    SceneHierarchy();
-    AssetPanel();
-    PreferencesWindow();
-    SceneLoadMenu();
+    if(!game_running_switch)
+    {
+      ImGui::ShowDemoWindow();
+      MenuBar();
+      DebugPanel();
+      ActionsPanel();
+      Inspector();
+      SceneHierarchy();
+      AssetPanel();
+      PreferencesWindow();
+      SceneLoadMenu();
+      DrawGrid();
+    }
     TransportPanel();
-
-
-    DrawGrid();
 
     loadBrowser.Display();
     if (loadBrowser.HasSelected()) {
@@ -629,11 +632,22 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 
 
 
-    editor_camera->GetOwner()->ProcessTick(engine->GetRenderer()->DeltaTime());
-    editor_camera->GetOwner()->ProcessRender();
-    if(game_running_switch)
+
+    if(!game_running_switch)
     {
-        engine->GetSceneLoader()->UpdateCurrentScene(engine->GetRenderer()->DeltaTime());
+      editor_camera->GetOwner()->ProcessTick(engine->GetRenderer()->DeltaTime());
+      editor_camera->GetOwner()->ProcessRender();
+      Engine()->GetSceneLoader()->GetCurrentScene()->SetCamera(this->editor_camera);
+    }
+    else
+    {
+      if(engine->GetInput()->KeyPressed(GLFW_KEY_ESCAPE))
+      {
+        engine->GetInput()->EnableCursor();
+      }
+      
+      Engine()->GetSceneLoader()->GetCurrentScene()->SetCameraToMain();
+      engine->GetSceneLoader()->UpdateCurrentScene(engine->GetRenderer()->DeltaTime());
     }
     engine->GetSceneLoader()->RenderCurrentScene();
 
@@ -665,6 +679,7 @@ void EditorInstance::TransportPanel()
     {
         if(ImGui::Button((std::string(ICON_CI_STOP_CIRCLE)+" ##TransportStop").c_str(),ImVec2{30,20}))
         {
+            engine->GetInput()->EnableCursor();
             game_running_switch = false;
         }
     }
@@ -673,6 +688,8 @@ void EditorInstance::TransportPanel()
       if (ImGui::Button(
               (std::string(ICON_CI_PLAY_CIRCLE) + " ##TransportPlay").c_str(),
               ImVec2{30, 20})) {
+
+          engine->GetInput()->DisableCursor();
           game_running_switch = true;
       }
     }
@@ -683,12 +700,6 @@ void EditorInstance::TransportPanel()
     {
       Engine()->GetSceneLoader()->SaveAsCheckpoint();
     }
-
     ImGui::End();
 }
-
-
-
-
-
 }

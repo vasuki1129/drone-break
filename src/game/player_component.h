@@ -16,6 +16,7 @@ public:
 
   float movement_speed = 5.0;
   glm::vec3 velocity = glm::vec3(0.0f,0.0f,0.0f);
+  float damping = 0.8f;
 
   PlayerComponent();
 

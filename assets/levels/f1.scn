@@ -9,29 +9,27 @@
           {
             "component_type": "MeshComponent",
             "material_name": "default",
-            "mesh_name": "Floor1.OuterHullFacade",
+            "mesh_name": "DefaultCube.Suzanne",
             "name": "MeshComponent",
             "uid": 10
           },
           {
-            "component_type": "MeshComponent",
-            "material_name": "default",
-            "mesh_name": "Floor1.EntranceTube",
-            "name": "MeshComponent",
+            "component_type": "CameraComponent",
+            "name": "Component",
             "uid": 17
           }
         ],
-        "name": "Floor1",
+        "name": "DefaultCube",
         "position": [
           0.0,
-          20.0,
-          84.53790283203125
+          0.0,
+          0.0
         ],
         "rotation": [
-          -0.7071067690849304,
-          -0.0,
           0.0,
-          0.7071067690849304
+          0.0,
+          0.0,
+          1.0
         ],
         "scale": [
           1.0,
@@ -39,36 +37,6 @@
           1.0
         ],
         "uid": 9
-      },
-      {
-        "children": [],
-        "components": [
-          {
-            "component_type": "MeshComponent",
-            "material_name": "default",
-            "mesh_name": "DefaultShip.Body.001",
-            "name": "MeshComponent",
-            "uid": 33
-          }
-        ],
-        "name": "Player",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotation": [
-          -0.4999999701976776,
-          0.4999999701976776,
-          0.4999999701976776,
-          0.4999999701976776
-        ],
-        "scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "uid": 32
       }
     ],
     "components": [],

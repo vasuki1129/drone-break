@@ -4,6 +4,11 @@
 
 namespace engine {
 
+
+void Component::begin_play() {}
+void Component::end_play() {}
+
+
 void Component::render() {}
 void Component::tick(float dt) {}
 void Component::init() {}

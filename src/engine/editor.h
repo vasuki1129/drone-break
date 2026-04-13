@@ -36,6 +36,7 @@ private:
   bool game_running_switch = false;
 
   EditorCameraComponent* editor_camera = nullptr;
+  CameraComponent* game_start_camera = nullptr;
 
   unsigned int grid_vao;
   unsigned int gizmo_vao;

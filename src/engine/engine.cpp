@@ -80,6 +80,7 @@ EngineInstance *CreateEngine(EngineCreateInfo &create_info) {
 void EngineInstance::RegisterBuiltinComponents() {
   RegisterComponent("MeshComponent", FACTORY_REF(MeshComponent));
   RegisterComponent("EditorCameraComponent", FACTORY_REF(EditorCameraComponent));
+  RegisterComponent("CameraComponent", FACTORY_REF(CameraComponent));
 }
 
 void EngineInstance::Initialize() {

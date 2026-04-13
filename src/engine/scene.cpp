@@ -10,7 +10,6 @@ Scene *Scene::Clone()
   return scn_out;
 }
 
-
 CameraComponent* Scene::GetCurrentCamera()
 {
   return current_camera;
@@ -20,6 +19,18 @@ void Scene::SetCamera(CameraComponent* cam)
 {
   this->current_camera = cam;
 }
+
+void Scene::SetMainCamera(CameraComponent* cam)
+{
+  this->main_camera = cam;
+}
+
+void Scene::SetCameraToMain()
+{
+  this->current_camera = main_camera;
+}
+
+
 
 glm::vec3 Scene::GetCurrentCameraPosition() {
   if (this->current_camera == nullptr) {
@@ -83,8 +94,10 @@ bool Scene::Load(json value)
 
   root = new Transform();
   root->Load(value["root"]);
-  this->current_camera = (CameraComponent*)root->FindComponentByUID(value["active_camera"]);
+  this->main_camera = (CameraComponent*)root->FindComponentByUID(value["active_camera"]);
+  this->current_camera = main_camera;
   this->finalized = true;
+
   return true;
 }
 

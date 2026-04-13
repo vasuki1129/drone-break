@@ -23,6 +23,10 @@ public:
   Component();
   Component(std::string name);
   virtual ~Component();
+
+  virtual void begin_play();
+  virtual void end_play();
+
   virtual void render();
   virtual void tick(float dt);
   virtual void init();

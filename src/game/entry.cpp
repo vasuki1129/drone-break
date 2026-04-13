@@ -1,5 +1,6 @@
 #include "../engine/editor.h"
 #include "test_component.h"
+#include "player_component.h"
 int main(int argc, char **argv) {
   //auto eng = new engine::editor::EditorInstance();
   engine::EngineCreateInfo create_info{
@@ -11,6 +12,7 @@ int main(int argc, char **argv) {
 
   //register our types with the engine
   engine::Engine()->RegisterComponent("RotationComponent",FACTORY_REF(TestComponent));
+  engine::Engine()->RegisterComponent("PlayerComponent",FACTORY_REF(PlayerComponent));
 
   eng->Run();
   delete eng;
