@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "../game/collision_component.h"
 
 namespace engine
 {
@@ -25,4 +26,27 @@ bool TestRayOBBIntersection(
     float &intersection_distance // Output : distance between ray_origin and the
                                  // intersection with the OBB
 );
+
+
+class PhysicsHandler {
+public:
+  void RegisterCollider(CollisionComponent* collider);
+  void DeregisterCollider(CollisionComponent *collider);
+  std::vector<CollisionComponent*>* GetColliders();
+private:
+  std::vector<CollisionComponent*> registered_colliders;
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
 }

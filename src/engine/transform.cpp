@@ -14,6 +14,13 @@ static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
     return 0;
 }
 
+
+
+
+
+
+
+
   void Transform::DrawWidget() {
     ImGui::InputText("Name",this->name.data(),64);
 
@@ -275,6 +282,18 @@ json Transform::Save() {
   out["components"] = serialized_components;
   return out;
 }
+
+
+
+void Transform::ProcessEditorRender() {
+  for (auto comp : components) {
+    comp->editor_render();
+  }
+  for (auto child : children) {
+    child->ProcessEditorRender();
+  }
+}
+
 
 void Transform::ProcessRender() {
   for (auto comp : components) {

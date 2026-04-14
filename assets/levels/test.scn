@@ -1,0 +1,73 @@
+{
+  "active_camera": 27,
+  "name": "DefaultScene",
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "DefaultCube.Suzanne",
+            "name": "MeshComponent",
+            "uid": 10
+          },
+          {
+            "component_type": "CameraComponent",
+            "name": "Component",
+            "uid": 27
+          },
+          {
+            "component_type": "PlayerComponent",
+            "damping": 0.800000011920929,
+            "name": "PlayerComponent",
+            "uid": 28,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "name": "DefaultCube",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 9
+      }
+    ],
+    "components": [],
+    "name": "Root",
+    "position": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "uid": 8
+  }
+}

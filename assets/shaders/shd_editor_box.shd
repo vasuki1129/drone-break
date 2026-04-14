@@ -1,0 +1,31 @@
+{
+    "name": "Editor Box",
+    "vertex_shader": [
+        "#version 330 core",
+        "layout (location=0) in vec3 pos;",
+        "layout (location=1) in vec3 normal;",
+        "layout (location=2) in vec2 t_coord;",
+        "out vec3 frag_pos;",
+        "out vec3 norm;",
+        "out vec2 tCoord;",
+        "uniform mat4 camera;",
+        "uniform mat4 model;",
+        "void main() {",
+        "gl_Position = camera * model * vec4(pos,1.0);",
+        "frag_pos = vec3(model * vec4(pos,1.0));",
+        "norm = mat3(transpose(inverse(model))) * normal;",
+        "tCoord = t_coord;",
+        "}"
+    ],
+    "fragment_shader": [
+        "#version 330 core",
+        "in vec3 frag_pos;",
+        "in vec3 norm;",
+        "in vec2 tCoord;",
+        "out vec4 frag_color;",
+        "uniform vec3 light_pos;",
+        "void main() {",
+        "frag_color = vec4(0.0,1.0,0.0,1.0);",
+        "}"
+    ]
+}

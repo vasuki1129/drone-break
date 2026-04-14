@@ -1,0 +1,95 @@
+{
+  "active_camera": -1,
+  "name": "DefaultScene",
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "DefaultCube.Suzanne",
+            "name": "MeshComponent",
+            "uid": 10
+          }
+        ],
+        "name": "DefaultCube",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 9
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "bounds": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "component_type": "CollisionComponent",
+            "name": "CollisionComponent",
+            "offset": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "uid": 18
+          }
+        ],
+        "name": "Child",
+        "position": [
+          0.0,
+          0.0,
+          -5.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 17
+      }
+    ],
+    "components": [],
+    "name": "Root",
+    "position": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "uid": 8
+  }
+}

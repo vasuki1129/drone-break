@@ -168,7 +168,6 @@ bool Shader::SetUniform(std::string key, Uniform u) {
   switch (glGetError()) {
     case GL_INVALID_VALUE:
     case GL_INVALID_OPERATION:
-      std::cout << "Invalid program supplied to SetUniform\n";
       return false;
       break;
   }

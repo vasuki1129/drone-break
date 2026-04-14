@@ -2,6 +2,7 @@
 #include "input.h"
 #include "opengl_renderer.h"
 #include "mesh_component.h"
+#include "physics.h"
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
 
@@ -93,7 +94,7 @@ void EngineInstance::Initialize() {
   asset_loader->Rescan();
   RegisterBuiltinComponents();
   scene_loader = new engine::SceneLoader();
-
+  physics_handler = new PhysicsHandler();
 }
 
 InputHandler *EngineInstance::GetInput() {
@@ -112,7 +113,8 @@ OpenGLRenderer *EngineInstance::GetRenderer() {
 
 EngineInstance::~EngineInstance()
 {
-    delete renderer;
+  delete renderer;
+  delete physics_handler;
 }
 
 }

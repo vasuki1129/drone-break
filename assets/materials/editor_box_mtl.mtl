@@ -1,0 +1,6 @@
+{
+    "name": "editor box",
+    "shader_id": "shd_editor_box",
+    "uniforms": [
+    ]
+}

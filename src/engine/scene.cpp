@@ -59,6 +59,10 @@ Scene::Scene(std::string name)
   this->name = name;
 }
 
+void Scene::EditorRender() {
+  root->ProcessEditorRender();
+}
+
 void Scene::Render() {
   root->ProcessRender();
 }
@@ -70,6 +74,7 @@ void Scene::Tick(float dt) {
 Scene::Scene() {
   root = new Transform(std::string("Root"));
   this->current_camera = nullptr;
+  this->main_camera = nullptr;
 }
 
 Scene::~Scene() {
@@ -105,8 +110,8 @@ json Scene::Save() {
   json j;
   j["name"] = name;
   j["root"] = root->Save();
-  if (current_camera != nullptr) {
-    j["active_camera"] = current_camera->GetUID();
+  if (main_camera != nullptr) {
+    j["active_camera"] = main_camera->GetUID();
   } else {
     j["active_camera"] = -1;
   }

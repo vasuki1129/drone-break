@@ -34,7 +34,7 @@ public:
   void SetIndices(std::vector<unsigned int> v);
   bool Rebuffer();
   bool Draw(BaseUniforms base, Material* material);
-
+  bool DrawWireframe(BaseUniforms base, Material* material);
 private:
   std::vector<Vertex> vertices;
   std::vector<unsigned int> indices;

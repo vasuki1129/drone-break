@@ -22,9 +22,7 @@ public:
   json Save() override;
   bool Load(json value) override;
 
-
-
-
+  void ProcessEditorRender();
   void ProcessRender();
   void ProcessTick(float dt);
 

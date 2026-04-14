@@ -28,6 +28,7 @@ LIN_DEPS += build_linux/release/engine/physics.o
 LIN_DEPS += build_linux/release/game/entry.o
 LIN_DEPS += build_linux/release/game/test_component.o
 LIN_DEPS += build_linux/release/game/player_component.o
+LIN_DEPS += build_linux/release/game/collision_component.o
 
 LIN_DEPS += build_linux/release/s7/s7.o
 
@@ -64,6 +65,7 @@ LIN_DEPS_DEBUG += build_linux/debug/engine/physics.o
 LIN_DEPS_DEBUG += build_linux/debug/game/entry.o
 LIN_DEPS_DEBUG += build_linux/debug/game/test_component.o
 LIN_DEPS_DEBUG += build_linux/debug/game/player_component.o
+LIN_DEPS_DEBUG += build_linux/debug/game/collision_component.o
 
 LIN_DEPS_DEBUG += build_linux/debug/s7/s7.o
 
@@ -128,6 +130,8 @@ NT_DEPS += build_windows/engine/physics.obj
 
 NT_DEPS += build_windows/game/entry.obj
 NT_DEPS += build_windows/game/test_component.obj
+NT_DEPS += build_windows/game/player_component.obj
+NT_DEPS += build_windows/game/collision_component.obj
 
 NT_DEPS += build_windows/s7/s7.obj
 

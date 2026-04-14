@@ -27,16 +27,18 @@
 #include "../s7/s7.h"
 
 #include "opengl_renderer.h"
+#include "physics.h"
 #include "scene.h"
 #include "script_engine.h"
 #include "scene_loader.h"
 #include "asset_manager.h"
 #include "input.h"
 
+
 namespace engine {
 
 class OpenGLRenderer;
-
+class PhysicsHandler;
 struct EngineCreateInfo {
   std::string game_name;
   uint16_t initial_window_width;
@@ -64,6 +66,8 @@ public:
       registered_component_types[type_name] = factory;
   };
 
+
+
   InputHandler* GetInput();
 
 private:
@@ -75,7 +79,7 @@ private:
   s7_scheme *scheme_interpreter;
   OpenGLRenderer* renderer;
   InputHandler* input_handler;
-
+  PhysicsHandler* physics_handler;
   std::map<std::string, Component* (*) ()> registered_component_types;
 };
 

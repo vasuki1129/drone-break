@@ -7,7 +7,7 @@ namespace engine {
 
 void Component::begin_play() {}
 void Component::end_play() {}
-
+void Component::editor_render() {}
 
 void Component::render() {}
 void Component::tick(float dt) {}

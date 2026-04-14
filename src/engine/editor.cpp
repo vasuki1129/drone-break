@@ -374,7 +374,9 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
     shd->SetUniform("grid_size", Uniform_f(1.0f));
     shd->SetUniform("min_pixels", Uniform_f(2.0f));
     glEnable(GL_MULTISAMPLE);
-    glDrawArrays(GL_TRIANGLES,0,6);
+    glDisable(GL_CULL_FACE);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glEnable(GL_CULL_FACE);
   }
 
 void EditorInstance::DebugPanel() {
@@ -637,6 +639,7 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     {
       editor_camera->GetOwner()->ProcessTick(engine->GetRenderer()->DeltaTime());
       editor_camera->GetOwner()->ProcessRender();
+      engine->GetSceneLoader()->GetCurrentScene()->EditorRender();
       Engine()->GetSceneLoader()->GetCurrentScene()->SetCamera(this->editor_camera);
     }
     else

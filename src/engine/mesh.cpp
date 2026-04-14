@@ -3,6 +3,37 @@
 
 namespace engine {
 
+bool Mesh::DrawWireframe(BaseUniforms base, Material *material) {
+    glBindVertexArray(this->vertex_array_handle);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_handle);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_handle);
+
+  {//let
+    auto err = material->Bind(base);
+    if (err == false) {
+      std::cout << "Material for mesh " + this->name + " could not be bound\n";
+      return false;
+    }
+  }
+  //glDrawArrays(GL_TRIANGLES,0,vertices.size());
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  auto err = glGetError();
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+  if (err == GL_INVALID_OPERATION) {
+    std::cout << "GL_INVALID_OPERATION on mesh draw call.\n";
+    return false;
+  } else {
+    return true;
+  }
+  glBindVertexArray(0);
+}
+
+
+
 bool Mesh::Draw(BaseUniforms base, Material* material) {
     glBindVertexArray(this->vertex_array_handle);
 

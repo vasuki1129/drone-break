@@ -4,6 +4,28 @@ namespace engine
 {
 
 
+void PhysicsHandler::RegisterCollider(CollisionComponent *collider) {
+  if (this->registered_colliders.find(collider) ==
+      this->registered_colliders.end()) {
+	  this->registered_colliders.push_back(collider);
+  }
+}
+void PhysicsHandler::DeregisterCollider(CollisionComponent *collider) {
+  if (this->registered_colliders.find(collider) !=
+      this->registered_colliders.end()) {
+	  this->registered_colliders.erase(this->registered_colliders.find(collider));
+  }
+}
+
+std::vector<CollisionComponent *> *PhysicsHandler::GetColliders() {
+	return registered_colliders;
+}
+
+
+
+
+
+
 
 bool TestRayOBBIntersection(
 	glm::vec3 ray_origin,        // Ray origin, in world space

@@ -28,6 +28,8 @@ public:
   virtual void end_play();
 
   virtual void render();
+  virtual void editor_render();
+
   virtual void tick(float dt);
   virtual void init();
   virtual void destroy();

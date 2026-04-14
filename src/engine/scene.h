@@ -12,7 +12,7 @@ public:
   ~Scene();
   void Render();
   void Tick(float dt);
-
+  void EditorRender();
   json Save() override;
   bool Load(json value) override;
 
