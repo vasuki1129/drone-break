@@ -2,6 +2,10 @@
 #include "../engine/input.h"
 #include "../engine/engine.h"
 #include "../engine/mesh.h"
+#include "../engine/physics.h"
+
+namespace engine {
+class PhysicsHandler;
 
 CollisionComponent::CollisionComponent() :engine::Component(){
   this->name = "CollisionComponent";
@@ -10,6 +14,19 @@ CollisionComponent::CollisionComponent() :engine::Component(){
 
 void CollisionComponent::tick(float dt) {
 
+    for(auto col : *engine::Engine()->GetPhysics()->GetColliders())
+    {
+        if(CheckCollision(col, nullptr))
+        {
+            colliding = true;
+            break;
+        }
+        else
+        {
+            colliding = false;
+        }
+    }
+
 }
 
 void CollisionComponent::DrawWidget() {
@@ -17,6 +34,9 @@ void CollisionComponent::DrawWidget() {
   ImGui::InputFloat("X",&this->bounds.x);
   ImGui::InputFloat("Y",&this->bounds.y);
   ImGui::InputFloat("Z",&this->bounds.z);
+
+  ImGui::Text("%d", colliding);
+
 }
 
 json CollisionComponent::Save() {
@@ -65,10 +85,10 @@ bool CollisionComponent::CheckCollision(CollisionComponent *other,
 
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
-      R[i][j] = glm::dot(basis_vectors_a[i],basis_vectors_b[j])
+      R[i][j] = glm::dot(basis_vectors_a[i],basis_vectors_b[j]);
     }
   }
-  vec3 t = other->GetOwner()->GetGlobalPosition() -
+  glm::vec3 t = other->GetOwner()->GetGlobalPosition() -
            this->GetOwner()->GetGlobalPosition();
   t = glm::vec3(glm::dot(t, basis_vectors_a[0]),
                 glm::dot(t, basis_vectors_a[1]),
@@ -76,47 +96,63 @@ bool CollisionComponent::CheckCollision(CollisionComponent *other,
 
   for (int i = 0; i < 3; i++)
     for (int j = 0; j < 3; j++)
-      AbsR[i][j] = abs(R[i][j]) + FLT_EPSILON;
+      AbsR[i][j] = std::abs(R[i][j]) + FLT_EPSILON;
 
 
   //test A normals
   ra = this->bounds.x;
   rb = other->bounds.x * AbsR[0][0] + other->bounds.y * AbsR[0][1] +
-       other.bounds.z * AbsR[0][2];
-  if(abs(t[0])>ra + rb) return false;
+       other->bounds.z * AbsR[0][2];
+  if(std::abs(t[0])>ra + rb) return false;
 
   ra = this->bounds.y;
   rb = other->bounds.x * AbsR[1][0] + other->bounds.y * AbsR[1][1] +
-       other.bounds.z * AbsR[1][2];
-  if(abs(t[1])>ra + rb) return false;
+       other->bounds.z * AbsR[1][2];
+  if(std::abs(t[1])>ra + rb) return false;
 
   ra = this->bounds.z;
   rb = other->bounds.x * AbsR[2][0] + other->bounds.y * AbsR[2][1] +
-       other.bounds.z * AbsR[2][2];
-  if(abs(t[2])>ra + rb) return false;
+       other->bounds.z * AbsR[2][2];
+  if(std::abs(t[2])>ra + rb) return false;
 
   //test B normals
   ra = this->bounds.x * AbsR[0][0] + this->bounds.y * AbsR[1][0] +
        this->bounds.z * AbsR[2][0];
   rb = other->bounds.x;
-  if (Abs(t[0] * R[0][0] + t[1] * R[1][0] + t[2] * R[2][0] > ra + rb))
+  if (std::abs(t[0] * R[0][0] + t[1] * R[1][0] + t[2] * R[2][0]) > ra + rb)
     return false;
 
   ra = this->bounds.x * AbsR[0][1] + this->bounds.y * AbsR[1][1] +
        this->bounds.z * AbsR[2][1];
   rb = other->bounds.y;
-  if (Abs(t[0] * R[0][1] + t[1] * R[1][1] + t[2] * R[2][1] > ra + rb))
+  if (std::abs(t[0] * R[0][1] + t[1] * R[1][1] + t[2] * R[2][1]) > ra + rb)
     return false;
 
   ra = this->bounds.x * AbsR[0][2] + this->bounds.y * AbsR[1][2] +
        this->bounds.z * AbsR[2][2];
   rb = other->bounds.z;
-  if (Abs(t[0] * R[0][2] + t[1] * R[1][2] + t[2] * R[2][2] > ra + rb))
+  if (std::abs(t[0] * R[0][2] + t[1] * R[1][2] + t[2] * R[2][2]) > ra + rb)
     return false;
-
 
   return true;
 }
+
+
+
+
+void CollisionComponent::init()
+{
+    Engine()->GetPhysics()->RegisterCollider(this);
+}
+
+
+
+void CollisionComponent::destroy()
+{
+
+    Engine()->GetPhysics()->DeregisterCollider(this);
+}
+
 
 void CollisionComponent::editor_render() {
   engine::Mesh* mesh = engine::Engine()->GetAssetManager()->GetMeshOrNull("editor_shapes.box");
@@ -139,3 +175,4 @@ void CollisionComponent::editor_render() {
 }
 
 FACTORY_DEF(CollisionComponent);
+}

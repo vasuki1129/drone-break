@@ -5,6 +5,10 @@
 namespace engine
 {
 
+class CameraComponent;
+
+
+
 class Scene : public Saveable {
 public:
   Scene();

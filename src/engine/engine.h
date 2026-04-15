@@ -33,12 +33,15 @@
 #include "scene_loader.h"
 #include "asset_manager.h"
 #include "input.h"
-
+#include "camera_component.h"
 
 namespace engine {
 
+class AssetManager;
+class SceneLoader;
 class OpenGLRenderer;
 class PhysicsHandler;
+struct Ray;
 struct EngineCreateInfo {
   std::string game_name;
   uint16_t initial_window_width;
@@ -55,6 +58,9 @@ public:
   OpenGLRenderer *GetRenderer();
   GLFWwindow *GetWindow();
   AssetManager* GetAssetManager();
+  PhysicsHandler* GetPhysics();
+
+
   void Initialize();
 
   std::vector<std::string> GetRegisteredComponentsList();

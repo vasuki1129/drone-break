@@ -1,9 +1,13 @@
 #pragma once
 #include <glm/glm.hpp>
 #include "../game/collision_component.h"
+#include "camera_component.h"
 
 namespace engine
 {
+
+class CollisionComponent;
+
 
 struct Ray
 {

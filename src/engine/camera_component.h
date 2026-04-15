@@ -9,6 +9,11 @@ namespace engine {
 FACTORY(EditorCameraComponent);
 FACTORY(CameraComponent);
 
+
+struct Ray;
+
+
+
 class CameraComponent : public Component {
 public:
   CameraComponent();

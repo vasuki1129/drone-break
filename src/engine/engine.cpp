@@ -31,6 +31,7 @@ Component *EngineInstance::LoadComponent(std::string component_type_name, json v
       registered_component_types.end()) {
     Component* comp =  registered_component_types[component_type_name]();
     comp->Load(value);
+    comp->init();
     return comp;
   } else {
     std::cout << "Component type `" + component_type_name + "` not found\n";
@@ -48,6 +49,12 @@ std::vector<std::string> EngineInstance::GetRegisteredComponentsList() {
 
 EngineInstance *Engine() {
   return instance;
+}
+
+
+PhysicsHandler* EngineInstance::GetPhysics()
+{
+  return this->physics_handler;
 }
 
 AssetManager *EngineInstance::GetAssetManager() {

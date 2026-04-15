@@ -6,9 +6,19 @@
 
 using json = nlohmann::json;
 
+namespace engine{
+
+
 class CollisionComponent : engine::Component {
 
 public:
+
+
+  void init() override;
+
+  void destroy() override;
+
+
 
   void tick(float dt) override;
   void DrawWidget() override;
@@ -17,7 +27,7 @@ public:
 
   void editor_render() override;
 
-
+  bool colliding = false;
 
   bool CheckCollision(CollisionComponent* other, glm::vec3* vector_out);
 
@@ -28,3 +38,4 @@ public:
 };
 
 FACTORY(CollisionComponent);
+}

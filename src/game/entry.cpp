@@ -16,7 +16,8 @@ int main(int argc, char **argv) {
   //register our types with the engine
   engine::Engine()->RegisterComponent("RotationComponent",FACTORY_REF(TestComponent));
   engine::Engine()->RegisterComponent("PlayerComponent",FACTORY_REF(PlayerComponent));
-  engine::Engine()->RegisterComponent("CollisionComponent",FACTORY_REF(CollisionComponent));
+  engine::Engine()->RegisterComponent("CollisionComponent",
+                                      engine::__GetCollisionComponent);
   eng->Run();
   delete eng;
   return 0;

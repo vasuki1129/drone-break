@@ -187,7 +187,6 @@ bool Shader::SetUniforms(UniformList &u) {
   for (auto uniform : u.uniforms) {
     auto e = this->SetUniform(uniform.first,uniform.second);
     if (!e) {
-      std::cout << "Error setting uniform list on shader: " + this->name << "\n";
       return false;
       break;
     }

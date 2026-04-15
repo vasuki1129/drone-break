@@ -5,6 +5,9 @@
 
 namespace engine {
 
+class Scene;
+
+
 class SceneLoader {
 public:
   SceneLoader();

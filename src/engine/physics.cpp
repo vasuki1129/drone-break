@@ -1,24 +1,26 @@
 #include "physics.h"
+#include <vector>
+
 
 namespace engine
 {
 
 
 void PhysicsHandler::RegisterCollider(CollisionComponent *collider) {
-  if (this->registered_colliders.find(collider) ==
+  if (std::find(this->registered_colliders.begin(),registered_colliders.end(),collider) ==
       this->registered_colliders.end()) {
 	  this->registered_colliders.push_back(collider);
   }
 }
 void PhysicsHandler::DeregisterCollider(CollisionComponent *collider) {
-  if (this->registered_colliders.find(collider) !=
+  if (std::find(this->registered_colliders.begin(),this->registered_colliders.end(),collider) !=
       this->registered_colliders.end()) {
-	  this->registered_colliders.erase(this->registered_colliders.find(collider));
+	  this->registered_colliders.erase(std::find(registered_colliders.begin(), registered_colliders.end(), collider));
   }
 }
 
 std::vector<CollisionComponent *> *PhysicsHandler::GetColliders() {
-	return registered_colliders;
+	return &registered_colliders;
 }
 
 
