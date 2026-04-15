@@ -16,7 +16,14 @@ static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
 
 
 
-
+Component *Transform::GetComponent(std::string name) {
+  for (auto comp : components) {
+    if (comp->name == name) {
+      return comp;
+    }
+  }
+  return nullptr;
+}
 
 
 

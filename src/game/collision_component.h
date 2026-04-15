@@ -34,6 +34,9 @@ public:
   glm::vec3 offset = glm::vec3(0.0,0.0,0.0);
   glm::vec3 bounds = glm::vec3(1.0,1.0,1.0);
 
+  bool should_tick = false;
+
+
   CollisionComponent();
 };
 

@@ -1,9 +1,10 @@
 #include "collision_component.h"
+#include "player_component.h"
 #include "../engine/input.h"
 #include "../engine/engine.h"
 #include "../engine/mesh.h"
 #include "../engine/physics.h"
-
+#include <iostream>
 namespace engine {
 class PhysicsHandler;
 
@@ -12,21 +13,21 @@ CollisionComponent::CollisionComponent() :engine::Component(){
   this->component_type="CollisionComponent";
 }
 
+
 void CollisionComponent::tick(float dt) {
-
-    for(auto col : *engine::Engine()->GetPhysics()->GetColliders())
-    {
-        if(CheckCollision(col, nullptr))
-        {
-            colliding = true;
-            break;
-        }
-        else
-        {
-            colliding = false;
-        }
+  if(!should_tick) return;
+  for (auto col : *engine::Engine()->GetPhysics()->GetColliders()) {
+    if (col->GetUID() == this->uid)
+      continue;
+    glm::vec3 mtv = glm::vec3(0.0f,0.0f,0.0f);
+    if (CheckCollision(col, &mtv)) {
+      this->GetOwner()->Translate(-mtv);
+      PlayerComponent* ply = (PlayerComponent*)this->GetOwner()->GetComponent("PlayerComponent");
+      ply->SetVelocity(0.98f * ply->GetVelocity() );
+      break;
+    } else {
     }
-
+  }
 }
 
 void CollisionComponent::DrawWidget() {
@@ -34,9 +35,8 @@ void CollisionComponent::DrawWidget() {
   ImGui::InputFloat("X",&this->bounds.x);
   ImGui::InputFloat("Y",&this->bounds.y);
   ImGui::InputFloat("Z",&this->bounds.z);
-
+  ImGui::Checkbox("Should Tick", &this->should_tick);
   ImGui::Text("%d", colliding);
-
 }
 
 json CollisionComponent::Save() {
@@ -50,16 +50,16 @@ json CollisionComponent::Save() {
   j["bounds"][0] = bounds.x;
   j["bounds"][1] = bounds.y;
   j["bounds"][2] = bounds.z;
-
+  j["should_tick"] = should_tick;
   return j;
 }
-
 
 bool CollisionComponent::Load(json value) {
 
   PROPERTY_LOAD(name)
   PROPERTY_LOAD(uid)
   PROPERTY_LOAD(component_type)
+  PROPERTY_LOAD(should_tick)
 
   this->offset.x = value["offset"][0];
   this->offset.y = value["offset"][1];
@@ -98,43 +98,201 @@ bool CollisionComponent::CheckCollision(CollisionComponent *other,
     for (int j = 0; j < 3; j++)
       AbsR[i][j] = std::abs(R[i][j]) + FLT_EPSILON;
 
+  glm::vec3 bounds_a = this->bounds / 2.0f;
+  glm::vec3 bounds_b = other->bounds / 2.0f;
+  float t_proj;
+  float overlap;
+  float min_overlap = 1000000;
+  glm::vec3 mtv = glm::vec3(0,0,0);
+  bool collided = true;
+
+
 
   //test A normals
-  ra = this->bounds.x;
-  rb = other->bounds.x * AbsR[0][0] + other->bounds.y * AbsR[0][1] +
-       other->bounds.z * AbsR[0][2];
-  if(std::abs(t[0])>ra + rb) return false;
+  ra = bounds_a.x;
+  rb = bounds_b.x * AbsR[0][0] + bounds_b.y * AbsR[0][1] +
+       bounds_b.z * AbsR[0][2];
+  t_proj = t[0];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    mtv = t_proj < 0 ? -this->GetOwner()->Right()*overlap : this->GetOwner()->Right()*overlap;
+  }
+  if(std::abs(t[0])>ra + rb) collided = false;
 
-  ra = this->bounds.y;
-  rb = other->bounds.x * AbsR[1][0] + other->bounds.y * AbsR[1][1] +
-       other->bounds.z * AbsR[1][2];
-  if(std::abs(t[1])>ra + rb) return false;
+  ra = bounds_a.y;
+  rb = bounds_b.x * AbsR[1][0] + bounds_b.y * AbsR[1][1] +
+       bounds_b.z * AbsR[1][2];
+  t_proj = t[1];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    mtv = t_proj < 0 ? -this->GetOwner()->Up()*overlap : this->GetOwner()->Up()*overlap;
+  }
+  if(std::abs(t[1])>ra + rb) collided = false;
 
-  ra = this->bounds.z;
-  rb = other->bounds.x * AbsR[2][0] + other->bounds.y * AbsR[2][1] +
-       other->bounds.z * AbsR[2][2];
-  if(std::abs(t[2])>ra + rb) return false;
+  ra = bounds_a.z;
+  rb = bounds_b.x * AbsR[2][0] + bounds_b.y * AbsR[2][1] +
+       bounds_b.z * AbsR[2][2];
+  t_proj = t[2];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    mtv = t_proj < 0 ? -this->GetOwner()->Forward()*overlap : this->GetOwner()->Forward()*overlap;
+  }
+  if(std::abs(t[2])>ra + rb) collided = false;
+
 
   //test B normals
-  ra = this->bounds.x * AbsR[0][0] + this->bounds.y * AbsR[1][0] +
-       this->bounds.z * AbsR[2][0];
-  rb = other->bounds.x;
-  if (std::abs(t[0] * R[0][0] + t[1] * R[1][0] + t[2] * R[2][0]) > ra + rb)
-    return false;
+  ra = bounds_a.x * AbsR[0][0] + bounds_a.y * AbsR[1][0] +
+       bounds_a.z * AbsR[2][0];
+  rb = bounds_b.x;
+  t_proj = t[0] * R[0][0] + t[1] * R[1][0] + t[2] * R[2][0];
 
-  ra = this->bounds.x * AbsR[0][1] + this->bounds.y * AbsR[1][1] +
-       this->bounds.z * AbsR[2][1];
-  rb = other->bounds.y;
-  if (std::abs(t[0] * R[0][1] + t[1] * R[1][1] + t[2] * R[2][1]) > ra + rb)
-    return false;
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    mtv = t_proj < 0 ? -other->GetOwner()->Right()*overlap : other->GetOwner()->Right()*overlap;
+  }
+  if (std::abs(t_proj) > ra + rb)
+    collided = false;
 
-  ra = this->bounds.x * AbsR[0][2] + this->bounds.y * AbsR[1][2] +
-       this->bounds.z * AbsR[2][2];
-  rb = other->bounds.z;
-  if (std::abs(t[0] * R[0][2] + t[1] * R[1][2] + t[2] * R[2][2]) > ra + rb)
-    return false;
+  ra = bounds_a.x * AbsR[0][1] + bounds_a.y * AbsR[1][1] +
+       bounds_a.z * AbsR[2][1];
+  rb = bounds_b.y;
+  t_proj = t[0] * R[0][1] + t[1] * R[1][1] + t[2] * R[2][1];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    mtv = t_proj < 0 ? -other->GetOwner()->Up()*overlap : other->GetOwner()->Up()*overlap;
+  }
+  if (std::abs(t_proj) > ra + rb)
+    collided = false;
 
-  return true;
+  ra = bounds_a.x * AbsR[0][2] + bounds_a.y * AbsR[1][2] +
+       bounds_a.z * AbsR[2][2];
+  rb = bounds_b.z;
+  t_proj = t[0] * R[0][2] + t[1] * R[1][2] + t[2] * R[2][2];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    mtv = t_proj < 0 ? -other->GetOwner()->Forward()*overlap : other->GetOwner()->Forward()*overlap;
+  }
+  if (std::abs(t_proj) > ra + rb)
+    collided = false;
+
+  //cross-product axes
+
+  ra = bounds_a.y * AbsR[2][0] + bounds_a.z * AbsR[1][0];
+  rb = bounds_b.y * AbsR[0][2] + bounds_b.z * AbsR[0][1];
+  t_proj = t[2] * R[1][0] - t[1] * R[2][0];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    glm::vec3 axis = glm::normalize(glm::cross(this->GetOwner()->Right(), other->GetOwner()->Right())) * overlap;
+    mtv = t_proj < 0 ? -axis : axis;
+
+  }
+  if(std::abs(t_proj) > ra+rb) collided = false;
+
+  ra = bounds_a.y * AbsR[2][1] + bounds_a.z * AbsR[1][1];
+  rb = bounds_b.x * AbsR[0][2] + bounds_b.z * AbsR[0][0];
+  t_proj = t[2] * R[1][1] - t[1] * R[2][1];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    glm::vec3 axis = glm::normalize(glm::cross(this->GetOwner()->Right(), other->GetOwner()->Up())) * overlap;
+    mtv = t_proj < 0 ? -axis : axis;
+  }
+  if (std::abs(t_proj) > ra + rb) collided = false;
+
+  ra = bounds_a.y * AbsR[2][2] + bounds_a.z * AbsR[1][2];
+  rb = bounds_b.x * AbsR[0][1] + bounds_b.y * AbsR[0][0];
+  t_proj = t[2] * R[1][2] - t[1] * R[2][2];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    glm::vec3 axis = glm::normalize(glm::cross(this->GetOwner()->Right(), other->GetOwner()->Forward())) * overlap;
+    mtv = t_proj < 0 ? -axis : axis;
+  }
+  if (std::abs(t_proj) > ra + rb) collided = false;
+
+  ra = bounds_a.x * AbsR[2][0] + bounds_a.z * AbsR[0][0];
+  rb = bounds_b.y * AbsR[1][2] + bounds_b.z * AbsR[1][1];
+  t_proj = t[0] * R[2][0] - t[2] * R[0][0];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    glm::vec3 axis = glm::normalize(glm::cross(this->GetOwner()->Up(), other->GetOwner()->Right())) * overlap;
+    mtv = t_proj < 0 ? -axis : axis;
+  }
+  if (std::abs(t_proj) > ra + rb) collided = false;
+
+  ra = bounds_a.x * AbsR[2][1] + bounds_a.z * AbsR[0][1];
+  rb = bounds_b.x * AbsR[1][2] + bounds_b.z * AbsR[1][0];
+  t_proj = t[0] * R[2][1] - t[2] * R[0][1];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    glm::vec3 axis = glm::normalize(glm::cross(this->GetOwner()->Up(), other->GetOwner()->Up())) * overlap;
+    mtv = t_proj < 0 ? -axis : axis;
+  }
+  if (std::abs(t_proj) > ra + rb) collided = false;
+
+  ra = bounds_a.x * AbsR[2][2] + bounds_a.z * AbsR[0][2];
+  rb = bounds_b.x * AbsR[1][1] + bounds_b.y * AbsR[1][0];
+  t_proj = t[0] * R[2][2] - t[2] * R[0][2];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    glm::vec3 axis = glm::normalize(glm::cross(this->GetOwner()->Up(), other->GetOwner()->Forward())) * overlap;
+    mtv = t_proj < 0 ? -axis : axis;
+  }
+  if (std::abs(t_proj) > ra + rb) collided = false;
+
+  ra = bounds_a.x * AbsR[1][1] + bounds_a.y * AbsR[0][1];
+  rb = bounds_b.x * AbsR[2][2] + bounds_b.z * AbsR[2][0];
+  t_proj = t[1] * R[0][1] - t[0] * R[1][1];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    glm::vec3 axis = glm::normalize(glm::cross(this->GetOwner()->Forward(), other->GetOwner()->Up())) * overlap;
+    mtv = t_proj < 0 ? -axis : axis;
+  }
+  if (std::abs(t_proj) > ra + rb) collided = false;
+
+  ra = bounds_a.x * AbsR[1][2] + bounds_a.y * AbsR[0][2];
+  rb = bounds_b.x * AbsR[2][1] + bounds_b.y * AbsR[2][0];
+  t_proj = t[1] * R[0][2] - t[0] * R[1][2];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    glm::vec3 axis = glm::normalize(glm::cross(this->GetOwner()->Forward(), other->GetOwner()->Forward())) * overlap;
+    mtv = t_proj < 0 ? -axis : axis;
+  }
+  if (std::abs(t_proj) > ra + rb) collided = false;
+
+
+  ra = bounds_a.x * AbsR[1][0] + bounds_a.y * AbsR[0][0];
+  rb = bounds_b.y * AbsR[2][2] + bounds_b.z * AbsR[2][1];
+  t_proj = t[1] * R[0][0] - t[0] * R[1][0];
+  overlap = (ra + rb) - std::abs(t_proj);
+  if (overlap < min_overlap) {
+    min_overlap = overlap;
+    glm::vec3 axis = glm::normalize(glm::cross(this->GetOwner()->Forward(), other->GetOwner()->Right())) * overlap;
+    mtv = t_proj < 0 ? -axis : axis;
+  }
+  if (std::abs(t_proj) > ra + rb) collided = false;
+
+  if (collided) {
+    if (vector_out != nullptr) {
+      *vector_out = mtv;
+    }
+    return true;
+  } else {
+    return false;
+  }
+
 }
 
 
@@ -155,6 +313,8 @@ void CollisionComponent::destroy()
 
 
 void CollisionComponent::editor_render() {
+
+
   engine::Mesh* mesh = engine::Engine()->GetAssetManager()->GetMeshOrNull("editor_shapes.box");
   engine::Material *material =
       engine::Engine()->GetAssetManager()->GetMaterialOrNull("editor_box_mtl");

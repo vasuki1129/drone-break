@@ -19,7 +19,9 @@ EngineInstance* instance = nullptr;
 Component *EngineInstance::CreateComponent(std::string component_type_name) {
   if (registered_component_types.find(component_type_name) !=
       registered_component_types.end()) {
-    return registered_component_types[component_type_name]();
+    Component* c = registered_component_types[component_type_name]();
+    c->init();
+    return c;
   } else {
     std::cout << "Component type `" + component_type_name + "` not found\n";
     return nullptr;

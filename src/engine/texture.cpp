@@ -17,8 +17,16 @@ Texture::Texture(std::string path) {
   unsigned char* data = stbi_load(path.c_str(),&width,&height,&n_channels,0);
   if (data) {
 
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+    if (n_channels == 3) {
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGB,
                GL_UNSIGNED_BYTE, data);
+    } else {
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+               GL_UNSIGNED_BYTE, data);
+
+    }
   glGenerateMipmap(GL_TEXTURE_2D);
     valid = true;
   } else {
@@ -26,6 +34,10 @@ Texture::Texture(std::string path) {
     valid = false;
   }
   stbi_image_free(data);
+}
+
+unsigned int Texture::GetTextureHandle() {
+  return texture_handle;
 }
 
 void Texture::Bind() {

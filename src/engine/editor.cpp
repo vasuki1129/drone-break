@@ -104,8 +104,9 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
         } else {
           ImGui::Text("No Transform Selected");
         }
+
+        ImGui::End();
       }
-      ImGui::End();
     }
   }
 
@@ -250,7 +251,7 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
         glm::vec3 dir = pB_t - pA_t;
         glm::vec2 pr = glm::vec2(dir.x,dir.y);
         float proj = glm::dot(Engine()->GetInput()->MouseDelta(),pr)/glm::length(dir);
-        hierarchy_selected->Translate((glm::vec3(1.0,0.0,0.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()) * 0.1f);
+        hierarchy_selected->Translate((glm::vec3(1.0,0.0,0.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()) * 0.01f);
     }
 
     if(y_axis_translate_dragging)
@@ -262,7 +263,7 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
         glm::vec3 dir = pB_t - pA_t;
         glm::vec2 pr = glm::vec2(dir.x,dir.y);
         float proj = glm::dot(Engine()->GetInput()->MouseDelta(),pr)/glm::length(dir);
-        hierarchy_selected->Translate((glm::vec3(0.0,-1.0,0.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()) * 0.1f);
+        hierarchy_selected->Translate((glm::vec3(0.0,-1.0,0.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()) * 0.01f);
     }
 
 
@@ -275,7 +276,7 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
         glm::vec3 dir = pB_t - pA_t;
         glm::vec2 pr = glm::vec2(dir.x,dir.y);
         float proj = glm::dot(Engine()->GetInput()->MouseDelta(),pr)/glm::length(dir);
-        hierarchy_selected->Translate((glm::vec3(0.0,0.0,1.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta()));
+        hierarchy_selected->Translate((glm::vec3(0.0,0.0,1.0) * hierarchy_selected->GetGlobalRotation()) * proj * glm::length(Engine()->GetInput()->MouseDelta() * 0.01f));
     }
 
     glBindVertexArray(gizmo_vao);
@@ -293,6 +294,13 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
                                   ->GetCurrentScene()
                                   ->GetCurrentCameraMatrix());
 
+
+
+      if (engine->GetSceneLoader()->GetCurrentScene()->GetCurrentCamera() !=
+          nullptr) {
+
+
+      
       Ray r = engine->GetSceneLoader()->GetCurrentScene()->GetCurrentCamera()->ScreenPointToRay(Engine()->GetInput()->MousePosition());
       float int_dist;
       if(TestRayOBBIntersection(r.position, r.direction, glm::vec3(0,0,0), glm::vec3(2.0f,0.1f,0.1f), hierarchy_selected->GetModelMatrixUnscaled(), int_dist)
@@ -343,7 +351,7 @@ void EditorInstance::HierarchyLevel(Transform *tr) {
       {
         shader->SetUniform("z_hovered", Uniform_f(0.0f));
       }
-
+      }
 
       glLineWidth(3.0);
       glDepthFunc(GL_ALWAYS);

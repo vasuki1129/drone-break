@@ -28,6 +28,8 @@ public:
 
   void AddComponent(Component* component);
 
+  Component* GetComponent(std::string name);
+
   void AddChild(Transform *tr);
 
   Transform* FindTransformByUID(uint64_t id);

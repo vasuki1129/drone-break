@@ -14,9 +14,15 @@ public:
   json Save() override;
   bool Load(json value) override;
 
+
+  glm::vec3 GetVelocity();
+  float GetSpeed();
+  void SetVelocity(glm::vec3 vel);
+
+
   float movement_speed = 5.0;
   glm::vec3 velocity = glm::vec3(0.0f,0.0f,0.0f);
-  float damping = 0.8f;
+  float damping = 0.01f;
 
   PlayerComponent();
 
