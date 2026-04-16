@@ -42,7 +42,7 @@ public:
 
 
 protected:
-  float movement_speed = 5.0f;
+  float movement_speed = 25.0f;
 };
 
 

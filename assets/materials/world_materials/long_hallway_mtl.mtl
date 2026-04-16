@@ -1,0 +1,7 @@
+{
+    "name": "long_hallway_mtl",
+    "shader_id": "shd_default_diffuse",
+    "texture": "long_hallway",
+    "uniforms": [
+    ]
+}

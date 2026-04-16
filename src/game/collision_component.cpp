@@ -23,8 +23,7 @@ void CollisionComponent::tick(float dt) {
     if (CheckCollision(col, &mtv)) {
       this->GetOwner()->Translate(-mtv);
       PlayerComponent* ply = (PlayerComponent*)this->GetOwner()->GetComponent("PlayerComponent");
-      ply->SetVelocity(0.98f * ply->GetVelocity() );
-      break;
+      ply->SetVelocity(0.99f * ply->GetVelocity() );
     } else {
     }
   }

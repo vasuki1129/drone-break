@@ -1,5 +1,5 @@
 {
-  "active_camera": 16,
+  "active_camera": 74,
   "name": "DefaultScene",
   "root": {
     "children": [
@@ -8,18 +8,564 @@
         "components": [
           {
             "component_type": "MeshComponent",
-            "material_name": "default",
-            "mesh_name": "DefaultCube.Suzanne",
+            "material_name": "hallway_corner_mtl",
+            "mesh_name": "hallway_corner.Cube",
             "name": "MeshComponent",
             "uid": 10
-          },
-          {
-            "component_type": "CameraComponent",
-            "name": "Component",
-            "uid": 17
           }
         ],
-        "name": "DefaultCube",
+        "name": "hallway_corner_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          -0.7071067690849304,
+          -0.0,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 9
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "long_hallway_mtl",
+            "mesh_name": "long_hallway.mesh",
+            "name": "MeshComponent",
+            "uid": 34
+          }
+        ],
+        "name": "hallway_00",
+        "position": [
+          0.0,
+          -1.9052861262025544e-06,
+          15.982707977294922
+        ],
+        "rotation": [
+          -0.7071067690849304,
+          -0.0,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 33
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "long_hallway_mtl",
+            "mesh_name": "long_hallway.mesh",
+            "name": "MeshComponent",
+            "uid": 42
+          }
+        ],
+        "name": "hallway_01",
+        "position": [
+          16.0,
+          -1.2212186106808076e-07,
+          0.0
+        ],
+        "rotation": [
+          -0.4999999701976776,
+          0.4999999701976776,
+          0.4999999701976776,
+          0.4999999701976776
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 41
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  1.0,
+                  5.0,
+                  30.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 35
+              }
+            ],
+            "name": "collider0",
+            "position": [
+              -2.502317428588867,
+              0.3785703480243683,
+              11.266199111938477
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 34
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  1.0,
+                  5.0,
+                  24.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 37
+              }
+            ],
+            "name": "collider1",
+            "position": [
+              2.5999999046325684,
+              0.43233489990234375,
+              14.103911399841309
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 36
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  5.0,
+                  1.0,
+                  28.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 52
+              }
+            ],
+            "name": "collider2",
+            "position": [
+              0.0,
+              3.116671562194824,
+              11.771382331848145
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 51
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  5.0,
+                  1.0,
+                  28.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 54
+              }
+            ],
+            "name": "collider3",
+            "position": [
+              0.0,
+              -2.0756568908691406,
+              11.712006568908691
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 53
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  38.0,
+                  6.0,
+                  1.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 60
+              }
+            ],
+            "name": "collider4",
+            "position": [
+              16.345752716064453,
+              0.5683287382125854,
+              -2.2868316173553467
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 59
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  25.0,
+                  6.0,
+                  1.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 108
+              }
+            ],
+            "name": "collider5",
+            "position": [
+              14.910443305969238,
+              0.0,
+              2.5302438735961914
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 107
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  30.0,
+                  1.0,
+                  6.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 135
+              }
+            ],
+            "name": "collider6",
+            "position": [
+              13.261195182800293,
+              3.1398820877075195,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 134
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  40.0,
+                  1.0,
+                  10.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 164
+              }
+            ],
+            "name": "collider7",
+            "position": [
+              22.457143783569336,
+              -2.1660852432250977,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 163
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  35.0,
+                  1.0,
+                  75.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 366
+              }
+            ],
+            "name": "collider8",
+            "position": [
+              40.98699951171875,
+              3.200000047683716,
+              30.52696418762207
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 365
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  10.0,
+                  6.0,
+                  1.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 95
+              }
+            ],
+            "name": "collider9",
+            "position": [
+              32.28173065185547,
+              0.0,
+              2.9416298866271973
+            ],
+            "rotation": [
+              0.0,
+              -0.04361938685178757,
+              0.0,
+              0.9990482330322266
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 94
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  5.0,
+                  6.0,
+                  1.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 97
+              }
+            ],
+            "name": "Child",
+            "position": [
+              39.36739730834961,
+              0.0,
+              4.206202507019043
+            ],
+            "rotation": [
+              0.0,
+              -0.1736481785774231,
+              0.0,
+              0.9848077297210693
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 96
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  8.0,
+                  6.0,
+                  1.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 145
+              }
+            ],
+            "name": "Child",
+            "position": [
+              38.48432922363281,
+              0.0,
+              -1.584568738937378
+            ],
+            "rotation": [
+              0.0,
+              -0.12186934798955917,
+              0.0,
+              0.9925461411476135
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 144
+          }
+        ],
+        "components": [],
+        "name": "colliders",
         "position": [
           0.0,
           0.0,
@@ -36,7 +582,234 @@
           1.0,
           1.0
         ],
-        "uid": 9
+        "uid": 33
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "bounds": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "component_type": "CollisionComponent",
+            "name": "CollisionComponent",
+            "offset": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "should_tick": true,
+            "uid": 73
+          },
+          {
+            "component_type": "CameraComponent",
+            "name": "Component",
+            "uid": 74
+          },
+          {
+            "component_type": "PlayerComponent",
+            "damping": 0.009999999776482582,
+            "name": "PlayerComponent",
+            "uid": 75,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "name": "Player",
+        "position": [
+          40.80830001831055,
+          -0.44907060265541077,
+          2.6613314151763916
+        ],
+        "rotation": [
+          0.04167814552783966,
+          0.39685821533203125,
+          0.9167284965515137,
+          -0.0193258635699749
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 72
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "hallway_curve_mtl",
+            "mesh_name": "hallway_curve.mesh",
+            "name": "MeshComponent",
+            "uid": 76
+          }
+        ],
+        "name": "hallway_curve_01",
+        "position": [
+          25.5,
+          -0.2472199946641922,
+          0.24300000071525574
+        ],
+        "rotation": [
+          -0.4999999701976776,
+          -0.4999999701976776,
+          -0.4999999701976776,
+          0.4999999701976776
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 75
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "hallway_curve_mtl",
+            "mesh_name": "hallway_curve.mesh",
+            "name": "MeshComponent",
+            "uid": 140
+          }
+        ],
+        "name": "hallway_curve_02",
+        "position": [
+          55.4900016784668,
+          -0.24400000274181366,
+          31.829999923706055
+        ],
+        "rotation": [
+          3.0908619663705394e-08,
+          -0.7071067690849304,
+          -0.7071067690849304,
+          -3.0908619663705394e-08
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 139
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "tube_mtl",
+            "mesh_name": "fan_tube.Icosphere.001",
+            "name": "MeshComponent",
+            "uid": 84
+          }
+        ],
+        "name": "fan_tube",
+        "position": [
+          0.0,
+          0.3400000035762787,
+          62.099998474121094
+        ],
+        "rotation": [
+          -0.4999999701976776,
+          0.4999999701976776,
+          0.4999999701976776,
+          0.4999999701976776
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 83
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "tube_fan_mtl",
+            "mesh_name": "fan_tube.Cube.001",
+            "name": "MeshComponent",
+            "uid": 121
+          },
+          {
+            "component_type": "RotationComponent",
+            "name": "RotationComponent",
+            "rotation_axis": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "rotation_speed": 1.0,
+            "uid": 122
+          }
+        ],
+        "name": "fan_blade",
+        "position": [
+          -10.0,
+          0.0,
+          62.099998474121094
+        ],
+        "rotation": [
+          -0.4999999701976776,
+          -0.4999999701976776,
+          -0.4999999701976776,
+          0.4999999701976776
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 120
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "tube_fan_mtl",
+            "mesh_name": "fan_tube.Cube.001",
+            "name": "MeshComponent",
+            "uid": 124
+          },
+          {
+            "component_type": "RotationComponent",
+            "name": "RotationComponent",
+            "rotation_axis": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "rotation_speed": -1.0,
+            "uid": 106
+          }
+        ],
+        "name": "fan_blade",
+        "position": [
+          10.0,
+          0.0,
+          62.099998474121094
+        ],
+        "rotation": [
+          -0.4999999701976776,
+          -0.4999999701976776,
+          -0.4999999701976776,
+          0.4999999701976776
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 123
       }
     ],
     "components": [],

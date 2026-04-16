@@ -8,7 +8,6 @@ PlayerComponent::PlayerComponent() :engine::Component(){
   this->component_type="PlayerComponent";
 }
 
-
 float PlayerComponent::GetSpeed() { return glm::length(velocity); }
 
 glm::vec3 PlayerComponent::GetVelocity() { return velocity; }
@@ -18,7 +17,24 @@ void PlayerComponent::SetVelocity(glm::vec3 vel) {
 }
 
 
+void PlayerComponent::PushMessage(std::string message) {
+  message_buffer.clear();
+  display_message.clear();
+  message_buffer = message;
+}
+
+
 void PlayerComponent::tick(float dt) {
+
+
+  print_timer += dt;
+  if (print_timer > print_interval) {
+    print_timer = 0;
+    if (message_buffer.size() > 0) {
+      display_message.push_back(*(message_buffer.begin()));
+      message_buffer.erase(message_buffer.begin());
+    }
+  }
 
   engine::Texture *reticle =
       engine::Engine()->GetAssetManager()->GetTextureOrNull("crosshair9");
@@ -27,6 +43,13 @@ void PlayerComponent::tick(float dt) {
   ImGui::Image((ImTextureID)(intptr_t)reticle->GetTextureHandle(),ImVec2(64,64));
   ImGui::End();
 
+
+
+  ImGui::SetNextWindowPos(ImVec2(0, 50));
+  ImGui::SetNextWindowSize(ImVec2(300,100));
+  ImGui::Begin("Messages", NULL, ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+  ImGui::TextWrapped("%s", this->display_message.c_str());
+  ImGui::End();
 
   glm::vec2 mouse_delta = engine::Engine()->GetInput()->MouseDelta();
 
@@ -47,14 +70,14 @@ void PlayerComponent::tick(float dt) {
 
   if(engine::Engine()->GetInput()->KeyDown(GLFW_KEY_SPACE))
   {
-    velocity += this->GetOwner()->Forward() * dt * 4.0f;
+    velocity += this->GetOwner()->Forward() * dt * 12.0f;
   }
   else
   {
 
   }
 
-  velocity = MoveTowards(velocity,glm::vec3(0.0,0.0,0.0),damping * dt * this->GetSpeed() * this->GetSpeed());
+  velocity = MoveTowards(velocity,glm::vec3(0.0,0.0,0.0),damping * dt * this->GetSpeed() * this->GetSpeed() + resistance * dt * this->GetSpeed());
 }
 
 void PlayerComponent::DrawWidget() {

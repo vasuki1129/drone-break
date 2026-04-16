@@ -36,8 +36,6 @@ EditorInstance::EditorInstance() {
     .initial_window_height = 800
   };
   engine = engine::CreateEngine(c_i);
-  engine->Initialize();
-  engine->GetRenderer()->InitForImGui();
   glGenVertexArrays(1,&grid_vao);
 
   Transform* editor_camera_transform = new Transform(std::string("EditorCameraNode"));
@@ -613,6 +611,7 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     loadBrowser.Display();
     if (loadBrowser.HasSelected()) {
       std::string path = loadBrowser.GetSelected().string();
+      hierarchy_selected = nullptr;
       if(!Engine()->GetSceneLoader()->LoadScene(path)){
           ImGui::OpenPopup("Scene Load Failure");
           std::cout << "Scene failed to load: " << path << "\n";

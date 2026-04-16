@@ -54,6 +54,8 @@ namespace engine
 
        name = data["name"];
        shader_path = data["shader_id"];
+       if(data.contains("texture"))
+           this->texture_path = data["texture"];
        this->shader = Engine()->GetAssetManager()->GetShaderOrNull(this->shader_path);
        this->texture = Engine()->GetAssetManager()->GetTextureOrNull(this->texture_path);
        for(json val : data["uniforms"])

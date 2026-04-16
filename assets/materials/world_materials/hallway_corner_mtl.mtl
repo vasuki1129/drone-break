@@ -1,0 +1,7 @@
+{
+    "name": "hallway_corner_mtl",
+    "shader_id": "shd_default_diffuse",
+    "texture": "hallway_corner_uv",
+    "uniforms": [
+    ]
+}

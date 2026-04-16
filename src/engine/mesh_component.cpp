@@ -24,7 +24,9 @@ FACTORY(MeshComponent) {
     PROPERTY_LOAD(name)
     PROPERTY_LOAD(uid)
     PROPERTY_LOAD(mesh_name)
+    mesh_name.resize(64);
     PROPERTY_LOAD(material_name)
+    material_name.resize(64);
     return true;
   }
 

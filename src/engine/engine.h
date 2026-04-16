@@ -46,6 +46,7 @@ struct EngineCreateInfo {
   std::string game_name;
   uint16_t initial_window_width;
   uint16_t initial_window_height;
+  std::string startup_scene;
 };
 
 class EngineInstance {
@@ -77,6 +78,7 @@ public:
   InputHandler* GetInput();
 
 private:
+  std::string startup_scene;
   void RegisterBuiltinComponents();
   glm::vec2 window_size;
   GLFWwindow *window;

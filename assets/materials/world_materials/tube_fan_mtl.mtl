@@ -1,0 +1,7 @@
+{
+    "name": "fan_mtl",
+    "shader_id": "shd_default_diffuse",
+    "texture": "fan_uv",
+    "uniforms": [
+    ]
+}

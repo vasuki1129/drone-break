@@ -74,7 +74,7 @@ EditorCameraComponent::EditorCameraComponent(std::string name)
 {
     this->name = name;
     this->component_type = "EditorCameraComponent";
-    this->movement_speed = 2.0f;
+    this->movement_speed = 8.0f;
 }
 
 void EditorCameraComponent::DrawWidget()
@@ -90,7 +90,7 @@ EditorCameraComponent::EditorCameraComponent()
 
 glm::mat4 CameraComponent::GetCameraMatrix() {
   glm::mat4 view = glm::lookAt(this->owner->GetGlobalPosition(), this->owner->GetGlobalPosition() + this->owner->Forward(), this->owner->Up());
-  glm::mat4 projection = glm::perspective(glm::radians(90.0f),(float)Engine()->GetRenderer()->WindowWidth()/(float)Engine()->GetRenderer()->WindowHeight(), 0.01f, 300.0f);
+  glm::mat4 projection = glm::perspective(glm::radians(110.0f),(float)Engine()->GetRenderer()->WindowWidth()/(float)Engine()->GetRenderer()->WindowHeight(), 0.01f, 300.0f);
   return  projection * view;
 }
 

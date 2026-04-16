@@ -5,6 +5,9 @@
 #include "physics.h"
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
+#include "../imgui/imgui.h"
+#include "../imgui/imgui_impl_glfw.h"
+#include "../imgui/imgui_impl_opengl3.h"
 
 namespace engine {
 
@@ -68,10 +71,18 @@ GLFWwindow *EngineInstance::GetWindow() {
 }
 
 void EngineInstance::Run() {
+  engine::Engine()->GetSceneLoader()->LoadScene(this->startup_scene);
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
     renderer->StartFrame();
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    Engine()->GetSceneLoader()->GetCurrentScene()->SetCameraToMain();
     GetSceneLoader()->UpdateCurrentScene(this->GetRenderer()->DeltaTime());
+    Engine()->GetSceneLoader()->RenderCurrentScene();
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     input_handler->Update();
     renderer->EndFrame();
   }
@@ -104,6 +115,8 @@ void EngineInstance::Initialize() {
   RegisterBuiltinComponents();
   scene_loader = new engine::SceneLoader();
   physics_handler = new PhysicsHandler();
+  renderer->InitForImGui();
+  Engine()->GetInput()->DisableCursor();
 }
 
 InputHandler *EngineInstance::GetInput() {
@@ -114,6 +127,7 @@ InputHandler *EngineInstance::GetInput() {
 
 EngineInstance::EngineInstance(EngineCreateInfo &create_info) {
   renderer = new engine::OpenGLRenderer(&window, create_info);
+  this->startup_scene = create_info.startup_scene;
 }
 
 OpenGLRenderer *EngineInstance::GetRenderer() {
