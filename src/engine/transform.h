@@ -67,14 +67,14 @@ public:
 
   void DrawWidget();
 
+  glm::vec3 position;
+  glm::quat rotation;
+  glm::vec3 scale;
 private:
   std::string name;
   uint64_t uid;
-  glm::vec3 position;
-  glm::quat rotation;
   glm::vec3 rotationEuler; //slaved to the quaternion
 
-  glm::vec3 scale;
   Transform *parent = nullptr;
   std::vector<Transform *> children;
   std::vector<Component*> components;

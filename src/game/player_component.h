@@ -5,7 +5,7 @@
 #include <string>
 using json = nlohmann::json;
 
-class PlayerComponent : engine::Component {
+class PlayerComponent : public engine::Component {
 
 public:
 
@@ -18,16 +18,13 @@ public:
   float GetSpeed();
   void SetVelocity(glm::vec3 vel);
 
-
   float movement_speed = 5.0;
   glm::vec3 velocity = glm::vec3(0.0f,0.0f,0.0f);
   float damping = 0.8f;
   float resistance = 0.1f;
   PlayerComponent();
 
-
   void PushMessage(std::string message);
-
 
   std::string message_buffer = "";
   std::string display_message = "";

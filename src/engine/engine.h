@@ -61,6 +61,12 @@ public:
   AssetManager* GetAssetManager();
   PhysicsHandler* GetPhysics();
 
+  Component *GetLocalPlayer();
+  void SetLocalPlayer(Component* local_player);
+
+
+
+
 
   void Initialize();
 
@@ -79,6 +85,8 @@ public:
 
 private:
   std::string startup_scene;
+  Component* local_player;
+
   void RegisterBuiltinComponents();
   glm::vec2 window_size;
   GLFWwindow *window;

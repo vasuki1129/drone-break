@@ -26,6 +26,7 @@ void PlayerComponent::PushMessage(std::string message) {
 
 void PlayerComponent::tick(float dt) {
 
+  engine::Engine()->SetLocalPlayer((engine::Component*)this);
 
   print_timer += dt;
   if (print_timer > print_interval) {
@@ -82,6 +83,8 @@ void PlayerComponent::tick(float dt) {
 
 void PlayerComponent::DrawWidget() {
 
+  ImGui::InputFloat("damping", &damping);
+  ImGui::InputFloat("resistance", &resistance);
 }
 
 json PlayerComponent::Save() {
@@ -90,6 +93,7 @@ json PlayerComponent::Save() {
   j["uid"] = uid;
   j["component_type"] = component_type;
   j["damping"] = damping;
+  j["resistance"] = resistance;
   j["velocity"][0] = velocity.x;
   j["velocity"][1] = velocity.y;
   j["velocity"][2] = velocity.z;
@@ -103,6 +107,7 @@ bool PlayerComponent::Load(json value) {
   PROPERTY_LOAD(uid)
   PROPERTY_LOAD(component_type)
   PROPERTY_LOAD(damping)
+  PROPERTY_LOAD(resistance)
   return true;
 }
 

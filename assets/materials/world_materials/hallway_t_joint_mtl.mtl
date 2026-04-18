@@ -1,0 +1,7 @@
+{
+    "name": "hallway_t_joint_mtl",
+    "shader_id": "shd_default_diffuse",
+    "texture": "hallway_t_joint_uv",
+    "uniforms": [
+    ]
+}

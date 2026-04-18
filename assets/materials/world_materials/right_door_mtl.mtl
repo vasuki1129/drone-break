@@ -1,0 +1,8 @@
+
+{
+    "name": "right_door_mtl",
+    "shader_id": "shd_default_diffuse",
+    "texture": "right_door_BaseColor",
+    "uniforms": [
+    ]
+}

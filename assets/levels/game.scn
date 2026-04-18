@@ -1,0 +1,1244 @@
+{
+  "active_camera": 11,
+  "name": "DefaultScene",
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "DefaultCube.Suzanne",
+            "name": "MeshComponent",
+            "uid": 3
+          },
+          {
+            "bounds": [
+              0.25,
+              0.25,
+              0.25
+            ],
+            "component_type": "CollisionComponent",
+            "name": "CollisionComponent",
+            "offset": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "should_tick": true,
+            "uid": 10
+          },
+          {
+            "component_type": "CameraComponent",
+            "name": "Component",
+            "uid": 11
+          },
+          {
+            "component_type": "PlayerComponent",
+            "damping": 0.029999999329447746,
+            "name": "PlayerComponent",
+            "resistance": 0.03999999910593033,
+            "uid": 12,
+            "velocity": [
+              2.6610405257088132e-06,
+              -3.1887419027043507e-05,
+              3.659540743683465e-05
+            ]
+          }
+        ],
+        "name": "Player",
+        "position": [
+          -19.00539207458496,
+          -1.4459296464920044,
+          -46.295867919921875
+        ],
+        "rotation": [
+          0.38793495297431946,
+          -0.2597978711128235,
+          0.5716590285301208,
+          -0.6747016906738281
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 2
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "long_hallway_mtl",
+                "mesh_name": "long_hallway.mesh",
+                "name": "MeshComponent",
+                "uid": 15
+              }
+            ],
+            "name": "hallway",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.7071067690849304,
+              -0.0,
+              0.0,
+              0.7071067690849304
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 14
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "hallway_corner_mtl",
+                "mesh_name": "hallway_corner.Cube",
+                "name": "MeshComponent",
+                "uid": 17
+              }
+            ],
+            "name": "corner",
+            "position": [
+              0.0,
+              1.9640428945422173e-06,
+              -16.0
+            ],
+            "rotation": [
+              -0.7071067690849304,
+              -0.0,
+              0.0,
+              0.7071067690849304
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 16
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "hallway_corner_mtl",
+                "mesh_name": "hallway_corner.Cube",
+                "name": "MeshComponent",
+                "uid": 19
+              }
+            ],
+            "name": "corner",
+            "position": [
+              12.0,
+              -1.0474395821802318e-06,
+              -16.0
+            ],
+            "rotation": [
+              3.0908619663705394e-08,
+              0.7071067690849304,
+              0.7071067690849304,
+              -3.0908619663705394e-08
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 18
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "long_hallway_mtl",
+                "mesh_name": "long_hallway.mesh",
+                "name": "MeshComponent",
+                "uid": 21
+              }
+            ],
+            "name": "hallway",
+            "position": [
+              12.0,
+              0.0,
+              -32.0
+            ],
+            "rotation": [
+              -0.7071067690849304,
+              -0.0,
+              0.0,
+              0.7071067690849304
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 20
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "hallway_corner_mtl",
+                "mesh_name": "hallway_corner.Cube",
+                "name": "MeshComponent",
+                "uid": 23
+              }
+            ],
+            "name": "corner",
+            "position": [
+              12.0,
+              0.0,
+              -48.0
+            ],
+            "rotation": [
+              -0.5001482963562012,
+              -0.49985161423683167,
+              -0.49985161423683167,
+              0.5001482963562012
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 22
+          },
+          {
+            "children": [
+              {
+                "children": [],
+                "components": [],
+                "name": "Child",
+                "position": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "uid": 25
+              }
+            ],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "long_hallway_mtl",
+                "mesh_name": "long_hallway.mesh",
+                "name": "MeshComponent",
+                "uid": 27
+              }
+            ],
+            "name": "Child",
+            "position": [
+              -4.0,
+              0.0,
+              -48.0
+            ],
+            "rotation": [
+              -0.4999999701976776,
+              0.4999999701976776,
+              0.4999999701976776,
+              0.4999999701976776
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 24
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "hallway_corner_mtl",
+                "mesh_name": "hallway_corner.Cube",
+                "name": "MeshComponent",
+                "uid": 28
+              }
+            ],
+            "name": "Child",
+            "position": [
+              -20.0,
+              0.0,
+              -48.0
+            ],
+            "rotation": [
+              -0.7071067690849304,
+              -0.0,
+              0.0,
+              0.7071067690849304
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 26
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "long_hallway_mtl",
+                "mesh_name": "long_hallway.mesh",
+                "name": "MeshComponent",
+                "uid": 30
+              }
+            ],
+            "name": "Child",
+            "position": [
+              -20.0,
+              0.0,
+              -32.0
+            ],
+            "rotation": [
+              -0.7071067690849304,
+              -0.0,
+              0.0,
+              0.7071067690849304
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 29
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "long_hallway_mtl",
+                "mesh_name": "long_hallway.mesh",
+                "name": "MeshComponent",
+                "uid": 32
+              }
+            ],
+            "name": "Child",
+            "position": [
+              -20.0,
+              0.0,
+              -12.0
+            ],
+            "rotation": [
+              -0.7071067690849304,
+              -0.0,
+              0.0,
+              0.7071067690849304
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 31
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "hallway_t_joint_mtl",
+                "mesh_name": "hallway_t_joint.mesh.001",
+                "name": "MeshComponent",
+                "uid": 34
+              }
+            ],
+            "name": "Child",
+            "position": [
+              -4.179999828338623,
+              0.009999999776482582,
+              16.0
+            ],
+            "rotation": [
+              -0.4999999701976776,
+              -0.4999999701976776,
+              -0.4999999701976776,
+              0.4999999701976776
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 33
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "hallway_t_joint_mtl",
+                "mesh_name": "hallway_t_joint.mesh.001",
+                "name": "MeshComponent",
+                "uid": 36
+              }
+            ],
+            "name": "Child",
+            "position": [
+              -7.826000213623047,
+              0.0,
+              16.0
+            ],
+            "rotation": [
+              0.4999999701976776,
+              -0.4999999701976776,
+              -0.4999999701976776,
+              -0.4999999701976776
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 35
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "hallway_corner_mtl",
+                "mesh_name": "hallway_corner.Cube",
+                "name": "MeshComponent",
+                "uid": 39
+              }
+            ],
+            "name": "Child",
+            "position": [
+              -12.0,
+              0.0,
+              4.0
+            ],
+            "rotation": [
+              -0.4999999701976776,
+              -0.4999999701976776,
+              -0.4999999701976776,
+              0.4999999701976776
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 37
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "hallway_corner_mtl",
+                "mesh_name": "hallway_corner.Cube",
+                "name": "MeshComponent",
+                "uid": 41
+              }
+            ],
+            "name": "Child",
+            "position": [
+              -20.0,
+              0.0,
+              4.0
+            ],
+            "rotation": [
+              0.5,
+              -0.4999999403953552,
+              -0.5,
+              -0.4999999403953552
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 40
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "MeshComponent",
+                "material_name": "long_hallway_mtl",
+                "mesh_name": "long_hallway.mesh",
+                "name": "MeshComponent",
+                "uid": 191
+              }
+            ],
+            "name": "Child",
+            "position": [
+              0.0,
+              -3.819466655841097e-06,
+              32.0
+            ],
+            "rotation": [
+              -0.7071067690849304,
+              -0.0,
+              0.0,
+              0.7071067690849304
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 190
+          }
+        ],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "hallway_corner.Cub",
+            "name": "MeshComponent",
+            "uid": 38
+          }
+        ],
+        "name": "WorldGeometry",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 13
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  60.0,
+                  6.0,
+                  85.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 228
+              }
+            ],
+            "name": "Floor",
+            "position": [
+              0.0,
+              -4.659999847412109,
+              -13.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 227
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  60.0,
+                  6.0,
+                  85.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 269
+              }
+            ],
+            "name": "Ceiling",
+            "position": [
+              0.0,
+              5.639999866485596,
+              -13.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 268
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "component_type": "CameraComponent",
+                "name": "Component",
+                "uid": 312
+              },
+              {
+                "bounds": [
+                  20.0,
+                  12.0,
+                  50.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 313
+              }
+            ],
+            "name": "wall",
+            "position": [
+              24.014850616455078,
+              0.0,
+              -38.9719352722168
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 311
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  20.0,
+                  12.0,
+                  40.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 315
+              }
+            ],
+            "name": "wall",
+            "position": [
+              12.110605239868164,
+              0.0,
+              6.044733047485352
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 314
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  27.799999237060547,
+                  12.0,
+                  27.799999237060547
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 317
+              }
+            ],
+            "name": "wall",
+            "position": [
+              -4.0,
+              0.0,
+              -31.9595947265625
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 316
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  10.0,
+                  12.0,
+                  70.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 319
+              }
+            ],
+            "name": "wall",
+            "position": [
+              -27.090797424316406,
+              0.0,
+              -25.708602905273438
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 318
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  60.0,
+                  12.0,
+                  20.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 321
+              }
+            ],
+            "name": "wall",
+            "position": [
+              0.0,
+              0.0,
+              -60.040000915527344
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 320
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  20.0,
+                  12.0,
+                  20.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 323
+              }
+            ],
+            "name": "wall",
+            "position": [
+              -24.050079345703125,
+              0.0,
+              16.021474838256836
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 322
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  15.800000190734863,
+                  12.0,
+                  25.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 325
+              }
+            ],
+            "name": "wall",
+            "position": [
+              -9.928613662719727,
+              0.0,
+              -10.532309532165527
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 324
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  7.800000190734863,
+                  12.0,
+                  15.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 327
+              }
+            ],
+            "name": "wall",
+            "position": [
+              -6.001185417175293,
+              0.0,
+              6.507891654968262
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 326
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  7.800000190734863,
+                  12.0,
+                  10.0
+                ],
+                "component_type": "CollisionComponent",
+                "name": "CollisionComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "uid": 445
+              }
+            ],
+            "name": "wall",
+            "position": [
+              -5.976735591888428,
+              0.0,
+              23.085235595703125
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 444
+          }
+        ],
+        "components": [],
+        "name": "Colliders",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 226
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "loading_drone.Cube",
+            "name": "MeshComponent",
+            "uid": 135
+          },
+          {
+            "component_type": "EnemyComponent",
+            "damping": 0.05000000074505806,
+            "engine_power": 6.0,
+            "name": "EnemyComponent",
+            "resistance": 0.05000000074505806,
+            "uid": 136,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "name": "Child",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          -0.14749403297901154,
+          0.12583082914352417,
+          -0.695823073387146,
+          0.691551148891449
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 134
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "door_frame_mtl",
+            "mesh_name": "hallway_door.door_frame",
+            "name": "MeshComponent",
+            "uid": 141
+          }
+        ],
+        "name": "entry_door",
+        "position": [
+          0.0,
+          -2.2378171706805006e-06,
+          18.772172927856445
+        ],
+        "rotation": [
+          -0.7071067690849304,
+          -0.0,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 140
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "left_door_mtl",
+            "mesh_name": "hallway_door.left_door",
+            "name": "MeshComponent",
+            "uid": 143
+          }
+        ],
+        "name": "door_left",
+        "position": [
+          0.0,
+          -2.2408160020859214e-06,
+          18.797330856323242
+        ],
+        "rotation": [
+          -0.7071067690849304,
+          -0.0,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 142
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "right_door_mtl",
+            "mesh_name": "hallway_door.right_door",
+            "name": "MeshComponent",
+            "uid": 145
+          }
+        ],
+        "name": "door_right",
+        "position": [
+          0.0,
+          0.0,
+          18.797000885009766
+        ],
+        "rotation": [
+          -0.7071067690849304,
+          -0.0,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 144
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "door_frame_mtl",
+            "mesh_name": "hallway_door.door_frame",
+            "name": "MeshComponent",
+            "uid": 147
+          }
+        ],
+        "name": "exit_door",
+        "position": [
+          -12.0,
+          0.0,
+          18.797000885009766
+        ],
+        "rotation": [
+          -0.7071067690849304,
+          -0.0,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 146
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "left_door_mtl",
+            "mesh_name": "hallway_door.left_door",
+            "name": "MeshComponent",
+            "uid": 149
+          }
+        ],
+        "name": "exit_door_left",
+        "position": [
+          -12.0,
+          0.0,
+          18.797000885009766
+        ],
+        "rotation": [
+          -0.7071067690849304,
+          -0.0,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 148
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "right_door_mtl",
+            "mesh_name": "hallway_door.right_door",
+            "name": "MeshComponent",
+            "uid": 151
+          }
+        ],
+        "name": "exit_door_right",
+        "position": [
+          -12.0,
+          0.0,
+          18.797000885009766
+        ],
+        "rotation": [
+          -0.7071067690849304,
+          -0.0,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 150
+      }
+    ],
+    "components": [],
+    "name": "Root",
+    "position": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "uid": 1
+  }
+}

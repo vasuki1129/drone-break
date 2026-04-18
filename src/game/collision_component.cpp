@@ -4,6 +4,7 @@
 #include "../engine/engine.h"
 #include "../engine/mesh.h"
 #include "../engine/physics.h"
+#include "enemy_component.h"
 #include <iostream>
 namespace engine {
 class PhysicsHandler;
@@ -13,7 +14,6 @@ CollisionComponent::CollisionComponent() :engine::Component(){
   this->component_type="CollisionComponent";
 }
 
-
 void CollisionComponent::tick(float dt) {
   if(!should_tick) return;
   for (auto col : *engine::Engine()->GetPhysics()->GetColliders()) {
@@ -22,8 +22,15 @@ void CollisionComponent::tick(float dt) {
     glm::vec3 mtv = glm::vec3(0.0f,0.0f,0.0f);
     if (CheckCollision(col, &mtv)) {
       this->GetOwner()->Translate(-mtv);
-      PlayerComponent* ply = (PlayerComponent*)this->GetOwner()->GetComponent("PlayerComponent");
-      ply->SetVelocity(0.99f * ply->GetVelocity() );
+      PlayerComponent *ply =
+          (PlayerComponent *)this->GetOwner()->GetComponent("PlayerComponent");
+      if (ply == nullptr) {
+        EnemyComponent *enmy =
+            (EnemyComponent *)this->GetOwner()->GetComponent("EnemyComponent");
+
+      } else {
+        ply->SetVelocity(0.99f * ply->GetVelocity() );
+      }
     } else {
     }
   }

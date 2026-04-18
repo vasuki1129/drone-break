@@ -17,6 +17,16 @@ std::string EngineInstance::GetVersionString() {
   return out;
 }
 
+
+Component *EngineInstance::GetLocalPlayer() {
+  return local_player;
+}
+
+void EngineInstance::SetLocalPlayer(Component* local_player) {
+  this->local_player = local_player;
+}
+
+
 EngineInstance* instance = nullptr;
 
 Component *EngineInstance::CreateComponent(std::string component_type_name) {

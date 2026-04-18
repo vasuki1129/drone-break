@@ -1,0 +1,8 @@
+
+{
+    "name": "left_door_mtl",
+    "shader_id": "shd_default_diffuse",
+    "texture": "left_door_BaseColor",
+    "uniforms": [
+    ]
+}

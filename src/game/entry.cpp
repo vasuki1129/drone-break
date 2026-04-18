@@ -2,7 +2,7 @@
 #include "test_component.h"
 #include "player_component.h"
 #include "collision_component.h"
-
+#include "enemy_component.h"
 
 int main(int argc, char **argv) {
 
@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
     engine::Engine()->RegisterComponent("CollisionComponent",
                                         engine::__GetCollisionComponent);
 
+    engine::Engine()->RegisterComponent("EnemyComponent",FACTORY_REF(EnemyComponent));
 
     eng->Run();
     delete eng;
@@ -38,6 +39,7 @@ int main(int argc, char **argv) {
     engine::Engine()->RegisterComponent("CollisionComponent",
                                         engine::__GetCollisionComponent);
 
+    engine::Engine()->RegisterComponent("EnemyComponent",FACTORY_REF(EnemyComponent));
 
     eng->Run();
     delete eng;
