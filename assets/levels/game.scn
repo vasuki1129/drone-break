@@ -1367,6 +1367,7 @@
     "components": [
       {
         "component_type": "GameManagerComponent",
+        "map_name": "loading_bay",
         "name": "GameManagerComponent",
         "uid": 178
       }

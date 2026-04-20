@@ -6,6 +6,8 @@
 #include "collision_component.h"
 
 struct LapInfo {
+  bool valid = false;
+  std::string username = "nobody";
   float lap_time = 0.0f;
   float s1_time = 0.0f;
   float s2_time = 0.0f;
@@ -21,7 +23,12 @@ public:
   bool Load(json value) override;
 
   std::map<std::string, LapInfo> best_laps;
+
+  std::string map_name;
+
   LapInfo current_lap;
+  LapInfo best_lap;
+  LapInfo last_lap;
 
   int current_lap_index = 0;
 
@@ -29,12 +36,14 @@ public:
   float sector_timer = 0.0f;
   float total_timer = 0.0f;
 
-  std::string current_username = "test_user";
+  std::string current_username = "max";
 
   engine::CollisionComponent* player_collider;
 
   void RecordSector(int sector);
 
+  json SaveLapData();
+  void LoadLapData(std::string path);
 
   GameManagerComponent();
 
