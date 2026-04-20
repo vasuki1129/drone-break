@@ -1,9 +1,51 @@
 #include "physics.h"
 #include <vector>
 
+#include "../game/collision_component.h"
+#include "../game/trigger_component.h"
 
 namespace engine
 {
+
+bool PhysicsHandler::CheckTrigger(CollisionComponent* collider, int trigger_group)
+{
+  for(auto trigger : this->registered_triggers)
+  {
+      if(trigger == nullptr || trigger->GetOwner() == nullptr) continue;
+      if(trigger->trigger_id == trigger_group)
+      {
+          if(trigger->CheckCollision(collider, nullptr))
+          {
+            return true;
+          }
+      }
+  }
+  return false;
+}
+
+
+void PhysicsHandler::RegisterTrigger(TriggerComponent* trigger)
+{
+
+  if (std::find(this->registered_triggers.begin(),registered_triggers.end(),trigger) ==
+      this->registered_triggers.end()) {
+    this->registered_triggers.push_back(trigger);
+  }
+}
+
+void PhysicsHandler::DeregisterTrigger(TriggerComponent* trigger)
+{
+
+  if (std::find(this->registered_triggers.begin(),this->registered_triggers.end(),trigger) !=
+      this->registered_triggers.end()) {
+      this->registered_triggers.erase(std::find(registered_triggers.begin(), registered_triggers.end(), trigger));
+  }
+}
+
+std::vector<TriggerComponent*>* PhysicsHandler::GetTriggers()
+{
+  return &registered_triggers;
+}
 
 
 void PhysicsHandler::RegisterCollider(CollisionComponent *collider) {
@@ -22,11 +64,6 @@ void PhysicsHandler::DeregisterCollider(CollisionComponent *collider) {
 std::vector<CollisionComponent *> *PhysicsHandler::GetColliders() {
 	return &registered_colliders;
 }
-
-
-
-
-
 
 
 bool TestRayOBBIntersection(

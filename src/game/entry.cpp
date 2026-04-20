@@ -6,6 +6,7 @@
 #include "game_manager.h"
 #include "menu_bgscroller.h"
 #include "menu_shipcontroller.h"
+#include "trigger_component.h"
 
 int main(int argc, char **argv) {
 
@@ -28,8 +29,9 @@ int main(int argc, char **argv) {
                                         FACTORY_REF(GameManagerComponent));
 
     engine::Engine()->RegisterComponent("MenuBackgroundScroll",
-                                        FACTORY_REF(MenuBackgroundScroll));\
+                                        FACTORY_REF(MenuBackgroundScroll));
     engine::Engine()->RegisterComponent("MenuShipController",FACTORY_REF(MenuShipController));
+    engine::Engine()->RegisterComponent("TriggerComponent",engine::__GetTriggerComponent);
     eng->Run();
     delete eng;
   } else {
@@ -51,7 +53,10 @@ int main(int argc, char **argv) {
     engine::Engine()->RegisterComponent("MenuBackgroundScroll",
                                         FACTORY_REF(MenuBackgroundScroll));
 
+    engine::Engine()->RegisterComponent("GameManagerComponent",
+                                        FACTORY_REF(GameManagerComponent));
     engine::Engine()->RegisterComponent("MenuShipController",FACTORY_REF(MenuShipController));
+    engine::Engine()->RegisterComponent("TriggerComponent",engine::__GetTriggerComponent);
     eng->Run();
     delete eng;
   }

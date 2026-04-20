@@ -1,13 +1,12 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "../game/collision_component.h"
 #include "camera_component.h"
 
 namespace engine
 {
 
 class CollisionComponent;
-
+class TriggerComponent;
 
 struct Ray
 {
@@ -31,15 +30,21 @@ bool TestRayOBBIntersection(
                                  // intersection with the OBB
 );
 
-
 class PhysicsHandler {
 public:
+  bool CheckTrigger(CollisionComponent* collider, int trigger_group);
+
   void RegisterCollider(CollisionComponent* collider);
   void DeregisterCollider(CollisionComponent *collider);
   std::vector<CollisionComponent*>* GetColliders();
+
+  void RegisterTrigger(TriggerComponent* trigger);
+  void DeregisterTrigger(TriggerComponent* trigger);
+  std::vector<TriggerComponent*>* GetTriggers();
+
 private:
   std::vector<CollisionComponent*> registered_colliders;
-
+  std::vector<TriggerComponent*> registered_triggers;
 };
 
 

@@ -6,10 +6,6 @@
 
 using json = nlohmann::json;
 
-
-
-
-
 class EnemyComponent : public engine::Component {
 public:
   void tick(float dt) override;
@@ -18,12 +14,10 @@ public:
 
   float GetSpeed();
 
-
   json Save() override;
   bool Load(json value) override;
 
   EnemyComponent();
-
 
 private:
   glm::vec2 current_input = glm::vec2(0.0,0.0);

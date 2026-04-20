@@ -24,15 +24,22 @@ LIN_DEPS += build_linux/release/engine/asset_manager.o
 LIN_DEPS += build_linux/release/engine/gui_util.o
 LIN_DEPS += build_linux/release/engine/input.o
 LIN_DEPS += build_linux/release/engine/physics.o
+LIN_DEPS += build_linux/release/engine/sound_manager.o
 
 LIN_DEPS += build_linux/release/game/entry.o
 LIN_DEPS += build_linux/release/game/test_component.o
 LIN_DEPS += build_linux/release/game/player_component.o
 LIN_DEPS += build_linux/release/game/collision_component.o
 LIN_DEPS += build_linux/release/game/enemy_component.o
-
+LIN_DEPS += build_linux/release/game/game_manager.o
+LIN_DEPS += build_linux/release/game/menu_bgscroller.o
+LIN_DEPS += build_linux/release/game/menu_shipcontroller.o
+LIN_DEPS += build_linux/release/game/trigger_component.o
 
 LIN_DEPS += build_linux/release/s7/s7.o
+
+LIN_DEPS += build_linux/release/miniaudio/miniaudio.o
+
 
 LIN_DEPS += build_linux/release/imgui/imgui.o
 LIN_DEPS += build_linux/release/imgui/imgui_demo.o
@@ -63,16 +70,22 @@ LIN_DEPS_DEBUG += build_linux/debug/engine/asset_manager.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/gui_util.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/input.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/physics.o
+LIN_DEPS_DEBUG += build_linux/debug/engine/sound_manager.o
+
 
 LIN_DEPS_DEBUG += build_linux/debug/game/entry.o
 LIN_DEPS_DEBUG += build_linux/debug/game/test_component.o
 LIN_DEPS_DEBUG += build_linux/debug/game/player_component.o
 LIN_DEPS_DEBUG += build_linux/debug/game/collision_component.o
-
-LIN_DEPS_DEBUG += build_linux/debug/game/collision_component.o
-
+LIN_DEPS_DEBUG += build_linux/debug/game/enemy_component.o
+LIN_DEPS_DEBUG += build_linux/debug/game/game_manager.o
+LIN_DEPS_DEBUG += build_linux/debug/game/menu_bgscroller.o
+LIN_DEPS_DEBUG += build_linux/debug/game/menu_shipcontroller.o
+LIN_DEPS_DEBUG += build_linux/debug/game/trigger_component.o
 
 LIN_DEPS_DEBUG += build_linux/debug/s7/s7.o
+
+LIN_DEPS_DEBUG += build_linux/debug/miniaudio/miniaudio.o
 
 LIN_DEPS_DEBUG += build_linux/debug/imgui/imgui.o
 LIN_DEPS_DEBUG += build_linux/debug/imgui/imgui_demo.o
@@ -99,6 +112,9 @@ build_linux/debug/s7/%.o : src/s7/%.c
 	gcc -c -o $@ $< -g
 build_linux/debug/imgui/%.o : src/imgui/%.cpp
 	g++ -c -o $@ $< -std=c++23 -g
+build_linux/debug/miniaudio/%.o : src/miniaudio/%.c
+	gcc -c -o $@ $< -g
+
 
 build_linux/release/engine/%.o : src/engine/%.cpp
 	g++ -c -o $@ $< -std=c++23
@@ -108,6 +124,10 @@ build_linux/release/s7/%.o : src/s7/%.c
 	gcc -c -o $@ $<
 build_linux/release/imgui/%.o : src/imgui/%.cpp
 	g++ -c -o $@ $< -std=c++23
+build_linux/release/miniaudio/%.o : src/miniaudio/%.c
+	gcc -c -o $@ $< 
+
+
 
 #WINDOWS
 NT_FLAGS := /FS /DGLEW_STATIC /Zi /MDd /EHsc /IC:\lib\glm\include /IC:\lib\glew\include /IC:\lib\glfw\include /IC:\lib\assimp\include

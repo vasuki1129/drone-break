@@ -9,7 +9,7 @@
 namespace engine {
 class PhysicsHandler;
 
-CollisionComponent::CollisionComponent() :engine::Component(){
+CollisionComponent::CollisionComponent() : engine::Component(){
   this->name = "CollisionComponent";
   this->component_type="CollisionComponent";
 }
@@ -29,7 +29,7 @@ void CollisionComponent::tick(float dt) {
             (EnemyComponent *)this->GetOwner()->GetComponent("EnemyComponent");
 
       } else {
-        ply->SetVelocity(0.99f * ply->GetVelocity() );
+        ply->SetVelocity( 0.99f * ply->GetVelocity() );
       }
     } else {
     }

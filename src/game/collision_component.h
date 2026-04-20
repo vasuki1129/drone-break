@@ -1,5 +1,4 @@
 #pragma once
-#include "../engine/engine.h"
 #include "../engine/component.h"
 #include "../json/json.hpp"
 #include <glm/glm.hpp>
@@ -7,23 +6,23 @@
 using json = nlohmann::json;
 
 namespace engine{
+class TriggerComponent;
 
-
-class CollisionComponent : engine::Component {
+class CollisionComponent : public Component {
 
 public:
 
 
-  void init() override;
+  virtual void init() override;
 
-  void destroy() override;
+  virtual void destroy() override;
 
 
 
-  void tick(float dt) override;
-  void DrawWidget() override;
-  json Save() override;
-  bool Load(json value) override;
+  virtual void tick(float dt) override;
+  virtual void DrawWidget() override;
+  virtual json Save() override;
+  virtual bool Load(json value) override;
 
   void editor_render() override;
 

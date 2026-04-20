@@ -2,16 +2,19 @@
 #include <glm/glm.hpp>
 
 void MenuShipController::tick(float dt) {
+    engine::Engine()->GetInput()->EnableCursor();
     timer += dt;
     this->GetOwner()->position.y = initial_position + sin(timer) * amplitude;
 
 
     //ACTUAL MENU CODE
-    ImGui::Begin("MainMenu");
 
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.22,0.22,0.22,0.0));
+
+    ImGui::Begin("MainMenu",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+    ImGui::SetWindowPos(ImVec2(100,100));
 
     if (menu_state == 0) {
-
         ImGui::Button("Campaign [Coming Soon]");
         if (ImGui::Button("Hotlap Mode")) {
           menu_state = 1;
@@ -24,16 +27,24 @@ void MenuShipController::tick(float dt) {
 
         }
     } else if (menu_state == 1) {
-      ImGui::Button("Loading Bay");
+      if(ImGui::Button("Loading Bay"))
+      {
+          engine::Engine()->GetInput()->DisableCursor();
+          engine::Engine()->GetSceneLoader()->LoadScene("assets/levels/game.scn");
+      }
       if (ImGui::Button("Back")) {
           menu_state = 0;
       }
 
     } else if (menu_state == 2) {
+
     } else {menu_state = 0;}
 
 
     ImGui::End();
+    ImGui::PopStyleColor(1);
+
+
 
 }
 

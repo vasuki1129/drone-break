@@ -49,9 +49,9 @@
         ],
         "name": "Player",
         "position": [
+          2.1552452835749136e-06,
           0.0,
-          0.0,
-          40.14848327636719
+          15.495342254638672
         ],
         "rotation": [
           -0.0,
@@ -1219,9 +1219,158 @@
           1.0
         ],
         "uid": 150
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  6.0,
+                  6.0,
+                  6.0
+                ],
+                "component_type": "TriggerComponent",
+                "name": "TriggerComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "trigger_id": 0,
+                "uid": 166
+              }
+            ],
+            "name": "S1",
+            "position": [
+              0.08587390929460526,
+              0.0,
+              15.58591365814209
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 165
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  6.0,
+                  6.0,
+                  6.0
+                ],
+                "component_type": "TriggerComponent",
+                "name": "TriggerComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "trigger_id": 1,
+                "uid": 168
+              }
+            ],
+            "name": "S2",
+            "position": [
+              11.71854305267334,
+              0.0,
+              -47.77799606323242
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 167
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "bounds": [
+                  6.0,
+                  6.0,
+                  6.0
+                ],
+                "component_type": "TriggerComponent",
+                "name": "TriggerComponent",
+                "offset": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "should_tick": false,
+                "trigger_id": 2,
+                "uid": 170
+              }
+            ],
+            "name": "S3",
+            "position": [
+              -19.969379425048828,
+              0.0,
+              -7.198642730712891
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "uid": 169
+          }
+        ],
+        "components": [],
+        "name": "Triggers",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 164
       }
     ],
-    "components": [],
+    "components": [
+      {
+        "component_type": "GameManagerComponent",
+        "name": "GameManagerComponent",
+        "uid": 178
+      }
+    ],
     "name": "Root",
     "position": [
       0.0,
