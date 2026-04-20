@@ -15,9 +15,24 @@ void GameManagerComponent::tick(float dt) {
 
   player_collider = (engine::CollisionComponent*) ply->GetOwner()->GetComponent("CollisionComponent");
 
-  ImGui::Begin("Lap Timer");
+  ImGui::Begin("Lap Timer",NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize);
   ImGui::Text("%f",this->lap_timer);
+  ImGui::Text("S1: %f",this->current_lap.s1_time);
+  ImGui::Text("S2: %f", this->current_lap.s2_time);
+  ImGui::Text("S3: %f", this->current_lap.s3_time);
   ImGui::End();
+
+
+  ImGui::Begin("Best Laps", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize);
+  ImGui::SetWindowPos(ImVec2(engine::Engine()->GetRenderer()->WindowWidth() - 200,100));
+  for(auto val : best_laps)
+  {
+    ImGui::Text("%s\t%f", val.first.c_str(), val.second.lap_time);
+  }
+
+  ImGui::End();
+
+
 
   lap_timer += dt;
   sector_timer += dt;
