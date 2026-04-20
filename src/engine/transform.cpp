@@ -105,6 +105,7 @@ Component *Transform::GetComponent(std::string name) {
   }
 void Transform::AddComponent(Component *component) {
   component->SetOwner(this);
+  component->init();
   this->components.push_back(component);
 }
 
@@ -254,6 +255,7 @@ bool Transform::Load(json value)
     if(!val.contains("component_type")) return false;
     Component* c = Engine()->LoadComponent(val["component_type"],val);
     c->SetOwner(this);
+    c->init();
     components.push_back(c);
   }
   return true;

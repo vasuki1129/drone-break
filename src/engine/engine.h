@@ -34,6 +34,8 @@
 #include "asset_manager.h"
 #include "input.h"
 #include "camera_component.h"
+#include "sound_manager.h"
+
 
 namespace engine {
 
@@ -60,6 +62,11 @@ public:
   GLFWwindow *GetWindow();
   AssetManager* GetAssetManager();
   PhysicsHandler* GetPhysics();
+  SoundManager* GetSoundManager();
+
+
+
+
 
   Component *GetLocalPlayer();
   void SetLocalPlayer(Component* local_player);
@@ -86,7 +93,7 @@ public:
 private:
   std::string startup_scene;
   Component* local_player;
-
+  SoundManager* sound_manager;
   void RegisterBuiltinComponents();
   glm::vec2 window_size;
   GLFWwindow *window;

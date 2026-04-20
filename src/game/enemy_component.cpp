@@ -65,6 +65,7 @@ bool EnemyComponent::Load(json value) {
   PROPERTY_LOAD(damping)
   PROPERTY_LOAD(resistance)
   PROPERTY_LOAD(engine_power)
+  return true;
 }
 
 FACTORY_DEF(EnemyComponent)

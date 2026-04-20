@@ -3,6 +3,9 @@
 #include "player_component.h"
 #include "collision_component.h"
 #include "enemy_component.h"
+#include "game_manager.h"
+#include "menu_bgscroller.h"
+#include "menu_shipcontroller.h"
 
 int main(int argc, char **argv) {
 
@@ -21,14 +24,19 @@ int main(int argc, char **argv) {
                                         engine::__GetCollisionComponent);
 
     engine::Engine()->RegisterComponent("EnemyComponent",FACTORY_REF(EnemyComponent));
+    engine::Engine()->RegisterComponent("GameManagerComponent",
+                                        FACTORY_REF(GameManagerComponent));
 
+    engine::Engine()->RegisterComponent("MenuBackgroundScroll",
+                                        FACTORY_REF(MenuBackgroundScroll));\
+    engine::Engine()->RegisterComponent("MenuShipController",FACTORY_REF(MenuShipController));
     eng->Run();
     delete eng;
   } else {
 
     engine::EngineCreateInfo create_info{
     .game_name = "Light", .initial_window_width = 800,
-    .initial_window_height = 600, .startup_scene = "assets/levels/f1.scn"
+    .initial_window_height = 600, .startup_scene = "assets/levels/menu.scn"
   };
     //auto eng = new engine::editor::EditorInstance();
     auto eng = engine::CreateEngine(create_info);
@@ -40,10 +48,11 @@ int main(int argc, char **argv) {
                                         engine::__GetCollisionComponent);
 
     engine::Engine()->RegisterComponent("EnemyComponent",FACTORY_REF(EnemyComponent));
+    engine::Engine()->RegisterComponent("MenuBackgroundScroll",
+                                        FACTORY_REF(MenuBackgroundScroll));
 
+    engine::Engine()->RegisterComponent("MenuShipController",FACTORY_REF(MenuShipController));
     eng->Run();
     delete eng;
-
   }
-
 }

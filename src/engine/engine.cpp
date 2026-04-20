@@ -8,6 +8,7 @@
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_impl_glfw.h"
 #include "../imgui/imgui_impl_opengl3.h"
+#include "sound_manager.h"
 
 namespace engine {
 
@@ -26,14 +27,16 @@ void EngineInstance::SetLocalPlayer(Component* local_player) {
   this->local_player = local_player;
 }
 
-
 EngineInstance* instance = nullptr;
+
+SoundManager* EngineInstance::GetSoundManager() {
+  return sound_manager;
+}
 
 Component *EngineInstance::CreateComponent(std::string component_type_name) {
   if (registered_component_types.find(component_type_name) !=
       registered_component_types.end()) {
     Component* c = registered_component_types[component_type_name]();
-    c->init();
     return c;
   } else {
     std::cout << "Component type `" + component_type_name + "` not found\n";
@@ -46,7 +49,6 @@ Component *EngineInstance::LoadComponent(std::string component_type_name, json v
       registered_component_types.end()) {
     Component* comp =  registered_component_types[component_type_name]();
     comp->Load(value);
-    comp->init();
     return comp;
   } else {
     std::cout << "Component type `" + component_type_name + "` not found\n";
@@ -118,7 +120,7 @@ void EngineInstance::Initialize() {
   input_handler = new InputHandler();
   asset_loader = new AssetManager();
   scheme_interpreter = s7_init();
-
+  sound_manager = new SoundManager();
 
 
   asset_loader->Rescan();

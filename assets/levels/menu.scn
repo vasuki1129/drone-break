@@ -1,0 +1,175 @@
+{
+  "active_camera": 12,
+  "name": "DefaultScene",
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "",
+            "name": "MeshComponent",
+            "uid": 3
+          },
+          {
+            "component_type": "CameraComponent",
+            "name": "Component",
+            "uid": 12
+          }
+        ],
+        "name": "Camera",
+        "position": [
+          22.89470100402832,
+          0.2720069885253906,
+          2.0486369132995605
+        ],
+        "rotation": [
+          0.002281516557559371,
+          0.9958533644676208,
+          -0.08712594211101532,
+          0.026077335700392723
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 2
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "long_hallway_mtl",
+            "mesh_name": "long_hallway.mesh",
+            "name": "MeshComponent",
+            "uid": 11
+          },
+          {
+            "component_type": "MenuBackgroundScroll",
+            "name": "MenuBackgroundScroll",
+            "speed": 30.0,
+            "uid": 28,
+            "x_maximum": 40.0,
+            "x_minimum": 0.0
+          }
+        ],
+        "name": "hallway_0",
+        "position": [
+          14.149405479431152,
+          0.0,
+          0.5
+        ],
+        "rotation": [
+          -0.5001220703125,
+          0.4998778700828552,
+          0.4998778700828552,
+          0.5001220703125
+        ],
+        "scale": [
+          1.0,
+          1.100000023841858,
+          1.0
+        ],
+        "uid": 10
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "long_hallway_mtl",
+            "mesh_name": "long_hallway.mesh",
+            "name": "MeshComponent",
+            "uid": 14
+          },
+          {
+            "component_type": "MenuBackgroundScroll",
+            "name": "MenuBackgroundScroll",
+            "speed": 30.0,
+            "uid": 29,
+            "x_maximum": 40.0,
+            "x_minimum": 0.0
+          }
+        ],
+        "name": "hallway_1",
+        "position": [
+          34.46518325805664,
+          0.0,
+          0.5
+        ],
+        "rotation": [
+          -0.4999999701976776,
+          0.4999999701976776,
+          0.4999999701976776,
+          0.4999999701976776
+        ],
+        "scale": [
+          1.0,
+          1.100000023841858,
+          1.0
+        ],
+        "uid": 13
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "DefaultShip.Body",
+            "name": "MeshComponent",
+            "uid": 42
+          },
+          {
+            "amplitude": 0.30000001192092896,
+            "component_type": "MenuShipController",
+            "name": "MenuShipController",
+            "speed": 5.0,
+            "uid": 36
+          }
+        ],
+        "name": "Ship",
+        "position": [
+          23.4121036529541,
+          -0.7521156072616577,
+          -8.965897535517797e-08
+        ],
+        "rotation": [
+          -0.7071067690849304,
+          -3.0908619663705394e-08,
+          -3.0908619663705394e-08,
+          0.7071067690849304
+        ],
+        "scale": [
+          0.30000001192092896,
+          0.30000001192092896,
+          0.30000001192092896
+        ],
+        "uid": 41
+      }
+    ],
+    "components": [],
+    "name": "Root",
+    "position": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "uid": 1
+  }
+}

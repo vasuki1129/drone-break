@@ -132,15 +132,22 @@ NT_DEPS += build_windows/engine/asset_manager.obj
 NT_DEPS += build_windows/engine/gui_util.obj
 NT_DEPS += build_windows/engine/input.obj
 NT_DEPS += build_windows/engine/physics.obj
+NT_DEPS += build_windows/engine/sound_manager.obj
+
 
 NT_DEPS += build_windows/game/entry.obj
 NT_DEPS += build_windows/game/test_component.obj
 NT_DEPS += build_windows/game/player_component.obj
 NT_DEPS += build_windows/game/collision_component.obj
 NT_DEPS += build_windows/game/enemy_component.obj
-
+NT_DEPS += build_windows/game/game_manager.obj
+NT_DEPS += build_windows/game/menu_bgscroller.obj
+NT_DEPS += build_windows/game/menu_shipcontroller.obj
 
 NT_DEPS += build_windows/s7/s7.obj
+
+NT_DEPS += build_windows/miniaudio/miniaudio.obj
+
 
 NT_DEPS += build_windows/imgui/imgui.obj
 NT_DEPS += build_windows/imgui/imgui_demo.obj
@@ -165,6 +172,10 @@ build_windows/engine/%.obj : src/engine/%.cpp
 	cl /std:c++20 $(NT_FLAGS) /Fo$@ /c $<
 build_windows/s7/s7.obj : src/s7/s7.c
 	cl $(NT_FLAGS) /std:c17 /DCLOCKS_PER_SEC=1000 /Fo".\\build_windows\\s7\\" /c /TC "src\\s7\\s7.c"
+
+build_windows/miniaudio/%.obj : src/miniaudio/%.c
+	cl $(NT_FLAGS) /std:c17 /Fo$@ /c /TC $<
+
 
 build_windows/imgui/%.obj : src/imgui/%.cpp
 	cl /std:c++20 $(NT_FLAGS) /Fo$@ /c $<
