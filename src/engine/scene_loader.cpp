@@ -18,7 +18,10 @@ void SceneLoader::RewindToCheckpoint() {
 
 
 bool SceneLoader::LoadScene(std::string path) {
+
+  Engine()->SetLocalPlayer(nullptr);
   std::ifstream f(path);
+
   json data = json::parse(f);
   Scene* scn = new Scene();
   scn->Load(data);

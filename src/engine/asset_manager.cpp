@@ -14,6 +14,14 @@ std::string trim_str(std::string in) {
   return nk;
 }
 
+Sound *AssetManager::GetSoundOrNull(std::string key) {
+  std::string nk = trim_str(key);
+  if (loaded_sounds.find(nk) != loaded_sounds.end()) {
+    return loaded_sounds.at(nk);
+  } else {
+    return nullptr;
+  }
+}
 
 Texture *AssetManager::GetTextureOrNull(std::string key) {
   std::string nk = trim_str(key);
@@ -86,6 +94,7 @@ void AssetManager::Rescan() {
   std::vector<std::filesystem::directory_entry> materials_ls;
   std::vector<std::filesystem::directory_entry> textures_ls;
   std::vector<std::filesystem::directory_entry> shaders_ls;
+  std::vector<std::filesystem::directory_entry> sounds_ls;
 
   for (const auto &dir_entry :
        std::filesystem::recursive_directory_iterator("assets")) {
@@ -99,6 +108,8 @@ void AssetManager::Rescan() {
         textures_ls.push_back(dir_entry);
       } else if (dir_entry.path().extension() == ".shd") {
         shaders_ls.push_back(dir_entry);
+      } else if (dir_entry.path().extension() == ".mp3") {
+        sounds_ls.push_back(dir_entry);
       }
     }
   }
@@ -115,6 +126,12 @@ void AssetManager::Rescan() {
   for (auto entry : materials_ls) {
     ProcessMaterial(entry.path());
   }
+  for (auto entry : sounds_ls) {
+    ProcessSound(entry.path());
+  }
+
+
+
 }
 
 void AssetManager::ProcessModel(std::filesystem::path pth) {
@@ -161,11 +178,16 @@ void AssetManager::ProcessTexture(std::filesystem::path pth) {
     std::cout << pth.string() << " failed to load";
     delete tex;
   }
-
 }
 
-
-
-
+void AssetManager::ProcessSound(std::filesystem::path pth) {
+  Sound *sound = new Sound(pth.string());
+  sound->SetName(pth.stem().string());
+  sound->SetPath(pth.string());
+  if (sound->IsValid()) {
+    loaded_sounds[sound->GetName()] = sound;
+    std::cout << "loaded sound: " << sound->GetName();
+  }
+}
 
 }

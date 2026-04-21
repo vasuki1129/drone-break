@@ -92,7 +92,7 @@ public:
 
 private:
   std::string startup_scene;
-  Component* local_player;
+  Component* local_player = nullptr;
   SoundManager* sound_manager;
   void RegisterBuiltinComponents();
   glm::vec2 window_size;

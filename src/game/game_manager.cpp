@@ -4,6 +4,7 @@ GameManagerComponent::GameManagerComponent() : engine::Component() {
   this->name = "GameManagerComponent";
   this->component_type = "GameManagerComponent";
   this->map_name.resize(64);
+  this->music_name.resize(64);
 }
 
 
@@ -175,12 +176,18 @@ void GameManagerComponent::RecordSector(int sector)
 }
 
 void GameManagerComponent::init() {
-    engine::Engine()->GetSoundManager()->PlaySound("assets/music/drone-break_menu.mp3");
-    LoadLapData("lapdata/" + std::string(this->map_name.c_str()) + ".json");
+  sound_handle = engine::Engine()->GetAssetManager()->GetSoundOrNull(music_name);
+  if (sound_handle != nullptr) {
+      sound_handle->PlayLooped();
+  } else {
+    std::cout << "Couldn't load sound: " << this->music_name << "\n";
+  }
+  LoadLapData("lapdata/" + std::string(this->map_name.c_str()) + ".json");
 }
 
 void GameManagerComponent::DrawWidget() {
-    ImGui::InputText("Map Name", map_name.data(),64);
+  ImGui::InputText("Map Name", map_name.data(), 64);
+    ImGui::InputText("Music Name", music_name.data(),64);
 }
 
 json GameManagerComponent::Save() {
@@ -189,6 +196,7 @@ json GameManagerComponent::Save() {
   j["uid"] = uid;
   j["component_type"] = component_type;
   j["map_name"] = std::string(map_name.c_str());
+  j["music_name"] = std::string(music_name.c_str());
   return j;
 
 }
@@ -199,6 +207,8 @@ bool GameManagerComponent::Load(json value) {
   PROPERTY_LOAD(component_type)
   PROPERTY_LOAD(map_name)
   map_name.resize(64);
+  PROPERTY_LOAD(music_name)
+  music_name.resize(64);
   return true;
 }
 

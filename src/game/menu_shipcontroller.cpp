@@ -9,6 +9,23 @@ void MenuShipController::tick(float dt) {
 
     //ACTUAL MENU CODE
 
+
+
+    engine::Texture *title_text =
+        engine::Engine()->GetAssetManager()->GetTextureOrNull("TitleText");
+    ImGui::SetNextWindowPos(
+        ImVec2(engine::Engine()->GetRenderer()->WindowWidth() - 600, 20));
+    ImGui::Begin("TitleText", NULL,
+                 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground |
+                     ImGuiWindowFlags_NoInputs);
+    ImGui::Image((ImTextureID)(intptr_t)title_text->GetTextureHandle(),
+                 ImVec2(600, 300));
+    ImGui::End();
+
+
+
+
+
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.22,0.22,0.22,0.0));
 
     ImGui::Begin("MainMenu",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);

@@ -19,4 +19,16 @@ void SoundManager::PlaySound(std::string sound) {
   ma_engine_play_sound(engine, sound.c_str(), NULL);
 }
 
+ma_sound *SoundManager::LoadSound(std::string path) {
+  ma_sound* snd = new ma_sound();
+  ma_result result =
+      ma_sound_init_from_file(engine, path.c_str(), 0, NULL, NULL, snd);
+  if (result != MA_SUCCESS) {
+    std::cout << "Failed to load sound: " << path << "\n";
+  }
+  return snd;
+}
+
+
+
 }

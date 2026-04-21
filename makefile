@@ -153,7 +153,7 @@ NT_DEPS += build_windows/engine/gui_util.obj
 NT_DEPS += build_windows/engine/input.obj
 NT_DEPS += build_windows/engine/physics.obj
 NT_DEPS += build_windows/engine/sound_manager.obj
-
+NT_DEPS += build_windows/engine/sound.obj
 
 NT_DEPS += build_windows/game/entry.obj
 NT_DEPS += build_windows/game/test_component.obj
@@ -163,6 +163,7 @@ NT_DEPS += build_windows/game/enemy_component.obj
 NT_DEPS += build_windows/game/game_manager.obj
 NT_DEPS += build_windows/game/menu_bgscroller.obj
 NT_DEPS += build_windows/game/menu_shipcontroller.obj
+NT_DEPS += build_windows/game/trigger_component.obj
 
 NT_DEPS += build_windows/s7/s7.obj
 

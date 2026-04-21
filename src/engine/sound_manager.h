@@ -9,6 +9,7 @@ public:
   SoundManager();
   ~SoundManager();
   void PlaySound(std::string sound);
+  ma_sound* LoadSound(std::string path);
 private:
     ma_engine* engine;
 };

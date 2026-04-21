@@ -1015,9 +1015,9 @@
             "resistance": 0.05000000074505806,
             "uid": 136,
             "velocity": [
-              0.0,
-              0.0,
-              0.0
+              -431602080.0,
+              -431602080.0,
+              -431602080.0
             ]
           }
         ],
@@ -1368,6 +1368,7 @@
       {
         "component_type": "GameManagerComponent",
         "map_name": "loading_bay",
+        "music_name": "drone-break_menu",
         "name": "GameManagerComponent",
         "uid": 178
       }

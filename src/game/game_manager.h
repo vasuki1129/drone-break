@@ -4,6 +4,7 @@
 #include "../engine/component.h"
 #include "../json/json.hpp"
 #include "collision_component.h"
+#include "../engine/sound.h"
 
 struct LapInfo {
   bool valid = false;
@@ -25,6 +26,7 @@ public:
   std::map<std::string, LapInfo> best_laps;
 
   std::string map_name;
+  std::string music_name;
 
   LapInfo current_lap;
   LapInfo best_lap;
@@ -46,6 +48,10 @@ public:
   void LoadLapData(std::string path);
 
   GameManagerComponent();
+
+  engine::Sound* sound_handle;
+
+
 
 };
 
