@@ -12,6 +12,12 @@
 
 namespace engine {
 
+
+void EngineInstance::Stop()
+{
+
+}
+
 std::string EngineInstance::GetVersionString() {
   std::string out;
   out += "LIGHT v0.2.2";

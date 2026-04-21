@@ -25,6 +25,7 @@ LIN_DEPS += build_linux/release/engine/gui_util.o
 LIN_DEPS += build_linux/release/engine/input.o
 LIN_DEPS += build_linux/release/engine/physics.o
 LIN_DEPS += build_linux/release/engine/sound_manager.o
+LIN_DEPS += build_linux/release/engine/sound.o
 
 LIN_DEPS += build_linux/release/game/entry.o
 LIN_DEPS += build_linux/release/game/test_component.o
@@ -39,7 +40,6 @@ LIN_DEPS += build_linux/release/game/trigger_component.o
 LIN_DEPS += build_linux/release/s7/s7.o
 
 LIN_DEPS += build_linux/release/miniaudio/miniaudio.o
-
 
 LIN_DEPS += build_linux/release/imgui/imgui.o
 LIN_DEPS += build_linux/release/imgui/imgui_demo.o
@@ -71,7 +71,7 @@ LIN_DEPS_DEBUG += build_linux/debug/engine/gui_util.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/input.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/physics.o
 LIN_DEPS_DEBUG += build_linux/debug/engine/sound_manager.o
-
+LIN_DEPS_DEBUG += build_linux/debug/engine/sound.o
 
 LIN_DEPS_DEBUG += build_linux/debug/game/entry.o
 LIN_DEPS_DEBUG += build_linux/debug/game/test_component.o
@@ -115,7 +115,6 @@ build_linux/debug/imgui/%.o : src/imgui/%.cpp
 build_linux/debug/miniaudio/%.o : src/miniaudio/%.c
 	gcc -c -o $@ $< -g
 
-
 build_linux/release/engine/%.o : src/engine/%.cpp
 	g++ -c -o $@ $< -std=c++23
 build_linux/release/game/%.o : src/game/%.cpp
@@ -126,8 +125,6 @@ build_linux/release/imgui/%.o : src/imgui/%.cpp
 	g++ -c -o $@ $< -std=c++23
 build_linux/release/miniaudio/%.o : src/miniaudio/%.c
 	gcc -c -o $@ $< 
-
-
 
 #WINDOWS
 NT_FLAGS := /FS /DGLEW_STATIC /Zi /MDd /EHsc /IC:\lib\glm\include /IC:\lib\glew\include /IC:\lib\glfw\include /IC:\lib\assimp\include

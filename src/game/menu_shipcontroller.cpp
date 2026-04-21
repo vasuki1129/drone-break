@@ -1,6 +1,8 @@
 #include "menu_shipcontroller.h"
 #include <glm/glm.hpp>
 
+
+
 void MenuShipController::tick(float dt) {
     engine::Engine()->GetInput()->EnableCursor();
     timer += dt;
@@ -36,18 +38,17 @@ void MenuShipController::tick(float dt) {
         if (ImGui::Button("Hotlap Mode")) {
           menu_state = 1;
         }
-        if (ImGui::Button("Settings")) {
-          menu_state = 2;
-        }
-        if (ImGui::Button("Quit")) {
+        //if (ImGui::Button("Settings")) {
+          //menu_state = 2;
+        //}
+        //if (ImGui::Button("Quit")) {
+        //    engine::Engine()->Stop();
 
-
-        }
+        //}
     } else if (menu_state == 1) {
       if(ImGui::Button("Loading Bay"))
       {
-          engine::Engine()->GetInput()->DisableCursor();
-          engine::Engine()->GetSceneLoader()->LoadScene("assets/levels/game.scn");
+          ImGui::OpenPopup("NicknamePrompt");
       }
       if (ImGui::Button("Back")) {
           menu_state = 0;
@@ -57,7 +58,18 @@ void MenuShipController::tick(float dt) {
 
     } else {menu_state = 0;}
 
+          static char nickname[50];
 
+          if(ImGui::BeginPopupModal("NicknamePrompt",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
+          {
+              ImGui::Text("Enter name for leaderboard.");
+              ImGui::InputText("Nickname", nickname,50);
+              if(ImGui::Button("Play")){
+                  engine::Engine()->GetInput()->DisableCursor();
+                  engine::Engine()->GetSceneLoader()->LoadScene("assets/levels/game.scn");
+              }
+              ImGui::EndPopup();
+          }
     ImGui::End();
     ImGui::PopStyleColor(1);
 

@@ -64,7 +64,7 @@ public:
   PhysicsHandler* GetPhysics();
   SoundManager* GetSoundManager();
 
-
+  void Stop();
 
 
 

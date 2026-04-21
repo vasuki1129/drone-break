@@ -1,0 +1,7 @@
+{
+    "name": "player_ship_mtl",
+    "shader_id": "shd_default_diffuse",
+    "texture": "Player_Ship_UV",
+    "uniforms": [
+    ]
+}

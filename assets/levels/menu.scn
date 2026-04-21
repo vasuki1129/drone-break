@@ -119,7 +119,7 @@
         "components": [
           {
             "component_type": "MeshComponent",
-            "material_name": "default",
+            "material_name": "player_ship_mtl",
             "mesh_name": "DefaultShip.Body",
             "name": "MeshComponent",
             "uid": 42
