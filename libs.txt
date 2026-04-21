@@ -1,0 +1,4 @@
+libglfw3
+libglew2.2
+libassimp5
+
