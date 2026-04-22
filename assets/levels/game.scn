@@ -9,7 +9,7 @@
           {
             "component_type": "MeshComponent",
             "material_name": "default",
-            "mesh_name": "DefaultCube.Suzanne",
+            "mesh_name": "",
             "name": "MeshComponent",
             "uid": 3
           },
@@ -1015,9 +1015,9 @@
             "resistance": 0.05000000074505806,
             "uid": 136,
             "velocity": [
-              -431602080.0,
-              -431602080.0,
-              -431602080.0
+              0.0,
+              0.0,
+              0.0
             ]
           }
         ],
@@ -1049,6 +1049,22 @@
             "mesh_name": "hallway_door.door_frame",
             "name": "MeshComponent",
             "uid": 141
+          },
+          {
+            "bounds": [
+              7.0,
+              1.0,
+              8.0
+            ],
+            "component_type": "CollisionComponent",
+            "name": "CollisionComponent",
+            "offset": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "should_tick": false,
+            "uid": 180
           }
         ],
         "name": "entry_door",
@@ -1139,6 +1155,22 @@
             "mesh_name": "hallway_door.door_frame",
             "name": "MeshComponent",
             "uid": 147
+          },
+          {
+            "bounds": [
+              7.0,
+              1.0,
+              7.0
+            ],
+            "component_type": "CollisionComponent",
+            "name": "CollisionComponent",
+            "offset": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "should_tick": false,
+            "uid": 181
           }
         ],
         "name": "exit_door",

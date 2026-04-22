@@ -36,6 +36,7 @@ LIN_DEPS += build_linux/release/game/game_manager.o
 LIN_DEPS += build_linux/release/game/menu_bgscroller.o
 LIN_DEPS += build_linux/release/game/menu_shipcontroller.o
 LIN_DEPS += build_linux/release/game/trigger_component.o
+LIN_DEPS += build_linux/release/game/skybox_component.o
 
 LIN_DEPS += build_linux/release/s7/s7.o
 
@@ -82,6 +83,7 @@ LIN_DEPS_DEBUG += build_linux/debug/game/game_manager.o
 LIN_DEPS_DEBUG += build_linux/debug/game/menu_bgscroller.o
 LIN_DEPS_DEBUG += build_linux/debug/game/menu_shipcontroller.o
 LIN_DEPS_DEBUG += build_linux/debug/game/trigger_component.o
+LIN_DEPS_DEBUG += build_linux/debug/game/skybox_component.o
 
 LIN_DEPS_DEBUG += build_linux/debug/s7/s7.o
 

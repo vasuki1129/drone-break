@@ -67,13 +67,15 @@ void GameManagerComponent::tick(float dt) {
 
   if (start_timer > 0.0f) {
     start_timer -= dt;
+
     ImGui::Begin("StartTimer", NULL,
                  ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoDecoration |
-                     ImGuiWindowFlags_NoBackground);
+                     ImGuiWindowFlags_NoBackground|ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::SetWindowFontScale(4.0f);
     ImGui::SetWindowPos(
-        ImVec2(engine::Engine()->GetRenderer()->WindowWidth() / 2,
-               engine::Engine()->GetRenderer()->WindowHeight() / 2));
-    ImGui::Text("%f", this->start_timer);
+        ImVec2(engine::Engine()->GetRenderer()->WindowWidth() / 2 - 50,
+               engine::Engine()->GetRenderer()->WindowHeight() / 2 - 50));
+    ImGui::Text("%.2f", this->start_timer);
     ImGui::End();
   }
 
@@ -91,11 +93,17 @@ void GameManagerComponent::tick(float dt) {
 
   player_collider = (engine::CollisionComponent*) ply->GetOwner()->GetComponent("CollisionComponent");
 
-  ImGui::Begin("Lap Timer",NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize);
+  ImGui::Begin("This Lap:",NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize);
+  ImGui::SeparatorText("This Lap");
   ImGui::Text("%f",this->lap_timer);
   ImGui::Text("S1: %f",this->current_lap.s1_time);
   ImGui::Text("S2: %f", this->current_lap.s2_time);
   ImGui::Text("S3: %f", this->current_lap.s3_time);
+  ImGui::SeparatorText("Last Lap");
+  ImGui::Text("%f", this->last_lap.lap_time);
+  ImGui::Text("S1: %f", this->last_lap.s1_time);
+  ImGui::Text("S2: %f", this->last_lap.s2_time);
+  ImGui::Text("S3: %f", this->last_lap.s3_time);
   ImGui::End();
 
   ImGui::Begin("Best Laps", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize);
@@ -117,10 +125,12 @@ void GameManagerComponent::tick(float dt) {
   ImGui::End();
 
 
-
-  lap_timer += dt;
-  sector_timer += dt;
-  total_timer += dt;
+  if(start_timer <= 0)
+  {
+      lap_timer += dt;
+      sector_timer += dt;
+      total_timer += dt;
+  }
 
 
   switch(current_lap_index)
@@ -185,7 +195,7 @@ void GameManagerComponent::RecordSector(int sector)
         }
     }
 
-
+    last_lap = current_lap;
     current_lap = LapInfo();
     lap_timer = 0.0f;
 

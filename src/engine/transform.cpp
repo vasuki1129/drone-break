@@ -323,12 +323,12 @@ std::vector<Transform *> Transform::GetChildren() {
 
 
 void Transform::ProcessInit() {
-  if (components.size() != 0) {
+  if (components.size() > 0) {
     for (auto comp : components) {
       comp->init();
     }
   }
-  if (children.size() != 0) {
+  if (children.size() > 0) {
     for (auto child : children) {
       child->ProcessInit();
     }
@@ -337,16 +337,21 @@ void Transform::ProcessInit() {
 }
 
 
-
 void Transform::ProcessTick(float dt) {
-  if (components.size() != 0) {
+  if (components.size() > 0) {
     for (auto comp : components) {
-      comp->tick(dt);
+      if(comp != nullptr)
+      {
+        comp->tick(dt);
+      }
     }
   }
-  if (children.size() != 0) {
+  if (children.size() > 0) {
     for (auto child : children) {
-      child->ProcessTick(dt);
+      if(child != nullptr)
+      {
+        child->ProcessTick(dt);
+      }
     }
   }
 }
