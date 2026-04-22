@@ -14,8 +14,6 @@ static int CompSearchCallback(ImGuiInputTextCallbackData* data) {
     return 0;
 }
 
-
-
 Component *Transform::GetComponent(std::string name) {
   for (auto comp : components) {
     if(comp == nullptr) continue;
@@ -106,7 +104,6 @@ Component *Transform::GetComponent(std::string name) {
   }
 void Transform::AddComponent(Component *component) {
   component->SetOwner(this);
-  component->init();
   this->components.push_back(component);
 }
 
@@ -256,7 +253,6 @@ bool Transform::Load(json value)
     if(!val.contains("component_type")) return false;
     Component* c = Engine()->LoadComponent(val["component_type"],val);
     c->SetOwner(this);
-    c->init();
     components.push_back(c);
   }
   return true;
@@ -324,6 +320,23 @@ std::string Transform::GetName() { return name; }
 std::vector<Transform *> Transform::GetChildren() {
   return children;
 }
+
+
+void Transform::ProcessInit() {
+  if (components.size() != 0) {
+    for (auto comp : components) {
+      comp->init();
+    }
+  }
+  if (children.size() != 0) {
+    for (auto child : children) {
+      child->ProcessInit();
+    }
+  }
+
+}
+
+
 
 void Transform::ProcessTick(float dt) {
   if (components.size() != 0) {

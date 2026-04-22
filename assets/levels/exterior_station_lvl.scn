@@ -1,0 +1,371 @@
+{
+  "active_camera": 13,
+  "name": "DefaultScene",
+  "root": {
+    "children": [
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "editor_shapes.box",
+            "name": "MeshComponent",
+            "uid": 3
+          },
+          {
+            "bounds": [
+              50.0,
+              4.0,
+              4.0
+            ],
+            "component_type": "CollisionComponent",
+            "name": "CollisionComponent",
+            "offset": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "should_tick": true,
+            "uid": 30
+          }
+        ],
+        "name": "DefaultCube",
+        "position": [
+          0.0,
+          0.028094062581658363,
+          0.003880022093653679
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          50.0,
+          4.0,
+          4.0
+        ],
+        "uid": 2
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "skybox_mtl",
+            "mesh_name": "sky_sphere.Sphere",
+            "name": "MeshComponent",
+            "uid": 11
+          },
+          {
+            "component_type": "SkyboxComponent",
+            "name": "SkyboxComponent",
+            "uid": 28
+          }
+        ],
+        "name": "Child",
+        "position": [
+          -24.17756462097168,
+          0.3652048408985138,
+          5.409535884857178
+        ],
+        "rotation": [
+          0.7071067690849304,
+          0.0,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          0.20000000298023224,
+          0.20000000298023224,
+          0.20000000298023224
+        ],
+        "uid": 10
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "CameraComponent",
+            "name": "Component",
+            "uid": 13
+          },
+          {
+            "component_type": "PlayerComponent",
+            "damping": 0.10000000149011612,
+            "name": "PlayerComponent",
+            "resistance": 0.009999999776482582,
+            "uid": 14,
+            "velocity": [
+              -1.569869041442871,
+              0.736087441444397,
+              -0.22121505439281464
+            ]
+          },
+          {
+            "bounds": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "component_type": "CollisionComponent",
+            "name": "CollisionComponent",
+            "offset": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "should_tick": true,
+            "uid": 42
+          }
+        ],
+        "name": "Child",
+        "position": [
+          -24.18707275390625,
+          0.3696632981300354,
+          5.408195972442627
+        ],
+        "rotation": [
+          0.5604960918426514,
+          -0.5313573479652405,
+          0.4279005229473114,
+          0.46947532892227173
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 12
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "goal_ring.Cube",
+            "name": "MeshComponent",
+            "uid": 59
+          }
+        ],
+        "name": "Ring",
+        "position": [
+          0.0,
+          3.030965566635132,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.7071067690849304,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 58
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "goal_ring.Cube",
+            "name": "MeshComponent",
+            "uid": 75
+          }
+        ],
+        "name": "Ring",
+        "position": [
+          -17.11128807067871,
+          0.0,
+          3.2423901557922363
+        ],
+        "rotation": [
+          0.0,
+          0.7071067690849304,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 74
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "component_type": "MeshComponent",
+            "material_name": "default",
+            "mesh_name": "goal_ring.Cube",
+            "name": "MeshComponent",
+            "uid": 77
+          }
+        ],
+        "name": "Ring",
+        "position": [
+          15.811891555786133,
+          0.0,
+          -3.1301825046539307
+        ],
+        "rotation": [
+          0.0,
+          0.7071067690849304,
+          0.0,
+          0.7071067690849304
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 76
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "bounds": [
+              0.5,
+              0.5,
+              5.0
+            ],
+            "component_type": "CollisionComponent",
+            "name": "CollisionComponent",
+            "offset": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "should_tick": false,
+            "uid": 79
+          }
+        ],
+        "name": "Child",
+        "position": [
+          -16.87017822265625,
+          1.693794846534729,
+          2.6267621517181396
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 78
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "bounds": [
+              0.5,
+              0.5,
+              5.0
+            ],
+            "component_type": "CollisionComponent",
+            "name": "CollisionComponent",
+            "offset": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "should_tick": false,
+            "uid": 81
+          }
+        ],
+        "name": "Child",
+        "position": [
+          -16.92414093017578,
+          -1.7573670148849487,
+          2.680023431777954
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 80
+      },
+      {
+        "children": [],
+        "components": [
+          {
+            "bounds": [
+              0.5,
+              4.0,
+              0.5
+            ],
+            "component_type": "CollisionComponent",
+            "name": "CollisionComponent",
+            "offset": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "should_tick": false,
+            "uid": 83
+          }
+        ],
+        "name": "Child",
+        "position": [
+          -16.913612365722656,
+          0.0,
+          4.911718368530273
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "uid": 82
+      }
+    ],
+    "components": [],
+    "name": "Root",
+    "position": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "uid": 1
+  }
+}

@@ -23,6 +23,15 @@ void PlayerComponent::PushMessage(std::string message) {
   message_buffer = message;
 }
 
+void PlayerComponent::EnableControl() {
+  has_control = true;
+
+}
+
+void PlayerComponent::DisableControl() {
+  has_control = false;
+
+}
 
 void PlayerComponent::tick(float dt) {
 
@@ -36,6 +45,13 @@ void PlayerComponent::tick(float dt) {
       message_buffer.erase(message_buffer.begin());
     }
   }
+
+
+
+
+
+
+  if (has_control) {
 
   engine::Texture *reticle =
       engine::Engine()->GetAssetManager()->GetTextureOrNull("crosshair9");
@@ -75,6 +91,8 @@ void PlayerComponent::tick(float dt) {
   }
   else
   {
+
+  }
 
   }
 

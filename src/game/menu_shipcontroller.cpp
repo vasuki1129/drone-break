@@ -1,18 +1,12 @@
 #include "menu_shipcontroller.h"
 #include <glm/glm.hpp>
 
-
-
 void MenuShipController::tick(float dt) {
     engine::Engine()->GetInput()->EnableCursor();
     timer += dt;
     this->GetOwner()->position.y = initial_position + sin(timer) * amplitude;
 
-
     //ACTUAL MENU CODE
-
-
-
     engine::Texture *title_text =
         engine::Engine()->GetAssetManager()->GetTextureOrNull("TitleText");
     ImGui::SetNextWindowPos(
@@ -23,10 +17,6 @@ void MenuShipController::tick(float dt) {
     ImGui::Image((ImTextureID)(intptr_t)title_text->GetTextureHandle(),
                  ImVec2(600, 300));
     ImGui::End();
-
-
-
-
 
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.22,0.22,0.22,0.0));
 
@@ -65,16 +55,13 @@ void MenuShipController::tick(float dt) {
               ImGui::Text("Enter name for leaderboard.");
               ImGui::InputText("Nickname", nickname,50);
               if(ImGui::Button("Play")){
-                  engine::Engine()->GetInput()->DisableCursor();
-                  engine::Engine()->GetSceneLoader()->LoadScene("assets/levels/game.scn");
+                engine::Engine()->GetInput()->DisableCursor();
+                engine::Engine()->GetSceneLoader()->LoadScene("assets/levels/game.scn",(void*)nickname);
               }
               ImGui::EndPopup();
           }
     ImGui::End();
     ImGui::PopStyleColor(1);
-
-
-
 }
 
 void MenuShipController::init() {

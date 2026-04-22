@@ -6,6 +6,13 @@
 namespace engine {
 //bool SceneLoader::CueScene(std::string path) {return false;}
 
+
+void *SceneLoader::GetPersistentData() {
+  return persistant_data;
+
+}
+
+
 void SceneLoader::SaveAsCheckpoint() {
   rewind_scene = current_scene->Clone();
 }
@@ -16,9 +23,19 @@ void SceneLoader::RewindToCheckpoint() {
   delete disc;
 }
 
+bool SceneLoader::LoadScene(std::string path, void *data) {
+  if (LoadScene(path)) {
+    if (data != nullptr) {
+      persistant_data = data;
+    }
+    this->current_scene->GetRoot()->ProcessInit();
+    return true;
+  } else {
+    return false;
+  }
+}
 
 bool SceneLoader::LoadScene(std::string path) {
-
   Engine()->SetLocalPlayer(nullptr);
   std::ifstream f(path);
 

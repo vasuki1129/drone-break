@@ -1,0 +1,7 @@
+{
+    "name": "skybox_mtl",
+    "shader_id": "shd_default_diffuse",
+    "texture": "sky_texture",
+    "uniforms": [
+    ]
+}

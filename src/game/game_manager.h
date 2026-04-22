@@ -38,6 +38,8 @@ public:
   float sector_timer = 0.0f;
   float total_timer = 0.0f;
 
+  float start_timer = 0.0f;
+
   std::string current_username = "max";
 
   engine::CollisionComponent* player_collider;
@@ -50,8 +52,6 @@ public:
   GameManagerComponent();
 
   engine::Sound* sound_handle;
-
-
 
 };
 

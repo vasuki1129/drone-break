@@ -14,6 +14,9 @@ public:
   json Save() override;
   bool Load(json value) override;
 
+  void EnableControl();
+  void DisableControl();
+
   glm::vec3 GetVelocity();
   float GetSpeed();
   void SetVelocity(glm::vec3 vel);
@@ -25,6 +28,8 @@ public:
   PlayerComponent();
 
   void PushMessage(std::string message);
+
+  bool has_control = true;
 
   std::string message_buffer = "";
   std::string display_message = "";

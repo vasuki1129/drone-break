@@ -29,7 +29,7 @@ void CollisionComponent::tick(float dt) {
             (EnemyComponent *)this->GetOwner()->GetComponent("EnemyComponent");
 
       } else {
-        ply->SetVelocity( 0.99f * ply->GetVelocity() );
+        ply->SetVelocity( 0.97f * ply->GetVelocity() );
       }
     } else {
     }

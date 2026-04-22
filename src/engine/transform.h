@@ -25,6 +25,9 @@ public:
   void ProcessEditorRender();
   void ProcessRender();
   void ProcessTick(float dt);
+  void ProcessInit();
+
+
 
   void AddComponent(Component* component);
 

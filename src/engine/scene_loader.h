@@ -13,7 +13,8 @@ public:
   SceneLoader();
   ~SceneLoader();
   //std::future<Scene*> CueScene(std::string path); // async load scene from json dump to on deck scene, for streaming or quickswapping scenes,
-  bool LoadScene(std::string path); // sync load scene from json dump to current scene
+  bool LoadScene(std::string path, void* data);
+
   void LoadDefaultScene();                 // immediately load the startup scene
   void SaveScene(std::string path);
   void DeloadScene();
@@ -25,10 +26,15 @@ public:
   void SaveAsCheckpoint();
   void RewindToCheckpoint();
 
+  void* GetPersistentData();
+
+
 
 private:
+  void* persistant_data = nullptr;
   Scene *current_scene = nullptr;
   Scene *rewind_scene = nullptr;
   Scene* scene_in_progress_load = nullptr;
+  bool LoadScene(std::string path); // sync load scene from json dump to current scene
 };
 }

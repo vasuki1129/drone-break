@@ -89,7 +89,7 @@ GLFWwindow *EngineInstance::GetWindow() {
 }
 
 void EngineInstance::Run() {
-  engine::Engine()->GetSceneLoader()->LoadScene(this->startup_scene);
+  engine::Engine()->GetSceneLoader()->LoadScene(this->startup_scene,nullptr);
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
     renderer->StartFrame();

@@ -612,7 +612,7 @@ colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
     if (loadBrowser.HasSelected()) {
       std::string path = loadBrowser.GetSelected().string();
       hierarchy_selected = nullptr;
-      if(!Engine()->GetSceneLoader()->LoadScene(path)){
+      if(!Engine()->GetSceneLoader()->LoadScene(path,nullptr)){
           ImGui::OpenPopup("Scene Load Failure");
           std::cout << "Scene failed to load: " << path << "\n";
       }

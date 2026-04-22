@@ -133,7 +133,7 @@
             "components": [
               {
                 "component_type": "MeshComponent",
-                "material_name": "hallway_corner_mtl",
+                "material_name": "hallway_corner_r_mtl",
                 "mesh_name": "hallway_corner.Cube",
                 "name": "MeshComponent",
                 "uid": 19
@@ -193,7 +193,7 @@
             "components": [
               {
                 "component_type": "MeshComponent",
-                "material_name": "hallway_corner_mtl",
+                "material_name": "hallway_corner_r_mtl",
                 "mesh_name": "hallway_corner.Cube",
                 "name": "MeshComponent",
                 "uid": 23
@@ -276,7 +276,7 @@
             "components": [
               {
                 "component_type": "MeshComponent",
-                "material_name": "hallway_corner_mtl",
+                "material_name": "hallway_corner_r_mtl",
                 "mesh_name": "hallway_corner.Cube",
                 "name": "MeshComponent",
                 "uid": 28
@@ -456,7 +456,7 @@
             "components": [
               {
                 "component_type": "MeshComponent",
-                "material_name": "hallway_corner_mtl",
+                "material_name": "hallway_corner_r_mtl",
                 "mesh_name": "hallway_corner.Cube",
                 "name": "MeshComponent",
                 "uid": 41

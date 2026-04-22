@@ -161,6 +161,7 @@ NT_DEPS += build_windows/game/game_manager.obj
 NT_DEPS += build_windows/game/menu_bgscroller.obj
 NT_DEPS += build_windows/game/menu_shipcontroller.obj
 NT_DEPS += build_windows/game/trigger_component.obj
+NT_DEPS += build_windows/game/skybox_component.obj
 
 NT_DEPS += build_windows/s7/s7.obj
 

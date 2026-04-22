@@ -1,13 +1,12 @@
 #include "game_manager.h"
 #include <fstream>
+#include "player_component.h"
 GameManagerComponent::GameManagerComponent() : engine::Component() {
   this->name = "GameManagerComponent";
   this->component_type = "GameManagerComponent";
   this->map_name.resize(64);
   this->music_name.resize(64);
 }
-
-
 
 json GameManagerComponent::SaveLapData()
 {
@@ -65,10 +64,29 @@ void GameManagerComponent::LoadLapData(std::string path)
 
 void GameManagerComponent::tick(float dt) {
 
+
+  if (start_timer > 0.0f) {
+    start_timer -= dt;
+    ImGui::Begin("StartTimer", NULL,
+                 ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoDecoration |
+                     ImGuiWindowFlags_NoBackground);
+    ImGui::SetWindowPos(
+        ImVec2(engine::Engine()->GetRenderer()->WindowWidth() / 2,
+               engine::Engine()->GetRenderer()->WindowHeight() / 2));
+    ImGui::Text("%f", this->start_timer);
+    ImGui::End();
+  }
+
+
   auto ply = engine::Engine()->GetLocalPlayer();
   if(ply == nullptr)
   {
     return;
+  }
+  if (start_timer > 0.0f) {
+    ((PlayerComponent*)ply)->DisableControl();
+  } else {
+    ((PlayerComponent*)ply)->EnableControl();
   }
 
   player_collider = (engine::CollisionComponent*) ply->GetOwner()->GetComponent("CollisionComponent");
@@ -89,7 +107,7 @@ void GameManagerComponent::tick(float dt) {
   }
 
   std::sort(laps.begin(), laps.end(), [] (const LapInfo& a, const LapInfo& b){
-      return a.lap_time>b.lap_time;
+      return a.lap_time<b.lap_time;
   });
 
   for(int i = 0; i < laps.size();i++)
@@ -176,6 +194,18 @@ void GameManagerComponent::RecordSector(int sector)
 }
 
 void GameManagerComponent::init() {
+
+  if (engine::Engine()->GetSceneLoader()->GetPersistentData() == nullptr) {
+    current_username = "test_user";
+
+  } else {
+
+  this->current_username =
+      (char*)engine::Engine()->GetSceneLoader()->GetPersistentData();
+
+  }
+
+  this->start_timer = 5.0f;
   sound_handle = engine::Engine()->GetAssetManager()->GetSoundOrNull(music_name);
   if (sound_handle != nullptr) {
       sound_handle->PlayLooped();
